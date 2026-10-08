@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>doola QA Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --yellow:#F9C800; --blue:#4F8FF6; --green:#40E86F; --pink:#FFA5BB;
+  --s-yellow:#FEF4CC; --s-blue:#EEF3FE; --s-green:#E3F9EA; --s-pink:#FFE7EC;
+  --text:#141414; --text2:#5B5B5B; --text3:#6B6B6B;
+  --bg:#FFFFFF; --surface:#FAFAFA; --line:#EAEAEA; --chip:#F2F2F2;
+  --onbright:#141414;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --text:#F4F4F4; --text2:#B4B4B4; --text3:#9A9A9A;
+    --bg:#0B0B0B; --surface:#161616; --line:#2A2A2A; --chip:#202020;
+    --s-yellow:#3A3105; --s-blue:#11213D; --s-green:#0C3218; --s-pink:#3A1A22;
+  }
+}
+:root[data-theme="dark"]{
+  --text:#F4F4F4; --text2:#B4B4B4; --text3:#9A9A9A;
+  --bg:#0B0B0B; --surface:#161616; --line:#2A2A2A; --chip:#202020;
+  --s-yellow:#3A3105; --s-blue:#11213D; --s-green:#0C3218; --s-pink:#3A1A22;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:30px 20px 72px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.03em;margin:0 0 6px}
+h2{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin:46px 0 14px}
+h3{font-size:15px;font-weight:600;margin:0 0 8px}
+p{margin:0 0 12px;color:var(--text2)}
+a{color:var(--blue);text-decoration:none;font-weight:500}
+a:hover{text-decoration:underline}
+.sub{color:var(--text3);font-size:13.5px;margin-bottom:22px}
+.num{font-variant-numeric:tabular-nums}
+
+.alert{border-left:5px solid var(--yellow);background:var(--s-yellow);border-radius:0 14px 14px 0;padding:16px 18px;font-size:13.5px;margin-bottom:14px}
+.alert.red{border-left-color:var(--pink);background:var(--s-pink)}
+.alert b{font-weight:700}
+
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;padding:16px;background:var(--surface);border:1px solid var(--line);border-radius:18px;margin:22px 0 26px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:200px;flex:1 1 200px}
+label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3)}
+select{font-family:inherit;font-size:14.5px;font-weight:600;color:var(--text);background:var(--bg);
+  border:2px solid var(--line);border-radius:12px;padding:11px 13px;width:100%;appearance:none;cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,var(--text3) 50%),linear-gradient(135deg,var(--text3) 50%,transparent 50%);
+  background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+select:focus{outline:none;border-color:var(--blue)}
+.reset{font-size:13px;font-weight:600;color:var(--onbright);background:var(--yellow);border:0;border-radius:12px;padding:12px 18px;cursor:pointer;font-family:inherit}
+.reset:hover{filter:brightness(.94)}
+
+/* vibrant KPI cards */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(176px,1fr));gap:12px}
+.kpi{border-radius:20px;padding:20px;color:var(--onbright)}
+.kpi .n{font-size:36px;font-weight:800;letter-spacing:-.035em;line-height:1.05}
+.kpi .l{font-size:12.5px;font-weight:700;margin-top:4px;opacity:.82}
+.kpi .d{font-size:11.5px;margin-top:10px;opacity:.68;font-weight:500}
+.k1{background:var(--blue)} .k2{background:var(--green)} .k3{background:var(--yellow)} .k4{background:var(--pink)}
+
+/* coaching focus, deliberately a separate block */
+.focus{margin-top:26px;border:2px dashed var(--line);border-radius:20px;padding:20px;background:var(--surface)}
+.focus .ftag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--chip);color:var(--text2);padding:4px 10px;border-radius:999px;margin-bottom:14px}
+.frow{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.fmain{flex:1 1 230px;min-width:0}
+.fmain .fw{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.fmain .fv{font-size:13px;color:var(--text2);margin-top:4px;font-weight:500}
+.fbars{flex:2 1 400px;min-width:0;display:flex;flex-direction:column;gap:9px}
+.fbar{display:grid;grid-template-columns:150px 1fr 42px;gap:10px;align-items:center;font-size:12.5px}
+.fbar .fl{color:var(--text2);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fbar .fn{text-align:right;font-weight:700}
+
+.bar{height:9px;background:var(--chip);border-radius:999px;overflow:hidden;min-width:60px}
+.bar>i{display:block;height:100%;border-radius:999px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.tblwrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+th{text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);padding:14px 16px;border-bottom:2px solid var(--line);white-space:nowrap}
+td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.rank{font-weight:800;font-size:18px;width:54px}
+td.name{font-weight:600}
+
+.badge{display:inline-block;font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:999px;white-space:nowrap;color:var(--onbright)}
+.bA{background:var(--green)} .bB{background:var(--blue)} .bC{background:var(--yellow)}
+.bD{background:var(--pink)} .bF{background:var(--pink)}
+.pipe{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap;color:var(--onbright)}
+.pCC{background:var(--blue)} .pAM{background:var(--pink)}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--chip);color:var(--text2)}
+
+.dims{display:grid;grid-template-columns:repeat(auto-fit,minmax(198px,1fr));gap:12px}
+.dim{border-radius:18px;padding:17px;color:var(--onbright)}
+.dim .t{font-size:12px;font-weight:700;min-height:34px;opacity:.85}
+.dim .v{font-size:30px;font-weight:800;letter-spacing:-.03em;margin:4px 0 10px}
+.dim .v small{font-size:13px;font-weight:600;opacity:.6}
+.dim .bar{background:rgba(0,0,0,.14)}
+.dim .bar>i{background:rgba(0,0,0,.52)}
+
+.ticket{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:12px}
+.thead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:4px}
+.tsubj{font-weight:700;font-size:15px;flex:1 1 260px;min-width:0}
+.tmeta{font-size:12.5px;color:var(--text3);margin-bottom:14px}
+.scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:9px;margin-bottom:14px}
+.sc{border-radius:13px;padding:10px 12px;color:var(--onbright)}
+.sc .sl{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;min-height:26px;opacity:.8}
+.sc .sv{font-size:21px;font-weight:800;margin-top:2px}
+.sc .sv small{font-size:11.5px;font-weight:600;opacity:.6}
+.notes{font-size:13.5px;color:var(--text2);background:var(--bg);border-radius:13px;padding:13px 15px;border:1px solid var(--line)}
+.notes b{color:var(--text);font-weight:700}
+.notes ul{margin:6px 0 0;padding-left:18px}
+.notes li{margin-bottom:4px}
+
+.imp{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--pink);border-radius:0 18px 18px 0;padding:18px;margin-bottom:12px}
+.imp h3{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.imp ul{margin:8px 0 0;padding-left:18px;color:var(--text2);font-size:14px}
+.imp li{margin-bottom:6px}
+
+.pattern{display:flex;gap:14px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--line)}
+.pattern:last-child{border-bottom:0}
+.pnum{flex:0 0 30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--onbright)}
+.pbody{font-size:14px}
+.pbody b{font-weight:700}
+.pbody span{display:block;color:var(--text2);font-size:13.5px;margin-top:2px}
+
+.roster{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.rcol{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px}
+.rlist{list-style:none;margin:0;padding:0;font-size:13.5px}
+.rlist li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);color:var(--text2)}
+.rlist li:last-child{border-bottom:0}
+.rlist .st{font-size:10.5px;font-weight:700;color:var(--text3);white-space:nowrap}
+.rlist .done{color:var(--text);font-weight:600}
+
+#idxTbl{min-width:1040px;font-size:13.5px}
+#idxTbl th,#idxTbl td{padding:11px 12px}
+#idxTbl th{font-size:10px}
+#idxTbl .idxsubj{min-width:210px;max-width:290px;color:var(--text2)}
+#idxTbl .sccell{text-align:center;font-weight:700;width:40px}
+#idxTbl th:nth-child(n+6):nth-child(-n+10){text-align:center}
+.empty{padding:30px 16px;text-align:center;color:var(--text3);font-size:14px}
+footer{margin-top:52px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--text3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>doola QA Dashboard</h1>
+<div class="sub">Customer Care and Account Management &middot; Cycle 2 &middot; Scored against the <a href="https://app.notion.com/p/284ff629db1e80e4b832ed4a84e25031">QA Evaluation rubric</a></div>
+
+<div class="alert">
+  <b>Account Management is complete.</b> All three agents on the pipeline are at a full 10 fully read threads, 30 tickets in total, so they are directly comparable. Customer Care has 15 agents still queued at 10 each, which is 150 more threads. Only agents at a full 10 appear in the ranking, never fewer.
+</div>
+<div class="alert red">
+  <b>Escalation routing is excluded from scoring.</b> No ticket is marked up or down for which internal channel it was or was not routed to, since those rules change. Policy and Process now covers only customer-facing conduct: response standards, disclosure, commitments kept, and whether a thread was closed with the customer's request actually resolved. Sampling attributes by message sender, not ticket owner, after ticket 48341970756 was found to be owned by Annie but answered entirely by Jesi, Anna and Kirti.
+</div>
+
+<div class="controls">
+  <div class="field">
+    <label for="fPipe">Pipeline</label>
+    <select id="fPipe">
+      <option value="all">All pipelines</option>
+      <option value="Customer Care">Customer Care</option>
+      <option value="Account Management">Account Management</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="fAgent">Agent</label>
+    <select id="fAgent"><option value="all">All agents</option></select>
+  </div>
+  <button class="reset" id="reset" type="button">Reset</button>
+</div>
+
+<h2>Cycle performance</h2>
+<div class="kpis">
+  <div class="kpi k1"><div class="n num" id="kTickets">0</div><div class="l">Tickets scored</div><div class="d" id="kAgents">0 agents</div></div>
+  <div class="kpi k2"><div class="n num" id="kAvg">0%</div><div class="l">Combined QA score</div><div class="d" id="kTarget">Target 95%</div></div>
+  <div class="kpi k3"><div class="n num" id="kOverall">0.0</div><div class="l">Overall out of 5</div><div class="d" id="kMedian">Median total 0</div></div>
+  <div class="kpi k4"><div class="n num" id="kSpread">0</div><div class="l">Out of range vs median</div><div class="d">Beyond &plusmn;5 points, re-review</div></div>
+</div>
+
+<div class="focus">
+  <span class="ftag">Coaching focus</span>
+  <div class="frow">
+    <div class="fmain">
+      <div class="fw" id="fWeak">&mdash;</div>
+      <div class="fv" id="fWeakVal">&nbsp;</div>
+    </div>
+    <div class="fbars" id="fBars"></div>
+  </div>
+</div>
+
+<h2>Agent ranking</h2>
+<div class="card"><div class="tblwrap"><table id="rankTbl">
+  <thead><tr><th>#</th><th>Agent</th><th>Pipelines</th><th>Tickets</th><th>Overall</th><th>Combined %</th><th></th><th>Band</th></tr></thead>
+  <tbody></tbody>
+</table></div></div>
+
+<h2>Preliminary, not ranked</h2>
+<div class="card"><div class="tblwrap"><table id="prelimTbl">
+  <thead><tr><th>Agent</th><th>Pipelines</th><th>Tickets</th><th>Combined %</th><th>Status</th></tr></thead>
+  <tbody></tbody>
+</table></div></div>
+
+<h2>Score by dimension</h2>
+<div class="dims" id="dimGrid"></div>
+
+<h2>Areas of improvement</h2>
+<div id="impList"></div>
+
+<h2>Top failure patterns this cycle</h2>
+<div class="card" style="padding:4px 18px" id="patterns"></div>
+
+<h2>Scored tickets</h2>
+<div id="ticketList"></div>
+
+<h2>Roster in scope</h2>
+<div class="roster" id="roster"></div>
+
+<h2>Ticket index</h2>
+<p style="font-size:13.5px;margin-bottom:14px">Every ticket triaged, with its HubSpot link and dimension scores. Follows the filters above.</p>
+<div class="card"><div class="tblwrap"><table id="idxTbl">
+  <thead><tr>
+    <th>Ticket</th><th>Subject</th><th>Agent</th><th>Pipeline</th><th>Closed</th>
+    <th title="Accuracy and Completeness">Acc</th><th title="Clarity and Structure">Cla</th>
+    <th title="Empathy and Tone">Emp</th><th title="Policy and Process">Pol</th>
+    <th title="Effort Reduction">Eff</th>
+    <th>Overall</th><th>Total</th><th>Band</th><th>Calibration</th><th>Primary category</th>
+  </tr></thead>
+  <tbody></tbody>
+</table></div></div>
+
+<footer>
+  Scoring scale: 5 exceptional, 4 strong, 3 adequate, 2 weak, 1 unacceptable. Overall = mean of the five dimensions. Combined % = Overall &times; 20. Bands: A 90 to 100, B 80 to 89, C 70 to 79, D 60 to 69, F below 60. Calibration: within &plusmn;5 points of the cycle median is in range.<br>
+  Source: HubSpot conversation threads, attributed by message sender. Rubric: QA Evaluation page, QA Central.
+</footer>
+</div>
+
+<script>
+var T=[
+{id:"48698840144",agent:"Jesi Alderite",pipeline:"Account Management",date:"2026-09-25",ranked:true,
+ subject:"Change of LLC sole member, document update",s:[5,5,4,5,4],category:"Effort Reduction",
+ keep:["Confirmed receipt of all three documents by name, uploaded them, and closed the loop the same day the phone number arrived.","Clean, short, zero ambiguity. The customer knew exactly what was needed and exactly when it was done."],
+ fix:["The phone number request created an extra round trip. List every field needed for a member update in the first reply so it closes in one exchange."]},
+
+{id:"48583279274",agent:"Jesi Alderite",pipeline:"Account Management",date:"2026-09-28",ranked:true,
+ subject:"Renewal discount and monthly plan pricing",s:[5,5,4,5,3],category:"Effort Reduction",
+ keep:["Every figure accurate and consistent across four messages: $2,999 annual, $2,699.10 discounted, $329 monthly, $296.10 first month.","Explained that the signup discount is normally one time only, then applied a courtesy exception and framed it as such rather than silently overriding policy."],
+ fix:["Did not warn that the automated renewal reminder would still show $2,999. The customer re-contacted seven days later purely about this.","Final reassurance reply took roughly 60 hours on an active billing concern."]},
+
+{id:"48697627189",agent:"Jesi Alderite",pipeline:"Account Management",date:"2026-09-25",ranked:true,
+ subject:"Withholding tax on bond investments, non-resident owner",s:[4,5,3,5,5],category:"Empathy & Tone",
+ keep:["Correctly declined to give US tax advice on a non-resident withholding question and handed it to the Tax Team instead, which is the right scope call.","Gave a complete numbered booking path plus a note on what to bring to the call, so the handoff needs no follow-up."],
+ fix:["Opened straight into process with no acknowledgement of the question itself. A single line confirming it is a sensible thing to ask would cost nothing.","A short general framing of how withholding usually works would have left the customer better informed while still deferring the specifics."]},
+
+{id:"48609924733",agent:"Jesi Alderite",pipeline:"Account Management",date:"2026-09-23",ranked:true,
+ subject:"IRS records, sole member to multi-member and name change",s:[5,5,4,3,4],category:"Policy & Process",
+ keep:["Actually opened both IRS documents and reconciled them by date, explaining why the February 147C still shows SOLE MBR while the July notice shows the reclassification. That is real analysis, not a holding reply.","Separated what the IRS has already processed from what is still outstanding, so the customer knew precisely where things stood."],
+ fix:["First response took roughly 53 hours against the 90 minute first response standard.","We will keep you updated is open ended. Give the EIN amendment an expected window and a check-back date."]},
+
+{id:"48619261759",agent:"Jesi Alderite",pipeline:"Account Management",date:"2026-09-23",ranked:true,
+ subject:"Final Form 1120 after dissolution",s:[3,4,3,4,4],category:"Accuracy & Completeness",
+ keep:["Stated the $600 short-year return fee up front rather than making the customer ask.","Proactively flagged that state-level sales tax and payroll accounts may need closing separately. That is a genuine re-contact prevented."],
+ fix:["The dashboard path given was Company Settings then Danger Zone then begin the dissolution process, but this company is already dissolved. Pointing an already-dissolved customer at the dissolution flow is confusing and may be the wrong route entirely.","Addressed as Hi there throughout when the signature carried a name."]},
+
+{id:"48538566714",agent:"Jesi Alderite",pipeline:"Account Management",date:"2026-09-24",ranked:true,
+ subject:"Mercury application declined twice, CFO escalation",s:[5,5,1,4,4],category:"Empathy & Tone",
+ keep:["Diagnosed the actual blocker precisely, a passport image pasted onto a white background, after liaising with Mercury directly. The account opened on the next attempt.","Chased Mercury proactively and came back with a specific, actionable instruction rather than a status update."],
+ fix:["Critical: the customer is Abhishek and was addressed as Hareesh and Haresh repeatedly across the thread, on a CFO escalation with the CEO and a board member copied in. This is the single most damaging defect in the cycle.","The customer wrote that the end to end timeline was a key reason they chose doola and that it had slipped. That complaint was never acknowledged."]},
+
+{id:"48672899156",agent:"Jesi Alderite",pipeline:"Account Management",date:"2026-09-28",ranked:true,
+ subject:"Mercury requires passport, alternative providers",s:[3,5,3,4,2],category:"Effort Reduction",
+ keep:["First reply was strong: four named alternatives with links, plus an offer to supply the formation and EIN documents for whichever they chose.","Correctly avoided promising approval, noting each provider runs its own compliance review."],
+ fix:["The customer then asked a specific question, which provider supports Merchant IDs for payment processor approval, and got it is up to you based on your business needs. That is a deflection, not an answer.","Ticket was closed on a non-response, then reopened by the customer."]},
+
+{id:"48067205770",agent:"Jesi Alderite",pipeline:"Account Management",date:"2026-09-23",ranked:true,
+ subject:"Payment dispute, services on hold",s:[4,4,2,5,2],category:"Empathy & Tone",
+ keep:["Followed the dispute protocol correctly end to end, including the Card Authorization Form and name-match requirement for resubscription.","Communicated the final outcome plainly rather than burying it."],
+ fix:["The customer is called Virender in the opening message and Manish from the middle of the thread onward. One of these is wrong and nobody caught it.","Three separate chases got near-identical still pending replies with no timeline and no proactive check, while the customer was locked out of a paid service.","Tone stayed transactional throughout with no acknowledgement of that impact."]},
+
+{id:"48143806281",agent:"Jesi Alderite",pipeline:"Account Management",date:"2026-09-23",ranked:true,
+ subject:"New customer, EIN progress and 147C letter",s:[5,4,2,2,4],category:"Policy & Process",
+ keep:["The 147C answer was excellent and specific: the customer already had it, on page two of the IRS document, marked LTR 147C in the upper right. That is the kind of precision that ends a thread.","Two proactive check-ins rather than waiting for the customer to chase."],
+ fix:["Critical: first response took 5.4 days against a 90 minute standard, to a brand new customer asking a nervous first question.","That late first reply was a bare clarifying question with no warmth and no apology for the delay.","A new customer asking what else should I know deserves the compliance calendar, not three lines."]},
+
+{id:"46252967533",agent:"Jesi Alderite",pipeline:"Account Management",date:"2026-09-25",ranked:true,
+ subject:"Refund request, repeated bookkeeper reassignment",s:[2,4,3,2,1],category:"Policy & Process",
+ keep:["The July denial letter was well constructed, explaining the 2025 catch-up work done at no charge and naming Fabio as the permanent bookkeeper.","Acknowledged the frustration genuinely rather than hiding behind the Terms of Service."],
+ fix:["Critical: the ticket was closed on 25 September with the refund request unresolved, the proof-of-delivery request unanswered, and a second question about Registered Agent double-billing never addressed at all.","Ran three months with at least six customer chases against a documented list of nine missed commitments from the bookkeeping side. Internal delivery failure, but the customer was left holding it.","Repeated I will get back to you with no date attached. Every holding reply needs a committed return date."]},
+
+{id:"48648556676",agent:"Annie Kapoor",pipeline:"Account Management",date:"2026-10-03",ranked:true,
+ subject:"doola Bookkeeping transactions not syncing with Mercury",s:[3,4,4,4,2],category:"Effort Reduction",
+ keep:["Best empathy in her sample. Named the frustration of a recurring fault directly rather than treating it as a fresh incident.","Consulted the Bookkeeping Team and came back with a concrete action rather than a status update."],
+ fix:["Four days between the holding reply and the actual answer, for a single-line recommendation.","The re-sync recommended was not what fixed it. The transactions appeared on their own, so the diagnosis was never actually confirmed.","Third recurrence met with I will pass your feedback to the product team, with no reference number and no commitment to come back. That is where a repeat fault gets lost."]},
+
+{id:"48719069463",agent:"Annie Kapoor",pipeline:"Account Management",date:"2026-10-01",ranked:true,
+ subject:"Form 1099-NEC and 1099-MISC showing overdue",s:[2,4,4,2,4],category:"Accuracy & Completeness",
+ keep:["Replied in 18 minutes with a definitive answer rather than a holding message.","Warm and genuinely reassuring to a customer worried about an overdue compliance flag."],
+ fix:["Critical: the customer asked about Form 1099-NEC and 1099-MISC. The reply confirms the 2025 IRS tax filing and the annual state filing, which are different filings entirely. Telling someone to disregard a 1099 alert without establishing whether they paid any contractor $600 or more is reassurance on the wrong basis.","The macro opens with I sincerely apologise for delayed response on a reply sent 18 minutes after the customer wrote in."]},
+
+{id:"48720769617",agent:"Annie Kapoor",pipeline:"Account Management",date:"2026-10-03",ranked:true,
+ subject:"IRS Form 720 listed on EIN confirmation letter",s:[3,3,2,4,3],category:"Clarity & Structure",
+ keep:["Did the real work of having the team contact the IRS, and came back with a genuine finding: the customer had enrolled for Excise Tax when applying for the EIN.","Gave both paths plainly, continue and file on time, or contact the IRS to close the account."],
+ fix:["The customer is Michael. He was addressed as Emma twice, which is the company name, Emma and Kate Commerce LLC, not a person.","The first question, could you explain what this form is for, was never answered. Form 720 is the quarterly federal excise tax return and that sentence was all it needed.","The key sentence is garbled: if you would like to continue with the Excise Tax account then you need the required return is filed on time."]},
+
+{id:"48742538521",agent:"Annie Kapoor",pipeline:"Account Management",date:"2026-10-02",ranked:true,
+ subject:"Unexpected Registered Agent renewal notification",s:[3,4,3,2,3],category:"Policy & Process",
+ keep:["Opening reply resolved the actual worry in one pass: confirmed the Business-in-a-Box yearly plan, named the 23 June 2027 renewal date, and explained the dashboard alert.","Fast, roughly 1.3 hours from the customer writing in."],
+ fix:["Critical: told the customer yes, I can be added to your Slack and shared her direct email, then reversed it a day later because company policy does not allow Slack support and the IT admin denied the request. Do not commit to a channel before checking.","The reversal carried no apology for the first answer having been wrong.","Three extra exchanges to arrive at a no that could have been given immediately."]},
+
+{id:"48632397448",agent:"Annie Kapoor",pipeline:"Account Management",date:"2026-09-25",ranked:true,
+ subject:"Cancel subscription, no renewal on 22 September",s:[1,4,4,2,3],category:"Accuracy & Completeness",
+ keep:["Pre-empted the automated renewal reminder emails so the customer would not panic when they arrived.","Removed the card proactively and disclosed the ongoing good standing obligations."],
+ fix:["Critical: shipped with an unfilled merge token, cancel at the end of your current billing period on [date]. The customer asked for the date in writing and it is missing.","The customer named 22 September 2026 explicitly. Confirm that specific date back.","Block any reply still containing square brackets before send."]},
+
+{id:"48659916145",agent:"Annie Kapoor",pipeline:"Account Management",date:"2026-09-26",ranked:true,
+ subject:"Meta verification, document linking LLC to phone number",s:[2,4,2,4,1],category:"Effort Reduction",
+ keep:["Numbered the reply to mirror the customer's two questions.","Apologised for the delayed response up front."],
+ fix:["Question 2 was not answered. The customer asked about adding their own number to a future filing via the annual report or an amendment; the reply discussed member information on Wyoming formation documents, which is a different question.","A detailed message listing five already-ruled-out documents got a two line dead end with no alternatives offered."]},
+
+{id:"48696826993",agent:"Annie Kapoor",pipeline:"Account Management",date:"2026-10-01",ranked:true,
+ subject:"Reseller permit, included in plan or not",s:[2,3,2,4,1],category:"Effort Reduction",
+ keep:["The Kintsugi partner referral is the right commercial route for sales tax registration and resale certificates.","The partner macro itself is well-organised and covers registration, filing, nexus monitoring and cancellation."],
+ fix:["The customer asked a yes or no question, is the reseller permit part of my package or do I get it myself, and it was never answered directly. The macro implies no but never says it.","Asked what is the cost and got you can reach out to Kintsugi support and they will help you with the cost. Nine words, no greeting, no sign-off, no price range.","Sending a customer to a third party to discover a price we could state is the clearest effort-reduction failure in the cycle."]},
+
+{id:"48681786420",agent:"Annie Kapoor",pipeline:"Account Management",date:"2026-10-01",ranked:true,
+ subject:"Mercury onboarding link not working",s:[2,3,2,4,1],category:"Accuracy & Completeness",
+ keep:["The pending EIN answer was genuinely valuable and specific: Mercury will process a doola client application using the pending EIN letter.","Escalated to the technical team once the fault was clearly reproducible."],
+ fix:["Critical macro mismatch. The customer reported a specific bug, the link redirects to a login for an account that does not exist, Open Account does nothing, and the dashboard wrongly shows Signed up. The reply was a generic list of seven banking partners that addresses none of it.","The incorrect Signed up dashboard status was raised and ignored across all three replies.","The customer reported the same unresolved bug three times and the ticket was closed on 1 October with it still open.","Greeting typo, H Samarth."]},
+
+{id:"48725224464",agent:"Annie Kapoor",pipeline:"Account Management",date:"2026-09-30",ranked:true,
+ subject:"Florida warehouse arrangement for a Wyoming company",s:[2,4,2,2,1],category:"Policy & Process",
+ keep:["Reached for the right concept, foreign qualification rather than forming a second entity, and itemised the costs clearly at $199 processing, $125 Florida state fee and $125 Wyoming certificate of good standing."],
+ fix:["Critical: quoted $449 of billable filings before establishing the facts. The customer came back with six specific points, third-party fulfilment, no lease, no employees, not operating the facility, which very likely means no foreign qualification is required at all.","The customer did the diagnostic work that should have been done by asking two questions first.","Closed on 30 September with I will check with filing team and update you, and no answer was ever delivered. The customer is left holding a quote they have good reason to think is wrong.","Typo, Thank you your message."]},
+
+{id:"48740377647",agent:"Annie Kapoor",pipeline:"Account Management",date:"2026-10-01",ranked:true,
+ subject:"Cancel plan and refund request",s:[2,4,2,2,1],category:"Effort Reduction",
+ keep:["Asking the reason for cancelling is standard retention practice and was phrased politely."],
+ fix:["Critical: the customer asked for two things, cancel my plan and provide a refund. Neither was actioned and neither was answered. No refund eligibility was stated and no cancellation was processed.","Ticket closed on 1 October with the customer never having replied and nothing done. A cancellation request sitting unactioned is a billing risk, not just a QA miss.","A terse four-word cancellation request met with hope you are doing well and it is my pleasure to e-meet you, then a feedback request. The retention probe came before the service."]},
+
+{id:"48714467236",agent:"Maricar Joyce Deocampo",pipeline:"Customer Care",date:"2026-09-26",ranked:false,
+ subject:"Dissolution and final tax return confirmation",s:[5,5,4,5,5],category:"Accuracy & Completeness",
+ keep:["Verified with the Tax Team before answering and confirmed all three concerns: dissolution status, 2025 filed as final, no 2026 return required.","Named the underlying worry and defused it, then asked for a review at exactly the right moment."],
+ fix:["Customer switched to Spanish and was answered in English with no acknowledgement."]},
+
+{id:"48697183297",agent:"Fatima Sindhu",pipeline:"Account Management",date:"2026-09-30",ranked:true,
+ subject:"15 October tax deadline and dashboard compliance flags",s:[5,5,3,5,5],category:"Empathy & Tone",
+ keep:["Answered all four questions point by point: the reminder was generic, the 2025 ITR is filed and on the dashboard, the Tax and Compliance workflow still needs basic information, and the 1 December Annual Report date is confirmed.","Proactively explained that the Compliance Overview is a general checklist and not every listed filing applies to this entity. That single sentence prevents a whole class of future tickets. Best ticket in the Account Management cycle."],
+ fix:["Tone is correct but flat. Thank you for getting back to me opens the follow-up as if it were routine, for a customer who had clearly been worrying about deadlines."]},
+
+{id:"48616656787",agent:"Fatima Sindhu",pipeline:"Account Management",date:"2026-09-25",ranked:true,
+ subject:"Mercury rejecting India co-working address",s:[5,4,3,5,5],category:"Empathy & Tone",
+ keep:["Answered all three sub-questions and correctly flagged that the Registered Agent address is virtual and will not satisfy a physical address requirement.","Gave a workable path and a fallback in one message. The bank account was issued."],
+ fix:["Customer said it was urgent and that Mercury had rejected them multiple times. Neither was acknowledged.","Closing message was two lines for a resolved banking blocker."]},
+
+{id:"48709603991",agent:"Fatima Sindhu",pipeline:"Account Management",date:"2026-09-30",ranked:true,
+ subject:"Ownership change request, opening outreach",s:[4,5,5,4,3],category:"Effort Reduction",
+ keep:["Warmest opening in the whole cycle. Proactive outreach on a request raised elsewhere, with a clear invitation to supply detail.","Correctly asked what the change involves before advising, since ownership changes branch heavily."],
+ fix:["A bare tell me more leaves the customer guessing. Outlining what an ownership change usually needs, amended operating agreement, updated Exhibit A, member details and any EIN implications, would let them prepare everything in one go.","No reply ever came. A single follow-up nudge would likely have recovered it."]},
+
+{id:"48587024308",agent:"Fatima Sindhu",pipeline:"Account Management",date:"2026-09-29",ranked:true,
+ subject:"Cancel subscription, wants bookkeeping and tax prep only",s:[4,4,3,5,3],category:"Policy & Process",
+ keep:["Disclosed before acting that cancelling ends the Registered Agent address and can lead to administrative dissolution. That is exactly the right warning and it protects the customer from a serious outcome.","Offered the Starter Plan downgrade with a complete itemised breakdown of what is included, what is excluded, and add-on pricing for doola books, state filing, CPA time and IRS filings."],
+ fix:["The customer said plainly that they want bookkeeping and tax preparation without the monthly subscription. The reply offers the one plan that excludes both, then lists them as paid add-ons. Build the answer around what they asked for.","I have asked more than once is a complaint about not being heard, and it went unacknowledged.","Four days between the downgrade question and the pricing reply, and the ticket closed with no decision taken."]},
+
+{id:"48806968081",agent:"Fatima Sindhu",pipeline:"Account Management",date:"2026-09-30",ranked:true,
+ subject:"EIN reference number for IRS follow-up",s:[5,4,2,4,2],category:"Effort Reduction",
+ keep:["Every fact correct and specific: submitted 28 September, 8 to 10 week standard timeline, no reference number exists because the SS-4 is faxed, call using the entity name, IRS hours Monday to Friday 7am to 7pm.","Replies came back within hours each time, which matters for someone blocked on a bank application."],
+ fix:["Four separate exchanges to deliver facts that fit in one reply. Each answer addressed only the literal question with no anticipation of the obvious next one.","Customer is blocked on Mercury and phoning the IRS repeatedly. Every reply opens Thank you for getting back to me with no acknowledgement of that.","This thread is still open. The customer listed their full SS-4 details asking what the IRS will ask, and has had no answer."]},
+
+{id:"48729741476",agent:"Fatima Sindhu",pipeline:"Account Management",date:"2026-10-01",ranked:true,
+ subject:"California Statement of Information and Franchise Tax",s:[4,4,2,3,3],category:"Empathy & Tone",
+ keep:["Confirmed the Statement of Information was filed and gave the Franchise Tax rule precisely, the $800 annual tax due the 15th day of the fourth month after filing, with a worked example and the FTB link.","Correctly scoped out that doola does not handle Franchise Tax filings, and offered a call to talk it through."],
+ fix:["The customer wrote this is business matter stuff with double exclamation marks and said twice that the date had passed. Neither the stress nor the missed deadline was acknowledged anywhere.","They are past the due date and were never told what to do about it. That is the one thing they needed.","Apologies for the slight delay understates a roughly four day gap, on a thread the customer had flagged as urgent."]},
+
+{id:"48671649345",agent:"Fatima Sindhu",pipeline:"Account Management",date:"2026-09-29",ranked:true,
+ subject:"Secondary contact for Irish non-Union OSS registration",s:[4,4,2,5,1],category:"Effort Reduction",
+ keep:["Correct refusal. doola should not be listed as a named contact with a foreign tax authority, and declining protected both sides.","Usefully clarified in the same breath that the Registered Agent scope is the virtual address only, which heads off the same request arriving again."],
+ fix:["The customer named a hard deadline, submit before 30 September, reply needed by 28 September. It was not acknowledged.","Complete dead end. No alternatives offered at all: their own accountant, a company secretary service, a second person in their business, or simply asking Irish Revenue whether the field can be waived for a single-member entity.","We understand your requirement followed immediately by a refusal reads as boilerplate on a genuine blocker."]},
+
+{id:"49000242076",agent:"Fatima Sindhu",pipeline:"Account Management",date:"2026-10-01",ranked:true,
+ subject:"Hiring and paying US creators through the LLC",s:[2,5,2,4,2],category:"Accuracy & Completeness",
+ keep:["Correctly declined to give tax advice and surfaced the free 30 minute consultation entitlement the customer did not know they had.","The booking macro is genuinely excellent: numbered, complete, and covers both booking and joining."],
+ fix:["Ten carefully numbered questions, zero answered. Several are plainly inside support scope, can I pay by ACH from Mercury, is a signed agreement plus monthly invoice enough, what records should I keep, do I need a new invoice monthly.","W-9 collection and 1099-NEC reporting above $600 are standard knowable facts, and doola sells 1099 e-filing as a dashboard item. At least flag the shape of the answer before routing the detail.","The customer did substantial work to ask precisely and got a booking link. Acknowledge that effort and answer what can be answered now."]},
+
+{id:"48625721371",agent:"Fatima Sindhu",pipeline:"Account Management",date:"2026-10-01",ranked:true,
+ subject:"Documents for opening a Chase or Wells Fargo account",s:[2,4,2,4,2],category:"Accuracy & Completeness",
+ keep:["Right call not to advise on traditional bank requirements doola has no reliable visibility into.","The partner provider list in the second reply is well-organised with correct caveats on independent approval."],
+ fix:["Two of three questions silently dropped. Which document is the certificate of formation is answerable in one line, it is on the dashboard under Documents. Whether the Articles of Organization mailing address works as proof of address was never addressed either.","Opens with Unfortunately and runs three negatives in a row, do not have information, do not have contacts, do not have a guide, before offering anything.","The useful alternatives only appeared after the customer prompted a second time."]},
+
+{id:"48673483819",agent:"Fatima Sindhu",pipeline:"Account Management",date:"2026-09-29",ranked:true,
+ subject:"Non-US shareholder and corporate bylaws",s:[2,4,2,3,2],category:"Accuracy & Completeness",
+ keep:["The bylaws answer is clear and reusable, with the exact dashboard path and a list of what else lives in Documents."],
+ fix:["There seems to be lots overdue, can this be sorted asap was ignored completely and the ticket closed without it ever being addressed. Overdue compliance plus asap is the highest-priority line in the message.","The customer stated clearly that the main shareholder field will not accept a non-US company. Asking where they would like to add the company name sends that back to them instead of addressing it.","Hi there on an identified account, and no acknowledgement of the stated urgency."]},
+
+{id:"48719255643",agent:"Christabelle Brown",pipeline:"Customer Care",date:"2026-09-28",ranked:false,
+ subject:"Taxpayer address vs designee address on formation",s:[3,4,5,5,2],category:"Effort Reduction",
+ keep:["Genuinely warm with an anxious pre-formation customer, and the emphatic restatement that the New York designee address must not be used was the right call.","Asked a clarifying question before advising rather than giving generic guidance."],
+ fix:["Never circled back to that clarifying question. The business address issue was unresolved at close.","No ETA on the formation. Soonest is not an answer.","Customer asked four separate times across the thread."]},
+
+{id:"48700077206",agent:"Art Flores",pipeline:"Customer Care",date:"2026-09-25",ranked:false,
+ subject:"EIN letter name correction, urgent query",s:[4,5,3,3,4],category:"Policy & Process",
+ keep:["Acknowledge and escalate, then return with the substantive answer. The customer never had to chase.","Correctly separated the valid EIN from the IRS decision on the letter."],
+ fix:["Flagged URGENT and first response took around 9 hours against the 90 minute standard.","Timeline moved from 2 October to 27 October with no apology.","No check-back date and no plan if 27 October also slips."]}
+];
+
+var DIMS=["Accuracy & Completeness","Clarity & Structure","Empathy & Tone","Policy & Process","Effort Reduction"];
+var DIMC=["var(--blue)","var(--green)","var(--pink)","var(--yellow)","var(--blue)"];
+var ROSTER={
+ "Customer Care":[["Christabelle Brown","cycle 1"],["Maricar Joyce Deocampo","cycle 1"],["Art Flores","cycle 1"],["Anna H","queued"],["Minakshi Banik","queued"],["Giovanna H","queued"],["Doris R","queued"],["Shubham Bajaj","queued"],["Harman Singh","queued"],["Dennis Piffen","queued"],["Gunjot Singh","queued"],["Ariel Gala","queued"],["Parshwa Mehta","queued"],["Aziz Razakov","queued"],["Jessica Whyte","queued"]],
+ "Account Management":[["Jesi Alderite","10 of 10"],["Annie Kapoor","10 of 10"],["Fatima Sindhu","10 of 10"]]
+};
+
+function band(t){return t>=90?"A":t>=80?"B":t>=70?"C":t>=60?"D":"F";}
+function bandName(b){return {A:"A Exceptional",B:"B Strong",C:"C Adequate",D:"D Weak",F:"F Unacceptable"}[b];}
+function barColor(t){return t>=90?"var(--green)":t>=80?"var(--blue)":t>=70?"var(--yellow)":"var(--pink)";}
+function overall(s){return s.reduce(function(a,b){return a+b;},0)/5;}
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function median(a){var b=a.slice().sort(function(x,y){return x-y;});var m=Math.floor(b.length/2);return b.length%2?b[m]:(b[m-1]+b[m])/2;}
+
+var fPipe=document.getElementById("fPipe"),fAgent=document.getElementById("fAgent");
+(function(){var n=[];T.forEach(function(t){if(n.indexOf(t.agent)<0)n.push(t.agent);});
+ n.sort().forEach(function(x){var o=document.createElement("option");o.value=x;o.textContent=x;fAgent.appendChild(o);});})();
+
+function filtered(){return T.filter(function(t){
+  return (fPipe.value==="all"||t.pipeline===fPipe.value)&&(fAgent.value==="all"||t.agent===fAgent.value);});}
+
+function render(){
+  var all=filtered();
+  var rows=all.filter(function(t){return t.ranked;});
+  var prelim=all.filter(function(t){return !t.ranked;});
+  var base=rows.length?rows:all;
+  var totals=base.map(function(t){return overall(t.s)*20;});
+  var med=totals.length?median(totals):0;
+  var avg=totals.length?totals.reduce(function(a,b){return a+b;},0)/totals.length:0;
+  var agents=[];base.forEach(function(t){if(agents.indexOf(t.agent)<0)agents.push(t.agent);});
+  var outOfRange=totals.filter(function(v){return Math.abs(v-med)>5;}).length;
+
+  document.getElementById("kTickets").textContent=base.length;
+  document.getElementById("kAgents").textContent=agents.length+(agents.length===1?" agent":" agents")+(rows.length?"":", preliminary");
+  document.getElementById("kAvg").textContent=totals.length?avg.toFixed(1)+"%":"\u2014";
+  document.getElementById("kTarget").textContent=totals.length?(avg>=95?"At the 95% target":(95-avg).toFixed(1)+" pts below the 95% target"):"Target 95%";
+  document.getElementById("kOverall").textContent=totals.length?(avg/20).toFixed(2):"\u2014";
+  document.getElementById("kMedian").textContent=totals.length?"Cycle median total "+med.toFixed(0):"\u2014";
+  document.getElementById("kSpread").textContent=totals.length?outOfRange+" of "+totals.length:"\u2014";
+
+  var dAvg=DIMS.map(function(_,i){return base.length?base.reduce(function(a,t){return a+t.s[i];},0)/base.length:0;});
+  var w=0;dAvg.forEach(function(v,i){if(v<dAvg[w])w=i;});
+  document.getElementById("fWeak").textContent=base.length?DIMS[w]:"\u2014";
+  document.getElementById("fWeakVal").textContent=base.length?"Weakest dimension at "+dAvg[w].toFixed(2)+" of 5, against a 4.75 target":"\u00a0";
+  document.getElementById("fBars").innerHTML=base.length?DIMS.map(function(d,i){
+    return '<div class="fbar"><span class="fl">'+esc(d)+'</span><span class="bar"><i style="width:'+(dAvg[i]/5*100).toFixed(1)+'%;background:'+barColor(dAvg[i]*20)+'"></i></span><span class="fn num">'+dAvg[i].toFixed(2)+'</span></div>';
+  }).join(""):"";
+
+  document.getElementById("dimGrid").innerHTML=base.length?DIMS.map(function(d,i){
+    return '<div class="dim" style="background:'+DIMC[i]+'"><div class="t">'+esc(d)+'</div><div class="v num">'+dAvg[i].toFixed(2)+' <small>/ 5</small></div><div class="bar"><i style="width:'+(dAvg[i]/5*100).toFixed(1)+'%"></i></div></div>';
+  }).join(""):'<div class="empty" style="grid-column:1/-1">No tickets match this filter.</div>';
+
+  var byAgent={};rows.forEach(function(t){
+    if(!byAgent[t.agent])byAgent[t.agent]={n:0,sum:0,p:{}};
+    byAgent[t.agent].n++;byAgent[t.agent].sum+=overall(t.s)*20;byAgent[t.agent].p[t.pipeline]=1;});
+  var list=Object.keys(byAgent).map(function(k){var a=byAgent[k];
+    return {name:k,n:a.n,pct:a.sum/a.n,pipes:Object.keys(a.p)};}).sort(function(a,b){return b.pct-a.pct;});
+
+  var tb=document.querySelector("#rankTbl tbody");
+  tb.innerHTML=list.length?(function(){var prev=null,r=0;return list.map(function(a,i){
+    if(prev===null||a.pct.toFixed(2)!==prev){r=i+1;prev=a.pct.toFixed(2);}
+    var b=band(a.pct);
+    return '<tr><td class="rank num">'+r+'</td><td class="name">'+esc(a.name)+'</td><td>'+
+      a.pipes.map(function(p){return '<span class="pipe '+(p==="Customer Care"?"pCC":"pAM")+'">'+esc(p)+'</span>';}).join(" ")+
+      '</td><td class="num">'+a.n+'</td><td class="num">'+(a.pct/20).toFixed(2)+'</td><td class="num" style="font-weight:700">'+a.pct.toFixed(1)+'%</td>'+
+      '<td style="width:110px"><div class="bar"><i style="width:'+a.pct.toFixed(1)+'%;background:'+barColor(a.pct)+'"></i></div></td>'+
+      '<td><span class="badge b'+b+'">'+esc(bandName(b))+'</span></td></tr>';}).join("");})()
+    :'<tr><td colspan="8" class="empty">No agent has a full 10 ticket sample under this filter yet.</td></tr>';
+
+  var pa={};prelim.forEach(function(t){if(!pa[t.agent])pa[t.agent]={n:0,sum:0,p:{}};
+    pa[t.agent].n++;pa[t.agent].sum+=overall(t.s)*20;pa[t.agent].p[t.pipeline]=1;});
+  var pl=Object.keys(pa).map(function(k){var a=pa[k];return {name:k,n:a.n,pct:a.sum/a.n,pipes:Object.keys(a.p)};})
+    .sort(function(a,b){return b.pct-a.pct;});
+  document.querySelector("#prelimTbl tbody").innerHTML=pl.length?pl.map(function(a){
+    return '<tr><td class="name">'+esc(a.name)+'</td><td>'+a.pipes.map(function(p){return '<span class="pipe '+(p==="Customer Care"?"pCC":"pAM")+'">'+esc(p)+'</span>';}).join(" ")+
+      '</td><td class="num">'+a.n+' of 10</td><td class="num">'+a.pct.toFixed(1)+'%</td><td><span class="tag">needs '+(10-a.n)+' more</span></td></tr>';
+  }).join(""):'<tr><td colspan="5" class="empty">Nothing preliminary under this filter.</td></tr>';
+
+  var imp={};base.forEach(function(t){(imp[t.agent]=imp[t.agent]||[]).push(t);});
+  var order=Object.keys(imp).sort(function(a,b){
+    var av=imp[a].reduce(function(x,t){return x+overall(t.s)*20;},0)/imp[a].length;
+    var bv=imp[b].reduce(function(x,t){return x+overall(t.s)*20;},0)/imp[b].length;return av-bv;});
+  document.getElementById("impList").innerHTML=order.length?order.map(function(n){
+    var ts=imp[n],pct=ts.reduce(function(a,t){return a+overall(t.s)*20;},0)/ts.length,b=band(pct);
+    var fx=[];ts.forEach(function(t){t.fix.forEach(function(f){fx.push(f);});});
+    var cats=[];ts.forEach(function(t){if(cats.indexOf(t.category)<0)cats.push(t.category);});
+    return '<div class="imp"><h3>'+esc(n)+' <span class="badge b'+b+'">'+pct.toFixed(1)+'%</span>'+
+      cats.map(function(c){return '<span class="tag">'+esc(c)+'</span>';}).join("")+'</h3><ul>'+
+      fx.map(function(f){return '<li>'+esc(f)+'</li>';}).join("")+'</ul></div>';
+  }).join(""):'<div class="empty card">No tickets match this filter.</div>';
+
+  var pats=[];
+  if(base.length){
+    var sla=base.filter(function(t){return /against the 90 minute|days against|hours against|Four days between/i.test(t.fix.join(" "));}).length;
+    var nameErr=base.filter(function(t){return /addressed as|was addressed|called Virender|Hi there throughout/i.test(t.fix.join(" "));}).length;
+    var unres=base.filter(function(t){return /never answered|was not answered|never circled back|never delivered|still open|unresolved|deflection|neither was/i.test(t.fix.join(" "));}).length;
+    var macro=base.filter(function(t){return /macro|merge token|square brackets|generic list|wrong basis/i.test(t.fix.join(" "));}).length;
+    pats.push(["Questions are being closed without being answered, effort reduction "+dAvg[4].toFixed(2)+" of 5","Present in "+unres+" of "+base.length+" tickets. Threads close with the customer's actual question still open, or get deflected with it is up to you and reach out to them for the cost. This is the single biggest score drag in the cycle."]);
+    pats.push(["Customers are being called the wrong name, empathy "+dAvg[2].toFixed(2)+" of 5","Found on "+nameErr+" of "+base.length+" tickets: Abhishek addressed as Hareesh on a CFO escalation with the CEO copied, Michael addressed as Emma which is his company name, and one customer called both Virender and Manish in the same thread."]);
+    pats.push(["Macros are being sent that do not match the question, accuracy "+dAvg[0].toFixed(2)+" of 5","Affects "+macro+" of "+base.length+" tickets. A reported login bug answered with a list of seven banking partners. A 1099 query answered by confirming unrelated filings. An apology for a delayed response on a reply sent in 18 minutes. An unfilled [date] token on a cancellation confirmation."]);
+    pats.push(["Advice and commitments given before the facts are checked","Billable filings quoted at $449 before establishing whether foreign qualification applied. Slack support promised then withdrawn a day later. Compliance reassurance given on filings the customer did not ask about."]);
+    pats.push(["First response standard is not holding","At least "+sla+" tickets missed the 90 minute first response standard, the worst at 5.4 days to a brand new customer, 53 hours on an IRS records query and 4 days between a holding reply and the answer."]);
+    pats.push(["Holding replies carry no committed return date","I will get back to you, we will keep you updated and I will check with the team appear repeatedly with no date attached, which guarantees the customer chases and in several cases the answer never arrives at all."]);
+  }
+  document.getElementById("patterns").innerHTML=pats.length?pats.map(function(p,i){
+    var c=[ "var(--pink)","var(--yellow)","var(--blue)","var(--green)","var(--pink)" ][i%5];
+    return '<div class="pattern"><div class="pnum" style="background:'+c+'">'+(i+1)+'</div><div class="pbody"><b>'+esc(p[0])+'</b><span>'+esc(p[1])+'</span></div></div>';
+  }).join(""):'<div class="empty">No tickets match this filter.</div>';
+
+  var sorted=all.slice().sort(function(a,b){return overall(b.s)-overall(a.s);});
+  document.getElementById("ticketList").innerHTML=sorted.length?sorted.map(function(t){
+    var tot=overall(t.s)*20,b=band(tot),ir=Math.abs(tot-med)<=5;
+    return '<div class="ticket"><div class="thead"><div class="tsubj">'+esc(t.subject)+'</div>'+
+      '<span class="pipe '+(t.pipeline==="Customer Care"?"pCC":"pAM")+'">'+esc(t.pipeline)+'</span>'+
+      '<span class="badge b'+b+'">'+esc(bandName(b))+'</span>'+
+      '<span class="tag num">'+overall(t.s).toFixed(1)+' / 5 &middot; '+tot.toFixed(0)+' / 100</span></div>'+
+      '<div class="tmeta">'+esc(t.agent)+' &middot; closed '+esc(t.date)+' &middot; '+(ir?"in range":"out of range")+' vs median &middot; '+
+      (t.ranked?'':'<span class="tag">preliminary</span> &middot; ')+
+      '<a href="https://app.hubspot.com/contacts/23182676/record/0-5/'+esc(t.id)+'" target="_blank" rel="noopener">open ticket '+esc(t.id)+'</a></div>'+
+      '<div class="scores">'+DIMS.map(function(d,i){
+        return '<div class="sc" style="background:'+barColor(t.s[i]*20)+'"><div class="sl">'+esc(d)+'</div><div class="sv num">'+t.s[i]+' <small>/ 5</small></div></div>';}).join("")+'</div>'+
+      '<div class="notes"><b>Keep doing</b><ul>'+t.keep.map(function(k){return '<li>'+esc(k)+'</li>';}).join("")+'</ul>'+
+      '<div style="height:10px"></div><b>Do differently</b><ul>'+t.fix.map(function(f){return '<li>'+esc(f)+'</li>';}).join("")+'</ul>'+
+      '<div style="height:10px"></div><b>Primary category:</b> '+esc(t.category)+'</div></div>';
+  }).join(""):'<div class="empty card">No tickets match this filter.</div>';
+
+  var rp=fPipe.value==="all"?Object.keys(ROSTER):[fPipe.value];
+  document.getElementById("roster").innerHTML=rp.map(function(p){
+    var d=ROSTER[p].filter(function(r){return r[1]==="10 of 10";}).length;
+    return '<div class="rcol"><h3>'+esc(p)+' <span class="pipe '+(p==="Customer Care"?"pCC":"pAM")+'">'+d+' of '+ROSTER[p].length+' complete</span></h3><ul class="rlist">'+
+      ROSTER[p].map(function(r){return '<li><span'+(r[1]==="10 of 10"?' class="done"':'')+'>'+esc(r[0])+'</span><span class="st">'+esc(r[1])+'</span></li>';}).join("")+'</ul></div>';
+  }).join("");
+
+  var bd=all.slice().sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:0;});
+  document.querySelector("#idxTbl tbody").innerHTML=bd.length?bd.map(function(t){
+    var tot=overall(t.s)*20,b=band(tot),ir=Math.abs(tot-med)<=5;
+    return '<tr><td class="num"><a href="https://app.hubspot.com/contacts/23182676/record/0-5/'+esc(t.id)+'" target="_blank" rel="noopener">'+esc(t.id)+'</a></td>'+
+      '<td class="idxsubj">'+esc(t.subject)+'</td><td style="white-space:nowrap">'+esc(t.agent)+'</td>'+
+      '<td><span class="pipe '+(t.pipeline==="Customer Care"?"pCC":"pAM")+'">'+(t.pipeline==="Customer Care"?"CC":"AM")+'</span></td>'+
+      '<td class="num" style="white-space:nowrap">'+esc(t.date)+'</td>'+
+      t.s.map(function(v){return '<td class="num sccell" style="color:'+barColor(v*20)+'">'+v+'</td>';}).join("")+
+      '<td class="num" style="font-weight:700">'+overall(t.s).toFixed(1)+'</td><td class="num" style="font-weight:700">'+tot.toFixed(0)+'</td>'+
+      '<td><span class="badge b'+b+'">'+b+'</span></td>'+
+      '<td style="white-space:nowrap;font-size:12.5px;color:'+(ir?"var(--text3)":"var(--text)")+'">'+(ir?"in range":"out of range")+'</td>'+
+      '<td style="font-size:12.5px;color:var(--text2)">'+esc(t.category)+'</td></tr>';
+  }).join(""):'<tr><td colspan="15" class="empty">No tickets match this filter.</td></tr>';
+}
+
+fPipe.addEventListener("change",function(){
+  var v=T.filter(function(t){return fPipe.value==="all"||t.pipeline===fPipe.value;}).map(function(t){return t.agent;});
+  if(fAgent.value!=="all"&&v.indexOf(fAgent.value)<0)fAgent.value="all";
+  render();});
+fAgent.addEventListener("change",render);
+document.getElementById("reset").addEventListener("click",function(){fPipe.value="all";fAgent.value="all";render();});
+render();
+</script>
+</body>
+</html>
