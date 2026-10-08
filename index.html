@@ -149,9 +149,48 @@ td.name{font-weight:600}
 #idxTbl th:nth-child(n+6):nth-child(-n+10){text-align:center}
 .empty{padding:30px 16px;text-align:center;color:var(--text3);font-size:14px}
 footer{margin-top:52px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--text3)}
+
+/* colourful mode */
+.brandbar{position:fixed;top:0;left:0;right:0;height:6px;z-index:10;
+  background:linear-gradient(90deg,var(--yellow) 0 25%,var(--blue) 25% 50%,var(--green) 50% 75%,var(--pink) 75% 100%)}
+body{background:
+  radial-gradient(900px 420px at 0% 0%,var(--s-yellow),transparent 70%),
+  radial-gradient(800px 420px at 100% 0%,var(--s-blue),transparent 70%),
+  var(--bg);background-repeat:no-repeat}
+.wrap{padding-top:44px}
+h2{display:flex;align-items:center;gap:10px;color:var(--text)}
+h2::before{content:"";flex:0 0 12px;height:12px;border-radius:4px;background:var(--blue)}
+h2:nth-of-type(4n+1)::before{background:var(--blue)}
+h2:nth-of-type(4n+2)::before{background:var(--green)}
+h2:nth-of-type(4n+3)::before{background:var(--yellow)}
+h2:nth-of-type(4n+4)::before{background:var(--pink)}
+.controls{background:var(--s-blue);border-color:transparent}
+.focus{background:var(--s-yellow);border-color:var(--yellow)}
+.focus .ftag{background:var(--yellow);color:var(--onbright)}
+.card{border-color:transparent}
+th{background:var(--s-blue);color:var(--text);border-bottom-color:var(--blue)}
+tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--s-blue) 45%,transparent)}
+tbody tr:hover td{background:var(--s-yellow)}
+.tag{background:var(--s-green);color:var(--text)}
+.ticket{border:0;border-top:5px solid var(--blue)}
+.ticket:nth-child(4n+2){border-top-color:var(--green)}
+.ticket:nth-child(4n+3){border-top-color:var(--yellow)}
+.ticket:nth-child(4n+4){border-top-color:var(--pink)}
+.notes{border-color:transparent}
+.imp{background:var(--s-pink);border-color:transparent;border-left-color:var(--pink)}
+#patterns{background:var(--s-green)}
+#patterns .pattern{border-bottom-color:color-mix(in srgb,var(--green) 35%,transparent)}
+.rcol{border-color:transparent;background:var(--s-blue)}
+.rcol:nth-child(2){background:var(--s-pink)}
+.rcol:nth-child(3){background:var(--s-green)}
+.rcol .rlist li{border-bottom-color:color-mix(in srgb,var(--text3) 18%,transparent)}
+footer{border-top:0;position:relative;padding-top:24px}
+footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;border-radius:999px;
+  background:linear-gradient(90deg,var(--yellow),var(--blue),var(--green),var(--pink))}
 </style>
 </head>
 <body>
+<div class="brandbar" aria-hidden="true"></div>
 <div class="wrap">
 
 <h1>doola QA Dashboard</h1>
