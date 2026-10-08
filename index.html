@@ -94,7 +94,7 @@ td.name{font-weight:600}
 
 .badge{display:inline-block;font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:999px;white-space:nowrap;color:var(--onbright)}
 .bA{background:var(--green)} .bB{background:var(--blue)} .bC{background:var(--yellow)}
-.bD{background:var(--pink)} .bF{background:var(--pink)}
+.bD{background:var(--pink)}
 .pipe{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap;color:var(--onbright)}
 .pCC{background:var(--blue)} .pAM{background:var(--pink)}
 .tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--chip);color:var(--text2)}
@@ -279,7 +279,7 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
 </table></div></div>
 
 <footer>
-  Scoring scale: 5 exceptional, 4 strong, 3 adequate, 2 weak, 1 unacceptable. Overall = mean of the five dimensions. Combined % = Overall &times; 20. Bands: A 90 to 100, B 80 to 89, C 70 to 79, D 60 to 69, F below 60. Calibration: within &plusmn;5 points of the cycle median is in range.<br>
+  Scoring scale: 5 exceptional, 4 strong, 3 adequate, 2 weak, 1 unacceptable. Overall = mean of the five dimensions. Combined % = Overall &times; 20. Bands: A Exceptional 90 to 100, B Adequate 70 to 89, C Fair 60 to 69, D Weak below 60. Calibration: within &plusmn;5 points of the cycle median is in range.<br>
   Source: HubSpot conversation threads, attributed by message sender. Rubric: QA Evaluation page, QA Central.
 </footer>
 </div>
@@ -944,9 +944,9 @@ var ROSTER={
  "Account Management":[["Jesi Alderite","10 of 10"],["Annie Kapoor","10 of 10"],["Fatima Sindhu","10 of 10"]]
 };
 
-function band(t){return t>=90?"A":t>=80?"B":t>=70?"C":t>=60?"D":"F";}
-function bandName(b){return {A:"A Exceptional",B:"B Strong",C:"C Adequate",D:"D Weak",F:"F Unacceptable"}[b];}
-function barColor(t){return t>=90?"var(--green)":t>=80?"var(--blue)":t>=70?"var(--yellow)":"var(--pink)";}
+function band(t){return t>=90?"A":t>=70?"B":t>=60?"C":"D";}
+function bandName(b){return {A:"A Exceptional",B:"B Adequate",C:"C Fair",D:"D Weak"}[b];}
+function barColor(t){return t>=90?"var(--green)":t>=70?"var(--blue)":t>=60?"var(--yellow)":"var(--pink)";}
 function overall(s){return s.reduce(function(a,b){return a+b;},0)/5;}
 function esc(x){return String(x).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function median(a){var b=a.slice().sort(function(x,y){return x-y;});var m=Math.floor(b.length/2);return b.length%2?b[m]:(b[m-1]+b[m])/2;}
