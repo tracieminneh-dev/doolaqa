@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>doola QA Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --yellow:#F9C800; --blue:#4F8FF6; --green:#40E86F; --pink:#FFA5BB;
+  --s-yellow:#FEF4CC; --s-blue:#EEF3FE; --s-green:#E3F9EA; --s-pink:#FFE7EC;
+  --text:#141414; --text2:#5B5B5B; --text3:#6B6B6B;
+  --bg:#FFFFFF; --surface:#FAFAFA; --line:#EAEAEA; --chip:#F2F2F2;
+  --onbright:#141414;
+  /* chart series (validated for light and dark surfaces) */
+  --series-cc:#4F8FF6; --series-am:#D9577A; --series-muted:#8A8A8A;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --text:#F4F4F4; --text2:#B4B4B4; --text3:#9A9A9A;
+    --bg:#0B0B0B; --surface:#161616; --line:#2A2A2A; --chip:#202020;
+    --s-yellow:#3A3105; --s-blue:#11213D; --s-green:#0C3218; --s-pink:#3A1A22;
+  }
+}
+:root[data-theme="dark"]{
+  --text:#F4F4F4; --text2:#B4B4B4; --text3:#9A9A9A;
+  --bg:#0B0B0B; --surface:#161616; --line:#2A2A2A; --chip:#202020;
+  --s-yellow:#3A3105; --s-blue:#11213D; --s-green:#0C3218; --s-pink:#3A1A22;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--text);
+  background:radial-gradient(900px 420px at 0% 0%,var(--s-yellow),transparent 70%),radial-gradient(800px 420px at 100% 0%,var(--s-blue),transparent 70%),var(--bg);
+  background-repeat:no-repeat;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+[hidden]{display:none !important}
+.brandbar{position:fixed;top:0;left:0;right:0;height:6px;z-index:10;
+  background:linear-gradient(90deg,var(--yellow) 0 25%,var(--blue) 25% 50%,var(--green) 50% 75%,var(--pink) 75% 100%)}
+.wrap{max-width:1140px;margin:0 auto;padding:44px 16px 72px}
+.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;justify-content:space-between}
+h1{font-size:30px;font-weight:800;letter-spacing:-.03em;margin:0 0 6px}
+h2{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text);margin:42px 0 14px}
+h2::before{content:"";flex:0 0 12px;height:12px;border-radius:4px;background:var(--blue)}
+h2.g::before{background:var(--green)} h2.y::before{background:var(--yellow)} h2.p::before{background:var(--pink)}
+h3{font-size:15px;font-weight:700;margin:0 0 2px}
+p{margin:0 0 12px;color:var(--text2)}
+a{color:var(--blue);font-weight:500}
+.sub{color:var(--text3);font-size:13.5px}
+.num{font-variant-numeric:tabular-nums}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 13.5px/1 Inter,sans-serif;border:0;border-radius:12px;padding:12px 18px;cursor:pointer;text-decoration:none;color:var(--onbright);background:var(--yellow)}
+.btn:hover{filter:brightness(.95);text-decoration:none}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
+.btn.blue{background:var(--blue)} .btn.green{background:var(--green)}
+.btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--line)}
+.btn.small{padding:8px 12px;font-size:12.5px;border-radius:10px}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.hit:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.topbtns{display:flex;gap:10px;flex-wrap:wrap}
+
+.card{background:var(--surface);border-radius:18px;padding:18px}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;padding:16px;background:var(--s-blue);border-radius:18px;margin:0 0 16px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:180px;flex:1 1 200px}
+label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3)}
+select,input{font-family:inherit;font-size:14.5px;font-weight:600;color:var(--text);background:var(--bg);
+  border:2px solid var(--line);border-radius:12px;padding:11px 13px;width:100%}
+select{appearance:none;cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,var(--text3) 50%),linear-gradient(135deg,var(--text3) 50%,transparent 50%);
+  background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+select:focus,input:focus{outline:none;border-color:var(--blue)}
+
+.login{max-width:420px;margin:40px auto 0;background:var(--surface);border-radius:20px;padding:26px}
+.login form{display:flex;flex-direction:column;gap:14px;margin-top:16px}
+.msg{font-size:13.5px;border-radius:12px;padding:12px 14px;background:var(--s-pink);color:var(--text)}
+.msg.ok{background:var(--s-green)} .msg.info{background:var(--s-yellow)}
+
+.setup{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:12px}
+.setup div{background:var(--bg);border-radius:12px;padding:10px 12px;font-size:13px;display:flex;gap:8px;align-items:center}
+.dot{flex:0 0 9px;height:9px;border-radius:50%;background:var(--pink)} .dot.on{background:var(--green)}
+
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:14px}
+.chart h3{margin-bottom:2px}
+.chart .cs{font-size:12.5px;color:var(--text3);margin-bottom:10px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--text2);margin-bottom:6px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{display:inline-block;width:16px;height:2px;border-radius:2px}
+.plot{position:relative}
+.plot svg{display:block;width:100%;height:auto;overflow:visible}
+.plot text{font-family:Inter,sans-serif;font-size:11px;fill:var(--text3)}
+.plot text.end{fill:var(--text);font-weight:600}
+.tip{position:absolute;pointer-events:none;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;min-width:150px;box-shadow:0 6px 18px rgba(0,0,0,.12);z-index:5}
+.tip .tm{color:var(--text3);font-weight:600;margin-bottom:4px}
+.tip .row{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.tip .row span{display:flex;align-items:center;gap:6px;color:var(--text2)}
+.tip .row i{display:inline-block;width:12px;height:2px;border-radius:2px}
+.tip .row b{color:var(--text);font-variant-numeric:tabular-nums}
+details.tbl{margin-top:8px;font-size:12.5px}
+details.tbl summary{cursor:pointer;color:var(--text3);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text);background:var(--s-blue);padding:11px 12px;white-space:nowrap}
+td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.tblwrap{overflow-x:auto}
+.smalls{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px}
+.smalls .mini{background:var(--bg);border-radius:14px;padding:12px}
+.smalls .mini h4{margin:0 0 4px;font-size:12.5px;font-weight:700}
+.note{font-size:12.5px;color:var(--text3);margin-top:8px}
+
+.run{display:grid;gap:14px}
+.runhead{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.progress{height:14px;background:var(--chip);border-radius:999px;overflow:hidden}
+.progress>i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .4s ease}
+.pct{font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.agents{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:8px}
+.agentrow{background:var(--bg);border-radius:12px;padding:10px 12px;font-size:13px}
+.agentrow b{display:block;font-size:13.5px}
+.agentrow .mini-bar{height:6px;background:var(--chip);border-radius:999px;overflow:hidden;margin:6px 0 4px}
+.agentrow .mini-bar i{display:block;height:100%;background:var(--blue);border-radius:999px}
+.agentrow .st{color:var(--text3);font-size:12px}
+.agentrow.err .st{color:var(--text)}
+.badge{display:inline-block;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;color:var(--onbright)}
+.bA{background:var(--green)} .bB{background:var(--blue)} .bC{background:var(--yellow)} .bD{background:var(--pink)}
+.state{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--chip);color:var(--text)}
+.state.sent{background:var(--s-green)} .state.failed{background:var(--s-pink)}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+.err{font-size:12px;color:var(--text2);margin-top:4px;max-width:340px}
+footer{margin-top:52px;padding-top:24px;font-size:12.5px;color:var(--text3);position:relative}
+footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--yellow),var(--blue),var(--green),var(--pink))}
+@media (max-width:600px){h1{font-size:25px}.pct{font-size:30px}}
+</style>
+</head>
+<body>
+<div class="brandbar" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>QA admin</h1>
+      <div class="sub" id="who">Month on month performance, new QA cycles and approvals</div>
+    </div>
+    <div class="topbtns">
+      <a class="btn ghost" href="/">Dashboard</a>
+      <button class="btn ghost" id="signOut" type="button" hidden>Sign out</button>
+    </div>
+  </header>
+
+  <section class="login" id="loginView" hidden>
+    <h3>Sign in</h3>
+    <p class="sub" style="margin:0">Use the admin email and password.</p>
+    <form id="loginForm">
+      <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required></div>
+      <div class="msg" id="loginMsg" hidden></div>
+      <button class="btn" type="submit" id="loginBtn">Sign in</button>
+    </form>
+  </section>
+
+  <main id="adminView" hidden>
+    <div class="card" id="setupCard" hidden style="margin-top:26px">
+      <h3>Finish setting up</h3>
+      <p class="sub" style="margin:0">These connections are set in Vercel under Settings, Environment Variables. Redeploy after adding them.</p>
+      <div class="setup" id="setupList"></div>
+    </div>
+
+    <h2>Performance month on month</h2>
+    <div class="controls">
+      <div class="field"><label for="fTeam">Team</label>
+        <select id="fTeam"><option value="all">All teams</option><option>Customer Care</option><option>Account Management</option></select></div>
+      <div class="field"><label for="fAgent">Agent</label><select id="fAgent"></select></div>
+    </div>
+    <div class="charts">
+      <div class="card chart"><h3>QA score by team</h3><div class="cs">Combined QA %, by month</div><div id="teamChart"></div></div>
+      <div class="card chart"><h3 id="agentTitle">Agent trend</h3><div class="cs" id="agentSub">Combined QA % against their team, by month</div><div id="agentChart"></div></div>
+    </div>
+    <div class="card chart" style="margin-top:14px">
+      <h3>Score by dimension</h3><div class="cs" id="dimSub">Average out of 5, by month</div>
+      <div class="smalls" id="dimCharts"></div>
+    </div>
+
+    <h2 class="g">New QA cycle</h2>
+    <div class="card run">
+      <div class="runhead">
+        <div class="field" style="max-width:380px"><label for="runMonth">Month to score</label><select id="runMonth"></select></div>
+        <button class="btn blue" id="pingBtn" type="button">Ping new QA cycle</button>
+        <button class="btn ghost" id="cancelBtn" type="button" hidden>Cancel run</button>
+      </div>
+      <p class="sub" style="margin:0">Samples 10 closed tickets per agent from HubSpot, keeps the ones each agent answered, and scores them against the rubric. The month is published once every agent is finished. Keep this page open while it runs; if you close it, the run picks up where it left off next time.</p>
+      <div id="runView" hidden>
+        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+          <div class="pct num" id="runPct">0%</div>
+          <div class="sub" id="runLabel"></div>
+        </div>
+        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="QA cycle progress" id="runBar"><i></i></div>
+        <div class="msg info" id="runMsg" hidden style="margin-top:12px"></div>
+        <div class="agents" id="runAgents" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+    <h2 class="p">Approvals</h2>
+    <div class="controls" style="background:var(--s-pink)">
+      <div class="field" style="max-width:280px"><label for="apMonth">Month</label><select id="apMonth"></select></div>
+    </div>
+    <div class="msg" id="apMsg" hidden style="margin-bottom:12px"></div>
+    <div class="card" style="padding:0;overflow:hidden"><div class="tblwrap"><table id="apTbl">
+      <thead><tr><th>Agent</th><th>Team</th><th>Tickets</th><th>Combined</th><th>Band</th><th>Status</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table></div></div>
+    <p class="note">Approving sends a PDF titled "QA analysis - month" to the agent's Slack DM. Only agents with a full 10 tickets can be approved.</p>
+  </main>
+
+  <footer>Bands: A Exceptional 90 to 100, B Adequate 70 to 89, C Fair 60 to 69, D Weak below 60. Target 95%.</footer>
+</div>
+
+<script>
+"use strict";
+var DIMS=["Accuracy & Completeness","Clarity & Structure","Empathy & Tone","Policy & Process","Effort Reduction"];
+var TEAM_COLOR={"Customer Care":"var(--series-cc)","Account Management":"var(--series-am)"};
+var state={data:null,roster:{},cycles:[],approvals:{},run:null,looping:false};
+var $=function(id){return document.getElementById(id);};
+
+function band(t){return t>=90?"A":t>=70?"B":t>=60?"C":"D";}
+function bandName(b){return {A:"A Exceptional",B:"B Adequate",C:"C Fair",D:"D Weak"}[b];}
+function total(s){return s.reduce(function(a,b){return a+b;},0)/5*20;}
+function avg(a){return a.length?a.reduce(function(x,y){return x+y;},0)/a.length:null;}
+function el(tag,attrs,text){var e=document.createElement(tag);if(attrs)for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e;}
+// CSS variables are not reliable inside SVG presentation attributes, so colour
+// values that use var() go through the style property instead.
+function svgEl(tag,attrs){
+  var e=document.createElementNS("http://www.w3.org/2000/svg",tag);
+  for(var k in attrs){
+    if((k==="fill"||k==="stroke")&&String(attrs[k]).indexOf("var(")===0)e.style.setProperty(k,attrs[k]);
+    else e.setAttribute(k,attrs[k]);
+  }
+  return e;
+}
+function show(id,on){$(id).hidden=!on;}
+
+async function api(path,opts){
+  opts=opts||{};
+  var res=await fetch(path,{method:opts.method||"GET",credentials:"same-origin",
+    headers:opts.body?{"Content-Type":"application/json"}:{},body:opts.body?JSON.stringify(opts.body):undefined});
+  var data=await res.json().catch(function(){return {};});
+  if(res.status===401&&path.indexOf("/api/admin/login")<0){showLogin();throw new Error(data.error||"Please sign in.");}
+  if(!res.ok)throw new Error(data.error||("Request failed ("+res.status+")"));
+  return data;
+}
+
+/* ---------------- sign in ---------------- */
+function showLogin(msg){
+  state.looping=false;
+  show("adminView",false);show("signOut",false);show("loginView",true);
+  if(msg){$("loginMsg").textContent=msg;show("loginMsg",true);}
+}
+$("loginForm").addEventListener("submit",async function(e){
+  e.preventDefault();show("loginMsg",false);$("loginBtn").disabled=true;
+  try{
+    await api("/api/admin/login",{method:"POST",body:{email:$("email").value,password:$("password").value}});
+    $("password").value="";await init();
+  }catch(err){$("loginMsg").textContent=err.message;show("loginMsg",true);}
+  finally{$("loginBtn").disabled=false;}
+});
+$("signOut").addEventListener("click",async function(){
+  try{await api("/api/admin/logout",{method:"POST",body:{}});}catch(e){}
+  showLogin();
+});
+
+async function init(){
+  var s;
+  try{s=await api("/api/admin/session");}
+  catch(e){showLogin("The admin service is not reachable right now. "+e.message);return;}
+  if(!s.authenticated){
+    showLogin(s.setup&&s.setup.login===false?"Admin sign-in is not set up yet. Add ADMIN_EMAIL and ADMIN_PASSWORD in Vercel, then redeploy.":null);
+    return;
+  }
+  show("loginView",false);show("adminView",true);show("signOut",true);
+  $("who").textContent="Signed in as "+s.email;
+  renderSetup(s.setup);
+  await loadData();
+  await refreshRun(true);
+}
+
+function renderSetup(setup){
+  var items=[["login","Admin sign-in"],["storage","Storage (Upstash Redis)"],["hubspot","HubSpot token"],["claude","Claude API key"],["slack","Slack bot token"]];
+  var list=$("setupList");list.textContent="";
+  var missing=0;
+  items.forEach(function(it){
+    var on=Boolean(setup[it[0]]);if(!on)missing++;
+    var d=el("div");d.appendChild(el("i",{class:"dot"+(on?" on":"")}));
+    d.appendChild(el("span",null,it[1]+(on?" connected":" not set")));list.appendChild(d);
+  });
+  if(setup.mock){var m=el("div");m.appendChild(el("i",{class:"dot"}));m.appendChild(el("span",null,"Local test mode: HubSpot, Claude and Slack are simulated"));list.appendChild(m);}
+  show("setupCard",missing>0||setup.mock);
+}
+
+/* ---------------- data ---------------- */
+async function loadData(){
+  var d=await api("/api/data");
+  state.data=d;state.roster=d.roster;state.cycles=d.cycles;
+  var agents=[];Object.keys(d.roster).forEach(function(t){d.roster[t].forEach(function(n){agents.push([n,t]);});});
+  var cur=$("fAgent").value;
+  var fa=$("fAgent");fa.textContent="";
+  agents.forEach(function(a){fa.appendChild(el("option",{value:a[0]},a[0]+" ("+(a[1]==="Customer Care"?"CC":"AM")+")"));});
+  if(cur&&agents.some(function(a){return a[0]===cur;}))fa.value=cur;
+  fillMonthSelects();
+  renderCharts();
+  await loadApprovals();
+}
+
+function monthsFor(filter){
+  return state.cycles.map(function(c){
+    var ts=c.tickets.filter(filter);
+    var ranked=ts.filter(function(t){return t.ranked;});
+    var base=ranked.length?ranked:ts;
+    return {month:c.month,label:c.label,tickets:base};
+  });
+}
+function shortMonth(label){var p=label.split(" ");return p[0].slice(0,3)+" "+p[1].slice(2);}
+
+/* ---------------- charts ---------------- */
+function lineChart(host,opt){
+  host.textContent="";
+  var labels=opt.labels,series=opt.series;
+  if(series.length>1){
+    var lg=el("div",{class:"legend"});
+    series.forEach(function(s){var sp=el("span");var k=el("i");k.style.background=s.color;sp.appendChild(k);sp.appendChild(document.createTextNode(s.name));lg.appendChild(sp);});
+    host.appendChild(lg);
+  }
+  var plot=el("div",{class:"plot"});host.appendChild(plot);
+  var W=Math.max(opt.small?160:280,host.clientWidth||520),H=opt.height||220;
+  var m={l:36,r:opt.small?34:84,t:12,b:26};
+  var iw=W-m.l-m.r,ih=H-m.t-m.b;
+  var lo=opt.domain[0],hi=opt.domain[1];
+  var svg=svgEl("svg",{viewBox:"0 0 "+W+" "+H,role:"img","aria-label":opt.aria});
+  var x=function(i){return labels.length===1?m.l+iw/2:m.l+iw*i/(labels.length-1);};
+  var y=function(v){return m.t+ih*(1-(v-lo)/(hi-lo));};
+  opt.ticks.forEach(function(v){
+    svg.appendChild(svgEl("line",{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v),stroke:"var(--line)","stroke-width":1}));
+    var t=svgEl("text",{x:m.l-8,y:y(v)+4,"text-anchor":"end",class:"num"});t.textContent=opt.fmtTick(v);svg.appendChild(t);
+  });
+  if(opt.target!=null){
+    svg.appendChild(svgEl("line",{x1:m.l,x2:W-m.r,y1:y(opt.target),y2:y(opt.target),stroke:"var(--text3)","stroke-width":1,opacity:.7}));
+    var tt=svgEl("text",{x:W-m.r+6,y:y(opt.target)+4});tt.textContent="Target "+opt.target+"%";svg.appendChild(tt);
+  }
+  labels.forEach(function(l,i){var t=svgEl("text",{x:x(i),y:H-6,"text-anchor":"middle"});t.textContent=l;svg.appendChild(t);});
+  var ends=[];
+  series.forEach(function(s){
+    var pts=s.values.map(function(v,i){return v==null?null:[x(i),y(v)];});
+    var d="",pen=false;
+    pts.forEach(function(p){if(!p){pen=false;return;}d+=(pen?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1);pen=true;});
+    if(d)svg.appendChild(svgEl("path",{d:d,fill:"none",stroke:s.color,"stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"}));
+    pts.forEach(function(p){if(p)svg.appendChild(svgEl("circle",{cx:p[0],cy:p[1],r:4,fill:s.color,stroke:"var(--surface)","stroke-width":2}));});
+    for(var i=pts.length-1;i>=0;i--)if(pts[i]){ends.push({y:pts[i][1],x:pts[i][0],text:(opt.small?"":s.short+" ")+opt.fmt(s.values[i])});break;}
+  });
+  var collide=ends.some(function(a,i){return ends.some(function(b,j){return i<j&&Math.abs(a.y-b.y)<14;});});
+  if(!collide)ends.forEach(function(e){var t=svgEl("text",{x:e.x+9,y:e.y+4,class:"end num"});t.textContent=e.text;svg.appendChild(t);});
+  // hover and keyboard layer
+  var cross=svgEl("line",{y1:m.t,y2:H-m.b,stroke:"var(--text3)","stroke-width":1,opacity:0});svg.appendChild(cross);
+  var hit=svgEl("rect",{x:m.l-12,y:0,width:iw+24,height:H,fill:"transparent",tabindex:0,class:"hit","aria-label":"Chart values, use the arrow keys"});
+  svg.appendChild(hit);plot.appendChild(svg);
+  var tip=el("div",{class:"tip"});tip.hidden=true;plot.appendChild(tip);
+  var idx=labels.length-1;
+  function showAt(i,px){
+    idx=Math.max(0,Math.min(labels.length-1,i));
+    var scale=plot.clientWidth/W;
+    cross.setAttribute("x1",x(idx));cross.setAttribute("x2",x(idx));cross.setAttribute("opacity",.6);
+    tip.textContent="";tip.appendChild(el("div",{class:"tm"},opt.fullLabels[idx]));
+    series.forEach(function(s){
+      var r=el("div",{class:"row"});var sp=el("span");var k=el("i");k.style.background=s.color;sp.appendChild(k);sp.appendChild(document.createTextNode(s.name));
+      r.appendChild(sp);r.appendChild(el("b",null,s.values[idx]==null?"No data":opt.fmt(s.values[idx])));tip.appendChild(r);
+    });
+    tip.hidden=false;
+    var left=(px!=null?px:x(idx)*scale)+14;if(left+170>plot.clientWidth)left=Math.max(0,left-190);
+    tip.style.left=left+"px";tip.style.top="8px";
+  }
+  function hide(){tip.hidden=true;cross.setAttribute("opacity",0);}
+  hit.addEventListener("pointermove",function(ev){
+    var r=svg.getBoundingClientRect(),sx=(ev.clientX-r.left)*(W/r.width);
+    var best=0;labels.forEach(function(_,i){if(Math.abs(x(i)-sx)<Math.abs(x(best)-sx))best=i;});
+    showAt(best,ev.clientX-r.left);
+  });
+  hit.addEventListener("pointerleave",hide);hit.addEventListener("blur",hide);
+  hit.addEventListener("focus",function(){showAt(idx);});
+  hit.addEventListener("keydown",function(ev){
+    if(ev.key==="ArrowLeft"){showAt(idx-1);ev.preventDefault();}
+    if(ev.key==="ArrowRight"){showAt(idx+1);ev.preventDefault();}
+  });
+  // table view: every value reachable without hovering
+  if(!opt.small){
+    var det=el("details",{class:"tbl"});det.appendChild(el("summary",null,"View as table"));
+    var tbl=el("table");var hr=el("tr");hr.appendChild(el("th",null,"Month"));
+    series.forEach(function(s){hr.appendChild(el("th",null,s.name));});
+    var th=el("thead");th.appendChild(hr);tbl.appendChild(th);var tb=el("tbody");
+    labels.forEach(function(l,i){var tr=el("tr");tr.appendChild(el("td",null,opt.fullLabels[i]));
+      series.forEach(function(s){tr.appendChild(el("td",{class:"num"},s.values[i]==null?"No data":opt.fmt(s.values[i])));});tb.appendChild(tr);});
+    tbl.appendChild(tb);det.appendChild(tbl);host.appendChild(det);
+  }
+  if(labels.length===1&&!opt.small)host.appendChild(el("p",{class:"note"},"Lines appear once a second month is published."));
+}
+
+function pctDomain(values){
+  var vs=values.filter(function(v){return v!=null;});
+  var lo=vs.length?Math.min.apply(null,vs):40;
+  lo=Math.max(0,Math.min(40,Math.floor((lo-5)/10)*10));
+  var ticks=[];for(var v=lo;v<=100;v+=lo<=20?20:10)ticks.push(v);
+  return {domain:[lo,100],ticks:ticks};
+}
+
+function renderCharts(){
+  if(!state.cycles.length)return;
+  var labels=state.cycles.map(function(c){return shortMonth(c.label);});
+  var full=state.cycles.map(function(c){return c.label;});
+  var pctFmt=function(v){return v.toFixed(1)+"%";};
+  // team chart
+  var teams=Object.keys(state.roster);
+  var tSeries=teams.map(function(team){
+    return {name:team,short:team==="Customer Care"?"CC":"AM",color:TEAM_COLOR[team],
+      values:monthsFor(function(t){return t.pipeline===team;}).map(function(m){return avg(m.tickets.map(function(t){return total(t.s);}));})};
+  });
+  var all=[];tSeries.forEach(function(s){all=all.concat(s.values);});
+  var dom=pctDomain(all);
+  lineChart($("teamChart"),{labels:labels,fullLabels:full,series:tSeries,domain:dom.domain,ticks:dom.ticks,target:95,
+    fmt:pctFmt,fmtTick:function(v){return v+"%";},aria:"QA score by team by month"});
+  // agent chart
+  var agent=$("fAgent").value,team="";
+  teams.forEach(function(t){if(state.roster[t].indexOf(agent)>=0)team=t;});
+  $("agentTitle").textContent=agent+" trend";
+  $("agentSub").textContent="Combined QA % against the "+team+" average, by month";
+  var aSeries=[
+    {name:agent,short:agent.split(" ")[0],color:TEAM_COLOR[team],values:state.cycles.map(function(c){return avg(c.tickets.filter(function(t){return t.agent===agent;}).map(function(t){return total(t.s);}));})},
+    {name:team+" average",short:"Team",color:"var(--series-muted)",values:tSeries.filter(function(s){return s.name===team;})[0].values}
+  ];
+  var dom2=pctDomain(aSeries[0].values.concat(aSeries[1].values));
+  lineChart($("agentChart"),{labels:labels,fullLabels:full,series:aSeries,domain:dom2.domain,ticks:dom2.ticks,target:95,
+    fmt:pctFmt,fmtTick:function(v){return v+"%";},aria:agent+" QA score by month against team average"});
+  // dimension small multiples: agent if chosen in the team filter scope, else team
+  var scopeTeam=$("fTeam").value;
+  var useAgent=scopeTeam==="all"||scopeTeam===team;
+  var filter=useAgent?function(t){return t.agent===agent;}:function(t){return t.pipeline===scopeTeam;};
+  $("dimSub").textContent="Average out of 5, by month, for "+(useAgent?agent:scopeTeam);
+  var months=monthsFor(filter);
+  var host=$("dimCharts");host.textContent="";
+  // Place all five panels first so each one measures its final width.
+  var slots=DIMS.map(function(d){
+    var box=el("div",{class:"mini"});box.appendChild(el("h4",null,d));var c=el("div");box.appendChild(c);host.appendChild(box);return c;
+  });
+  DIMS.forEach(function(d,i){
+    lineChart(slots[i],{small:true,height:130,labels:labels,fullLabels:full,
+      series:[{name:d,short:"",color:useAgent?TEAM_COLOR[team]:TEAM_COLOR[scopeTeam],values:months.map(function(m){return avg(m.tickets.map(function(t){return t.s[i];}));})}],
+      domain:[1,5],ticks:[1,2,3,4,5],fmt:function(v){return v.toFixed(2);},fmtTick:function(v){return String(v);},aria:d+" by month"});
+  });
+}
+$("fAgent").addEventListener("change",renderCharts);
+$("fTeam").addEventListener("change",function(){
+  var team=$("fTeam").value;
+  if(team!=="all"&&state.roster[team]&&state.roster[team].indexOf($("fAgent").value)<0)$("fAgent").value=state.roster[team][0];
+  renderCharts();
+});
+var resizeTimer;window.addEventListener("resize",function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(renderCharts,150);});
+
+/* ---------------- months ---------------- */
+var MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+function fillMonthSelects(){
+  var published={};state.cycles.forEach(function(c){published[c.month]=true;});
+  var rm=$("runMonth"),prev=rm.value;rm.textContent="";
+  var now=new Date(),opts=[];
+  for(var i=0;i<12;i++){
+    var d=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth()-i,1));
+    var key=d.toISOString().slice(0,7),label=MONTHS[d.getUTCMonth()]+" "+d.getUTCFullYear();
+    opts.push(key);
+    rm.appendChild(el("option",{value:key},label+(i===0?", month to date":"")+(published[key]?" (published)":"")));
+  }
+  var def=opts.filter(function(k){return !published[k];})[0]||opts[0];
+  rm.value=prev&&opts.indexOf(prev)>=0?prev:(published[opts[1]]?opts[0]:opts[1]);
+  if(!rm.value)rm.value=def;
+  var am=$("apMonth"),prevA=am.value;am.textContent="";
+  state.cycles.slice().reverse().forEach(function(c){am.appendChild(el("option",{value:c.month},c.label));});
+  if(prevA&&published[prevA])am.value=prevA;
+}
+
+/* ---------------- run ---------------- */
+function renderRun(run){
+  state.run=run;
+  var running=run&&run.status==="running";
+  $("pingBtn").disabled=running;show("cancelBtn",running);
+  if(!run){show("runView",false);return;}
+  show("runView",true);
+  $("runPct").textContent=run.percent+"%";
+  $("runBar").firstChild.style.width=run.percent+"%";$("runBar").setAttribute("aria-valuenow",run.percent);
+  var scored=run.agents.reduce(function(n,a){return n+Math.min(a.scored,run.target);},0);
+  var verb={running:"Scoring",published:"Published",failed:"Stopped",cancelled:"Cancelled"}[run.status]||run.status;
+  $("runLabel").textContent=verb+" "+run.label+" · "+scored+" of "+(run.agents.length*run.target)+" tickets scored";
+  var msg=$("runMsg");
+  if(run.message){msg.textContent=run.message;msg.className="msg "+(run.status==="published"?"ok":run.status==="failed"?"":"info");show("runMsg",true);}
+  else if(running){msg.textContent="Keep this page open. The month is published when every agent is finished.";msg.className="msg info";show("runMsg",true);}
+  else show("runMsg",false);
+  var box=$("runAgents");box.textContent="";
+  run.agents.forEach(function(a){
+    var row=el("div",{class:"agentrow"+(a.failed||a.lastError?" err":"")});
+    row.appendChild(el("b",null,a.name));
+    var bar=el("div",{class:"mini-bar"});var fill=el("i");fill.style.width=(a.done?100:Math.min(100,a.scored/run.target*100))+"%";
+    if(a.done&&a.scored<run.target)fill.style.background="var(--yellow)";
+    bar.appendChild(fill);row.appendChild(bar);
+    var st;
+    if(a.failed)st="Could not start: "+a.lastError;
+    else if(a.done)st=a.scored>=run.target?"Done, "+a.scored+" of "+run.target+" scored":"Done, only "+a.scored+" of "+run.target+" scorable tickets this month";
+    else if(a.phase==="pending")st="Waiting to find tickets";
+    else st=a.scored+" of "+run.target+" scored · checked "+a.checked+" of "+a.candidates+" tickets"+(a.lastError?" · retrying after: "+a.lastError:"");
+    row.appendChild(el("div",{class:"st"},st));box.appendChild(row);
+  });
+}
+
+async function refreshRun(resume){
+  try{var r=await api("/api/admin/run");renderRun(r.run);
+    if(resume&&r.run&&r.run.status==="running")loop();}
+  catch(e){}
+}
+
+async function loop(){
+  if(state.looping)return;state.looping=true;
+  var wasPublished=false;
+  try{
+    while(state.looping&&state.run&&state.run.status==="running"){
+      var todo=state.run.agents.filter(function(a){return !a.done;}).slice(0,3);
+      if(!todo.length){var s=await api("/api/admin/run");renderRun(s.run);break;}
+      var runId=state.run.runId;
+      var results=await Promise.all(todo.map(function(a){
+        return api("/api/admin/run",{method:"POST",body:{action:"step",runId:runId,agent:a.key}}).catch(function(e){return {error:e.message};});
+      }));
+      var latest=null;results.forEach(function(r){if(r&&r.run)latest=r.run;});
+      if(latest)renderRun(latest);
+      if(results.some(function(r){return r&&r.busy;}))await new Promise(function(ok){setTimeout(ok,2000);});
+      if(results.every(function(r){return r&&r.error;})){await new Promise(function(ok){setTimeout(ok,4000);});await refreshRun(false);}
+    }
+    wasPublished=state.run&&state.run.status==="published";
+  }finally{state.looping=false;}
+  if(wasPublished)await loadData();
+}
+
+$("pingBtn").addEventListener("click",async function(){
+  var month=$("runMonth").value,mp=month.split("-"),label=MONTHS[Number(mp[1])-1]+" "+mp[0];
+  var published=state.cycles.some(function(c){return c.month===month;});
+  var text="Start a new QA cycle for "+label+"?\n\nThis reads up to about 200 HubSpot conversations and scores them with Claude (roughly 10 to 15 US dollars of API usage). The month is published to the dashboard once every agent is finished.";
+  if(published)text+="\n\n"+label+" is already published. Finishing this run replaces its scores and resets its approvals.";
+  if(!confirm(text))return;
+  $("pingBtn").disabled=true;
+  try{var r=await api("/api/admin/run",{method:"POST",body:{action:"start",month:month}});renderRun(r.run);loop();}
+  catch(e){$("runMsg").textContent=e.message;$("runMsg").className="msg";show("runView",true);show("runMsg",true);$("pingBtn").disabled=false;}
+});
+$("cancelBtn").addEventListener("click",async function(){
+  if(!confirm("Cancel this run? Nothing is published for the month."))return;
+  state.looping=false;
+  try{var r=await api("/api/admin/run",{method:"POST",body:{action:"cancel"}});renderRun(r.run);}catch(e){}
+});
+
+/* ---------------- approvals ---------------- */
+async function loadApprovals(){
+  var month=$("apMonth").value;if(!month)return;
+  try{var r=await api("/api/admin/approvals?month="+encodeURIComponent(month));state.approvals=r.approvals||{};}
+  catch(e){state.approvals={};showApMsg(e.message);}
+  renderApprovals();
+}
+function showApMsg(text,ok){var m=$("apMsg");m.textContent=text;m.className="msg"+(ok?" ok":"");show("apMsg",Boolean(text));}
+
+function renderApprovals(){
+  var month=$("apMonth").value;
+  var cycle=state.cycles.filter(function(c){return c.month===month;})[0];
+  var tb=document.querySelector("#apTbl tbody");tb.textContent="";
+  if(!cycle)return;
+  var per=state.data.perAgent||10;
+  Object.keys(state.roster).forEach(function(team){
+    state.roster[team].forEach(function(name){
+      var ts=cycle.tickets.filter(function(t){return t.agent===name;});
+      var pct=avg(ts.map(function(t){return total(t.s);}));
+      var ap=state.approvals[name];
+      var tr=el("tr");
+      tr.appendChild(el("td",{style:"font-weight:600"},name));
+      tr.appendChild(el("td",null,team));
+      tr.appendChild(el("td",{class:"num"},ts.length+" of "+per));
+      tr.appendChild(el("td",{class:"num",style:"font-weight:700"},pct==null?"No data":pct.toFixed(1)+"%"));
+      var bt=el("td");if(pct!=null){var b=band(pct);bt.appendChild(el("span",{class:"badge b"+b},bandName(b)));}tr.appendChild(bt);
+      var stc=el("td");
+      if(!ap)stc.appendChild(el("span",{class:"state"},"Not approved"));
+      else{
+        var sent=ap.slack&&ap.slack.status==="sent";
+        var when=new Date(sent?ap.slack.at:ap.approvedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short"});
+        stc.appendChild(el("span",{class:"state "+(sent?"sent":"failed")},sent?"✓ Sent to Slack "+when:"! Approved, Slack not sent"));
+        if(!sent&&ap.slack&&ap.slack.error)stc.appendChild(el("div",{class:"err"},ap.slack.error));
+      }
+      tr.appendChild(stc);
+      var act=el("td");var wrap=el("div",{class:"actions"});
+      if(ts.length){
+        var pv=el("a",{class:"btn ghost small",href:"/api/admin/report?month="+encodeURIComponent(month)+"&agent="+encodeURIComponent(name),target:"_blank",rel:"noopener"},"Preview PDF");
+        wrap.appendChild(pv);
+      }
+      var full=ts.length>=per;
+      var sentAlready=ap&&ap.slack&&ap.slack.status==="sent";
+      var btn=el("button",{class:"btn small "+(ap&&!sentAlready?"":"green"),type:"button"},ap&&!sentAlready?"Retry Slack":sentAlready?"Resend":"Approve and send");
+      btn.disabled=!full;
+      if(!full)btn.title="Only agents with a full "+per+" tickets can be approved";
+      btn.addEventListener("click",function(){approve(name,cycle.label,Boolean(sentAlready),btn);});
+      wrap.appendChild(btn);act.appendChild(wrap);tr.appendChild(act);
+      tb.appendChild(tr);
+    });
+  });
+}
+
+async function approve(name,label,resend,btn){
+  var q=resend?"Send "+name+"'s QA analysis for "+label+" to their Slack DM again?":"Approve "+name+"'s QA for "+label+" and send the QA analysis PDF to their Slack DM?";
+  if(!confirm(q))return;
+  btn.disabled=true;btn.textContent="Sending...";showApMsg("");
+  try{
+    var r=await api("/api/admin/approvals",{method:"POST",body:{month:$("apMonth").value,agent:name,resend:resend}});
+    state.approvals[name]=r.approval;
+    var ok=r.approval.slack&&r.approval.slack.status==="sent";
+    showApMsg(ok?"Approved. "+name+"'s QA analysis was sent to their Slack DM.":"Approved, but the Slack message was not sent: "+(r.approval.slack.error||"unknown error"),ok);
+  }catch(e){showApMsg(e.message);}
+  renderApprovals();
+}
+$("apMonth").addEventListener("change",loadApprovals);
+
+init();
+</script>
+</body>
+</html>

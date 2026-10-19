@@ -187,16 +187,28 @@ tbody tr:hover td{background:var(--s-yellow)}
 footer{border-top:0;position:relative;padding-top:24px}
 footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;border-radius:999px;
   background:linear-gradient(90deg,var(--yellow),var(--blue),var(--green),var(--pink))}
+
+/* header with admin entry point */
+.head{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;justify-content:space-between}
+.adminbtn{display:inline-flex;align-items:center;font-size:13.5px;font-weight:600;color:var(--text);background:var(--surface);
+  border:1px solid var(--line);border-radius:12px;padding:11px 18px;text-decoration:none;white-space:nowrap}
+.adminbtn:hover{text-decoration:none;background:var(--s-blue)}
+.adminbtn:focus-visible,.reset:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 </style>
 </head>
 <body>
 <div class="brandbar" aria-hidden="true"></div>
 <div class="wrap">
 
-<h1>doola QA Dashboard</h1>
-<div class="sub">Customer Care and Account Management &middot; Cycle 2 &middot; Scored against the <a href="https://app.notion.com/p/284ff629db1e80e4b832ed4a84e25031">QA Evaluation rubric</a></div>
+<div class="head">
+  <div>
+    <h1>doola QA Dashboard</h1>
+    <div class="sub">Customer Care and Account Management &middot; <span id="monthInfo">September 2026, tickets closed 23 Sep to 3 Oct 2026</span> &middot; Scored against the <a href="https://app.notion.com/p/284ff629db1e80e4b832ed4a84e25031">QA Evaluation rubric</a></div>
+  </div>
+  <a class="adminbtn" href="/admin">Admin</a>
+</div>
 
-<div class="alert">
+<div class="alert" id="statusAlert">
   <b>Account Management and Customer Care are complete.</b> All three Account Management agents are at a full 10 fully read threads, 30 tickets. All ten Customer Care agents are at a full 10, 100 tickets, so every ranked agent is directly comparable. Only agents at a full 10 appear in the ranking, never fewer.
 </div>
 <div class="alert red">
@@ -204,6 +216,10 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
 </div>
 
 <div class="controls">
+  <div class="field">
+    <label for="fMonth">Month</label>
+    <select id="fMonth"><option value="2026-09">September 2026</option></select>
+  </div>
   <div class="field">
     <label for="fPipe">Pipeline</label>
     <select id="fPipe">
@@ -939,10 +955,16 @@ var T=[
 
 var DIMS=["Accuracy & Completeness","Clarity & Structure","Empathy & Tone","Policy & Process","Effort Reduction"];
 var DIMC=["var(--blue)","var(--green)","var(--pink)","var(--yellow)","var(--blue)"];
+// Fixed QA roster. Live data from /api/data replaces this when available.
 var ROSTER={
- "Customer Care":[["Christabelle Brown","10 of 10"],["Maricar Joyce Deocampo","10 of 10"],["Art Flores","10 of 10"],["Anna H","10 of 10"],["Minakshi Banik","10 of 10"],["Giovanna H","10 of 10"],["Doris R","10 of 10"],["Shubham Bajaj","10 of 10"],["Harman Singh","10 of 10"],["Dennis Piffen","10 of 10"]],
- "Account Management":[["Jesi Alderite","10 of 10"],["Annie Kapoor","10 of 10"],["Fatima Sindhu","10 of 10"]]
+ "Customer Care":["Christabelle Brown","Maricar Joyce Deocampo","Art Flores","Anna H","Minakshi Banik","Giovanna H","Doris R","Shubham Bajaj","Harman Singh","Dennis Piffen"],
+ "Account Management":["Jesi Alderite","Annie Kapoor","Fatima Sindhu"]
 };
+var PER_AGENT=10;
+// Months on record. The tickets above are September 2026 (Cycle 2); later
+// months are published from the admin page and arrive through /api/data.
+var CYCLES=[{month:"2026-09",label:"September 2026",window:{from:"2026-09-23",to:"2026-10-03"}}];
+T.forEach(function(t){if(!t.month)t.month="2026-09";});
 
 function band(t){return t>=90?"A":t>=70?"B":t>=60?"C":"D";}
 function bandName(b){return {A:"A Exceptional",B:"B Adequate",C:"C Fair",D:"D Weak"}[b];}
@@ -951,12 +973,55 @@ function overall(s){return s.reduce(function(a,b){return a+b;},0)/5;}
 function esc(x){return String(x).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function median(a){var b=a.slice().sort(function(x,y){return x-y;});var m=Math.floor(b.length/2);return b.length%2?b[m]:(b[m-1]+b[m])/2;}
 
-var fPipe=document.getElementById("fPipe"),fAgent=document.getElementById("fAgent");
-(function(){var n=[];T.forEach(function(t){if(n.indexOf(t.agent)<0)n.push(t.agent);});
- n.sort().forEach(function(x){var o=document.createElement("option");o.value=x;o.textContent=x;fAgent.appendChild(o);});})();
+var fMonth=document.getElementById("fMonth"),fPipe=document.getElementById("fPipe"),fAgent=document.getElementById("fAgent");
+
+function fillMonths(){
+  var cur=fMonth.value;fMonth.textContent="";
+  CYCLES.slice().sort(function(a,b){return a.month<b.month?1:-1;}).forEach(function(c){
+    var o=document.createElement("option");o.value=c.month;o.textContent=c.label;fMonth.appendChild(o);});
+  if(CYCLES.some(function(c){return c.month===cur;}))fMonth.value=cur;
+}
+function fillAgents(){
+  var cur=fAgent.value,names=[];
+  Object.keys(ROSTER).forEach(function(p){ROSTER[p].forEach(function(n){if(names.indexOf(n)<0)names.push(n);});});
+  fAgent.textContent="";
+  var all=document.createElement("option");all.value="all";all.textContent="All agents";fAgent.appendChild(all);
+  names.sort().forEach(function(x){var o=document.createElement("option");o.value=x;o.textContent=x;fAgent.appendChild(o);});
+  fAgent.value=names.indexOf(cur)>=0?cur:"all";
+}
+fillMonths();fillAgents();
+
+function cycleOf(month){return CYCLES.filter(function(c){return c.month===month;})[0]||{month:month,label:month,window:null};}
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function shortDate(iso){var p=String(iso).split("-");return Number(p[2])+" "+MON[Number(p[1])-1];}
+var WORDS=["no","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen"];
+function word(n){return WORDS[n]||String(n);}
 
 function filtered(){return T.filter(function(t){
-  return (fPipe.value==="all"||t.pipeline===fPipe.value)&&(fAgent.value==="all"||t.agent===fAgent.value);});}
+  return t.month===fMonth.value&&(fPipe.value==="all"||t.pipeline===fPipe.value)&&(fAgent.value==="all"||t.agent===fAgent.value);});}
+
+// Header line and completeness banner for the selected month.
+function renderMonthInfo(){
+  var c=cycleOf(fMonth.value);
+  var w=c.window?", tickets closed "+shortDate(c.window.from)+" to "+shortDate(c.window.to)+" "+c.window.to.slice(0,4):"";
+  document.getElementById("monthInfo").textContent=c.label+w;
+  var counts={};T.forEach(function(t){if(t.month===fMonth.value)counts[t.agent]=(counts[t.agent]||0)+1;});
+  var teams=Object.keys(ROSTER),parts=[],full=0,agents=0;
+  teams.forEach(function(p){
+    var n=ROSTER[p].length,f=ROSTER[p].filter(function(a){return (counts[a]||0)>=PER_AGENT;}).length;
+    var tix=ROSTER[p].reduce(function(s,a){return s+(counts[a]||0);},0);
+    full+=f;agents+=n;
+    var cap=function(s){return s.charAt(0).toUpperCase()+s.slice(1);};
+    parts.push(f===n?"All "+word(n)+" "+p+" agents are at a full "+PER_AGENT+", "+tix+" tickets.":
+      f===0?"None of the "+word(n)+" "+p+" agents is at a full "+PER_AGENT+" yet, "+tix+" tickets so far.":
+      cap(word(f))+" of "+word(n)+" "+p+" agents "+(f===1?"is":"are")+" at a full "+PER_AGENT+", "+tix+" tickets.");
+  });
+  var box=document.getElementById("statusAlert");box.textContent="";
+  var b=document.createElement("b");
+  b.textContent=full===agents?(teams.join(" and ")+" are complete for "+c.label+"."):("Agents at a full "+PER_AGENT+" in "+c.label+": "+full+" of "+agents+".");
+  box.appendChild(b);
+  box.appendChild(document.createTextNode(" "+parts.join(" ")+(full===agents?" Every ranked agent is directly comparable.":" Agents with fewer appear under Preliminary, not ranked.")+" Only agents at a full "+PER_AGENT+" appear in the ranking, never fewer."));
+}
 
 function render(){
   var all=filtered();
@@ -1040,11 +1105,23 @@ function render(){
     pats.push(["Advice and commitments given before the facts are checked","Billable filings quoted at $449 before establishing whether foreign qualification applied. Slack support promised then withdrawn a day later. Compliance reassurance given on filings the customer did not ask about."]);
     pats.push(["First response standard is not holding","At least "+sla+" tickets missed the 90 minute first response standard, the worst at 5.4 days to a brand new customer, 53 hours on an IRS records query and 4 days between a holding reply and the answer."]);
     pats.push(["Holding replies carry no committed return date","I will get back to you, we will keep you updated and I will check with the team appear repeatedly with no date attached, which guarantees the customer chases and in several cases the answer never arrives at all."]);
+    // The worked examples above come from September 2026 tickets. Other months
+    // show the same patterns with their own counts only, most frequent first.
+    if(fMonth.value!=="2026-09"){
+      var hold=base.filter(function(t){return /return date|check-?in date|no date|time ?frame|no timeline|return time/i.test(t.fix.join(" "));}).length;
+      pats=[
+        [unres,"Questions are being closed without being answered, effort reduction "+dAvg[4].toFixed(2)+" of 5","Present in "+unres+" of "+base.length+" tickets: threads closed or deflected with the customer's actual question still open."],
+        [sla,"First response standard is not holding","At least "+sla+" of "+base.length+" tickets missed the 90 minute first response standard."],
+        [hold,"Holding replies carry no committed return date","Flagged on "+hold+" of "+base.length+" tickets, which leaves the customer to chase."],
+        [macro,"Macros are being sent that do not match the question, accuracy "+dAvg[0].toFixed(2)+" of 5","Affects "+macro+" of "+base.length+" tickets: templated replies that answer a different question or carry unfilled placeholders."],
+        [nameErr,"Customers are being called the wrong name, empathy "+dAvg[2].toFixed(2)+" of 5","Found on "+nameErr+" of "+base.length+" tickets."]
+      ].filter(function(p){return p[0]>0;}).sort(function(a,b){return b[0]-a[0];}).map(function(p){return [p[1],p[2]];});
+    }
   }
   document.getElementById("patterns").innerHTML=pats.length?pats.map(function(p,i){
     var c=[ "var(--pink)","var(--yellow)","var(--blue)","var(--green)","var(--pink)" ][i%5];
     return '<div class="pattern"><div class="pnum" style="background:'+c+'">'+(i+1)+'</div><div class="pbody"><b>'+esc(p[0])+'</b><span>'+esc(p[1])+'</span></div></div>';
-  }).join(""):'<div class="empty">No tickets match this filter.</div>';
+  }).join(""):'<div class="empty">'+(base.length?"No recurring failure patterns found for this selection.":"No tickets match this filter.")+'</div>';
 
   var sorted=all.slice().sort(function(a,b){return overall(b.s)-overall(a.s);});
   document.getElementById("ticketList").innerHTML=sorted.length?sorted.map(function(t){
@@ -1064,11 +1141,14 @@ function render(){
   }).join(""):'<div class="empty card">No tickets match this filter.</div>';
 
   var rp=fPipe.value==="all"?Object.keys(ROSTER):[fPipe.value];
+  var cnt={};T.forEach(function(t){if(t.month===fMonth.value)cnt[t.agent]=(cnt[t.agent]||0)+1;});
+  var status=function(n){var c=cnt[n]||0;return c>=PER_AGENT?PER_AGENT+" of "+PER_AGENT:c?c+" of "+PER_AGENT:"queued";};
   document.getElementById("roster").innerHTML=rp.map(function(p){
-    var d=ROSTER[p].filter(function(r){return r[1]==="10 of 10";}).length;
+    var d=ROSTER[p].filter(function(n){return (cnt[n]||0)>=PER_AGENT;}).length;
     return '<div class="rcol"><h3>'+esc(p)+' <span class="pipe '+(p==="Customer Care"?"pCC":"pAM")+'">'+d+' of '+ROSTER[p].length+' complete</span></h3><ul class="rlist">'+
-      ROSTER[p].map(function(r){return '<li><span'+(r[1]==="10 of 10"?' class="done"':'')+'>'+esc(r[0])+'</span><span class="st">'+esc(r[1])+'</span></li>';}).join("")+'</ul></div>';
+      ROSTER[p].map(function(n){var s=status(n);return '<li><span'+((cnt[n]||0)>=PER_AGENT?' class="done"':'')+'>'+esc(n)+'</span><span class="st">'+esc(s)+'</span></li>';}).join("")+'</ul></div>';
   }).join("");
+  renderMonthInfo();
 
   var bd=all.slice().sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:0;});
   document.querySelector("#idxTbl tbody").innerHTML=bd.length?bd.map(function(t){
@@ -1086,12 +1166,29 @@ function render(){
 }
 
 fPipe.addEventListener("change",function(){
-  var v=T.filter(function(t){return fPipe.value==="all"||t.pipeline===fPipe.value;}).map(function(t){return t.agent;});
+  var v=fPipe.value==="all"?[].concat.apply([],Object.keys(ROSTER).map(function(p){return ROSTER[p];})):(ROSTER[fPipe.value]||[]);
   if(fAgent.value!=="all"&&v.indexOf(fAgent.value)<0)fAgent.value="all";
   render();});
 fAgent.addEventListener("change",render);
-document.getElementById("reset").addEventListener("click",function(){fPipe.value="all";fAgent.value="all";render();});
+fMonth.addEventListener("change",render);
+function latestMonth(){return CYCLES.map(function(c){return c.month;}).sort().pop();}
+document.getElementById("reset").addEventListener("click",function(){fMonth.value=latestMonth();fPipe.value="all";fAgent.value="all";render();});
+fMonth.value=latestMonth();
 render();
+
+// Load every published month from the backend. If it is unreachable (for
+// example when this file is opened directly), the September data above stays.
+fetch("/api/data",{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+  if(!d||!d.cycles||!d.cycles.length)return;
+  var tickets=[];
+  d.cycles.forEach(function(c){c.tickets.forEach(function(t){t.month=c.month;tickets.push(t);});});
+  var hadLatest=fMonth.value===latestMonth();
+  T=tickets;ROSTER=d.roster||ROSTER;PER_AGENT=d.perAgent||PER_AGENT;
+  CYCLES=d.cycles.map(function(c){return {month:c.month,label:c.label,window:c.window};});
+  fillMonths();fillAgents();
+  if(hadLatest||!CYCLES.some(function(c){return c.month===fMonth.value;}))fMonth.value=latestMonth();
+  render();
+}).catch(function(){});
 </script>
 </body>
 </html>
