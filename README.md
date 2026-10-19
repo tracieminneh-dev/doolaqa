@@ -28,8 +28,10 @@ Never put real values in this repository.
 
 1. **Storage.** Connect Upstash Redis from the Vercel Marketplace (Storage tab)
    to this project. It adds the connection variables automatically.
-2. **Admin sign-in.** `ADMIN_EMAIL` (one email, or several separated by commas)
-   and `ADMIN_PASSWORD`. Optional `SESSION_SECRET`: a long random string.
+2. **Admin sign-in.** `ADMIN_PASSWORD`. Anyone with a doola.com email and this
+   password can sign in, and every admin can run cycles and approve. To narrow
+   it, set `ADMIN_EMAIL` to specific emails and/or `@domain` entries, comma
+   separated. Optional `SESSION_SECRET`: a long random string.
 3. **HubSpot.** Create a private app with scopes `tickets`,
    `conversations.read` and `crm.objects.owners.read`, and set
    `HUBSPOT_ACCESS_TOKEN`.

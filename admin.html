@@ -147,9 +147,9 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
 
   <section class="login" id="loginView" hidden>
     <h3>Sign in</h3>
-    <p class="sub" style="margin:0">Use the admin email and password.</p>
+    <p class="sub" style="margin:0">Use your doola email address and the admin password.</p>
     <form id="loginForm">
-      <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" placeholder="name@doola.com" required></div>
       <div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required></div>
       <div class="msg" id="loginMsg" hidden></div>
       <button class="btn" type="submit" id="loginBtn">Sign in</button>
@@ -270,7 +270,7 @@ async function init(){
   try{s=await api("/api/admin/session");}
   catch(e){showLogin("The admin service is not reachable right now. "+e.message);return;}
   if(!s.authenticated){
-    showLogin(s.setup&&s.setup.login===false?"Admin sign-in is not set up yet. Add ADMIN_EMAIL and ADMIN_PASSWORD in Vercel, then redeploy.":null);
+    showLogin(s.setup&&s.setup.login===false?"Admin sign-in is not set up yet. Add ADMIN_PASSWORD in Vercel, then redeploy.":null);
     return;
   }
   show("loginView",false);show("adminView",true);show("signOut",true);
