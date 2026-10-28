@@ -63,4 +63,4 @@ http.createServer(async (req, res) => {
     res.writeHead(500, { "Content-Type": "text/plain" });
     res.end("Dev server error: " + err.message);
   }
-}).listen(PORT, () => console.log(`doola QA dev server on http://localhost:${PORT}${process.env.QA_MOCK === "1" ? " (mock mode)" : ""}`));
+}).listen(PORT, () => console.log(`CS QA dev server on http://localhost:${PORT}${process.env.QA_MOCK === "1" ? " (mock mode)" : ""}`));

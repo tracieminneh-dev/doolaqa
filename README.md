@@ -1,4 +1,4 @@
-# doola QA Dashboard
+# CS QA Dashboard
 
 QA scores for the Customer Care and Account Management teams, month by month,
 plus an admin page for running new monthly QA cycles and approving results.

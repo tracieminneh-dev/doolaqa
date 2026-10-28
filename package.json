@@ -2,7 +2,7 @@
   "name": "doola-qa-dashboard",
   "private": true,
   "type": "module",
-  "description": "doola QA dashboard with a monthly QA admin page",
+  "description": "CS QA dashboard with a monthly QA admin page",
   "engines": {
     "node": "24.x"
   },
