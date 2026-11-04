@@ -32,7 +32,7 @@ Never put real values in this repository.
    password can sign in, and every admin can run cycles and approve. To narrow
    it, set `ADMIN_EMAIL` to specific emails and/or `@domain` entries, comma
    separated. Optional `SESSION_SECRET`: a long random string.
-3. **HubSpot.** Create a private app with scopes `tickets`,
+3. **HubSpot.** Create a private app with scopes `tickets`, `crm.objects.notes.read` (for the HubSpot notes check),
    `conversations.read` and `crm.objects.owners.read`, and set
    `HUBSPOT_ACCESS_TOKEN`.
 4. **Claude.** Set `ANTHROPIC_API_KEY`. A full monthly run reads up to about

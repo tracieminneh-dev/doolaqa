@@ -199,16 +199,18 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
       </div>
     </div>
 
-    <h2 class="p">Approvals</h2>
+    <h2 class="p">Monthly approvals</h2>
     <div class="controls" style="background:var(--s-pink)">
       <div class="field" style="max-width:280px"><label for="apMonth">Month</label><select id="apMonth"></select></div>
+      <button class="btn green" id="approveAllBtn" type="button">Approve all complete agents</button>
+      <button class="btn blue" id="sendAllBtn" type="button">Send all approved reports</button>
     </div>
     <div class="msg" id="apMsg" hidden style="margin-bottom:12px"></div>
     <div class="card" style="padding:0;overflow:hidden"><div class="tblwrap"><table id="apTbl">
-      <thead><tr><th>Agent</th><th>Team</th><th>Tickets</th><th>Combined</th><th>Band</th><th>Status</th><th></th></tr></thead>
+      <thead><tr><th>Agent</th><th>Team</th><th>Tickets</th><th>Combined</th><th>Band</th><th>Notes coverage</th><th>Approval</th><th>Report</th><th></th></tr></thead>
       <tbody></tbody>
     </table></div></div>
-    <p class="note">Approving sends a PDF titled "QA analysis - month" to the agent's Slack DM. Only agents with a full 10 tickets can be approved.</p>
+    <p class="note">Step 1: a team lead reviews each agent's month and presses Approve. Step 2: Send report delivers the "QA analysis - month" PDF to that agent's Slack DM. Only agents with a full 10 tickets can be approved; an approval can be undone until the report is sent.</p>
   </main>
 
   <footer>Bands: A Exceptional 90 to 100, B Adequate 70 to 89, C Fair 60 to 69, D Weak below 60. Target 95%.</footer>
@@ -581,44 +583,65 @@ function renderApprovals(){
       tr.appendChild(el("td",{class:"num"},ts.length+" of "+per));
       tr.appendChild(el("td",{class:"num",style:"font-weight:700"},pct==null?"No data":pct.toFixed(1)+"%"));
       var bt=el("td");if(pct!=null){var b=band(pct);bt.appendChild(el("span",{class:"badge b"+b},bandName(b)));}tr.appendChild(bt);
-      var stc=el("td");
-      if(!ap)stc.appendChild(el("span",{class:"state"},"Not approved"));
-      else{
-        var sent=ap.slack&&ap.slack.status==="sent";
-        var when=new Date(sent?ap.slack.at:ap.approvedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short"});
-        stc.appendChild(el("span",{class:"state "+(sent?"sent":"failed")},sent?"✓ Sent to Slack "+when:"! Approved, Slack not sent"));
-        if(!sent&&ap.slack&&ap.slack.error)stc.appendChild(el("div",{class:"err"},ap.slack.error));
-      }
-      tr.appendChild(stc);
+      var checked=ts.filter(function(t){return t.notes;});
+      var cov=checked.length?Math.round(100*checked.filter(function(t){return t.notes.status==="Complete";}).length/checked.length)+"%":"Not checked";
+      tr.appendChild(el("td",{class:"num"},cov));
+      var short=function(iso){return new Date(iso).toLocaleDateString("en-GB",{day:"numeric",month:"short"});};
+      var apc=el("td");
+      if(!ap)apc.appendChild(el("span",{class:"state"},"Not approved"));
+      else apc.appendChild(el("span",{class:"state sent"},"✓ Approved "+short(ap.approvedAt)+" by "+String(ap.approvedBy||"").split("@")[0]));
+      tr.appendChild(apc);
+      var rep=ap&&ap.report||{};
+      var rc=el("td");
+      if(rep.status==="sent")rc.appendChild(el("span",{class:"state sent"},"✓ Sent "+short(rep.at)));
+      else if(rep.status==="failed"){rc.appendChild(el("span",{class:"state failed"},"! Not sent"));if(rep.error)rc.appendChild(el("div",{class:"err"},rep.error));}
+      else rc.appendChild(el("span",{class:"state"},ap?"Ready to send":"Waiting for approval"));
+      tr.appendChild(rc);
       var act=el("td");var wrap=el("div",{class:"actions"});
-      if(ts.length){
-        var pv=el("a",{class:"btn ghost small",href:"/api/admin/report?month="+encodeURIComponent(month)+"&agent="+encodeURIComponent(name),target:"_blank",rel:"noopener"},"Preview PDF");
-        wrap.appendChild(pv);
-      }
+      if(ts.length)wrap.appendChild(el("a",{class:"btn ghost small",href:"/api/admin/report?month="+encodeURIComponent(month)+"&agent="+encodeURIComponent(name),target:"_blank",rel:"noopener"},"Preview PDF"));
       var full=ts.length>=per;
-      var sentAlready=ap&&ap.slack&&ap.slack.status==="sent";
-      var btn=el("button",{class:"btn small "+(ap&&!sentAlready?"":"green"),type:"button"},ap&&!sentAlready?"Retry Slack":sentAlready?"Resend":"Approve and send");
-      btn.disabled=!full;
-      if(!full)btn.title="Only agents with a full "+per+" tickets can be approved";
-      btn.addEventListener("click",function(){approve(name,cycle.label,Boolean(sentAlready),btn);});
-      wrap.appendChild(btn);act.appendChild(wrap);tr.appendChild(act);
+      if(!ap){
+        var ab=el("button",{class:"btn small green",type:"button"},"Approve");
+        ab.disabled=!full;if(!full)ab.title="Only agents with a full "+per+" tickets can be approved";
+        ab.addEventListener("click",function(){apAction("approve",name,"Approve "+name+"'s QA results for "+cycle.label+"?",ab);});
+        wrap.appendChild(ab);
+      }else{
+        var sent=rep.status==="sent";
+        var sb=el("button",{class:"btn small blue",type:"button"},sent?"Resend report":rep.status==="failed"?"Retry send":"Send report");
+        sb.addEventListener("click",function(){apAction("send",name,(sent?"Send ":"Send ")+name+"'s QA analysis for "+cycle.label+" to their Slack DM"+(sent?" again":"")+"?",sb,sent);});
+        wrap.appendChild(sb);
+        if(!sent){
+          var ub=el("button",{class:"btn small ghost",type:"button"},"Undo approval");
+          ub.addEventListener("click",function(){apAction("unapprove",name,"Undo the approval for "+name+"?",ub);});
+          wrap.appendChild(ub);
+        }
+      }
+      act.appendChild(wrap);tr.appendChild(act);
       tb.appendChild(tr);
     });
   });
 }
 
-async function approve(name,label,resend,btn){
-  var q=resend?"Send "+name+"'s QA analysis for "+label+" to their Slack DM again?":"Approve "+name+"'s QA for "+label+" and send the QA analysis PDF to their Slack DM?";
-  if(!confirm(q))return;
-  btn.disabled=true;btn.textContent="Sending...";showApMsg("");
+async function apAction(action,name,question,btn,resend){
+  if(!confirm(question))return;
+  var label=btn?btn.textContent:"";
+  if(btn){btn.disabled=true;btn.textContent=action.indexOf("send")===0?"Sending...":"Saving...";}
+  showApMsg("");
   try{
-    var r=await api("/api/admin/approvals",{method:"POST",body:{month:$("apMonth").value,agent:name,resend:resend}});
-    state.approvals[name]=r.approval;
-    var ok=r.approval.slack&&r.approval.slack.status==="sent";
-    showApMsg(ok?"Approved. "+name+"'s QA analysis was sent to their Slack DM.":"Approved, but the Slack message was not sent: "+(r.approval.slack.error||"unknown error"),ok);
+    var r=await api("/api/admin/approvals",{method:"POST",body:{month:$("apMonth").value,agent:name,action:action,resend:Boolean(resend)}});
+    state.approvals=r.approvals||{};
+    if(action==="approve")showApMsg("Approved "+name+". Press Send report when you're ready to send their QA analysis.",true);
+    else if(action==="unapprove")showApMsg("Approval for "+name+" undone.",true);
+    else if(action==="send"){var rep=(r.result&&r.result.report)||{};showApMsg(rep.status==="sent"?name+"'s QA analysis was sent to their Slack DM.":"The report was not sent: "+(rep.error||"unknown error"),rep.status==="sent");}
+    else if(action==="approve_all")showApMsg((r.result||[]).length?"Approved "+r.result.length+" agents at a full 10.":"No agents at a full 10 to approve.",true);
+    else if(action==="send_all"){var res=r.result||{},names=Object.keys(res),ok=names.filter(function(n){return res[n]==="sent";});
+      showApMsg(!names.length?"Every approved report has already been sent.":ok.length+" of "+names.length+" reports sent."+(ok.length<names.length?" Check the rows marked Not sent.":""),ok.length===names.length);}
   }catch(e){showApMsg(e.message);}
+  if(btn){btn.disabled=false;btn.textContent=label;}
   renderApprovals();
 }
+$("approveAllBtn").addEventListener("click",function(){var c=$("apMonth").selectedOptions[0];apAction("approve_all",null,"Approve every agent with a full 10 tickets for "+(c?c.textContent:"this month")+"?",$("approveAllBtn"));});
+$("sendAllBtn").addEventListener("click",function(){var c=$("apMonth").selectedOptions[0];apAction("send_all",null,"Send the QA analysis to every approved agent for "+(c?c.textContent:"this month")+" who hasn't received it yet?",$("sendAllBtn"));});
 $("apMonth").addEventListener("change",loadApprovals);
 
 init();

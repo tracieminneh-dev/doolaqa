@@ -257,7 +257,7 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
 
 <h2>Agent ranking</h2>
 <div class="card"><div class="tblwrap"><table id="rankTbl">
-  <thead><tr><th>#</th><th>Agent</th><th>Pipelines</th><th>Tickets</th><th>Overall</th><th>Combined %</th><th></th><th>Band</th></tr></thead>
+  <thead><tr><th>#</th><th>Agent</th><th>Pipelines</th><th>Tickets</th><th>Overall</th><th>Combined %</th><th></th><th>Band</th><th title="Share of scored tickets whose HubSpot notes are Complete">Notes coverage</th></tr></thead>
   <tbody></tbody>
 </table></div></div>
 
@@ -290,7 +290,7 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
     <th title="Accuracy and Completeness">Acc</th><th title="Clarity and Structure">Cla</th>
     <th title="Empathy and Tone">Emp</th><th title="Policy and Process">Pol</th>
     <th title="Effort Reduction">Eff</th>
-    <th>Overall</th><th>Total</th><th>Band</th><th>Calibration</th><th>Primary category</th>
+    <th>Overall</th><th>Total</th><th>Band</th><th>Calibration</th><th>Primary category</th><th>HubSpot notes</th>
   </tr></thead>
   <tbody></tbody>
 </table></div></div>
@@ -1606,10 +1606,11 @@ function render(){
   }).join(""):'<div class="empty" style="grid-column:1/-1">No tickets match this filter.</div>';
 
   var byAgent={};rows.forEach(function(t){
-    if(!byAgent[t.agent])byAgent[t.agent]={n:0,sum:0,p:{}};
-    byAgent[t.agent].n++;byAgent[t.agent].sum+=overall(t.s)*20;byAgent[t.agent].p[t.pipeline]=1;});
+    if(!byAgent[t.agent])byAgent[t.agent]={n:0,sum:0,p:{},nc:0,nok:0};
+    byAgent[t.agent].n++;byAgent[t.agent].sum+=overall(t.s)*20;byAgent[t.agent].p[t.pipeline]=1;
+    if(t.notes){byAgent[t.agent].nc++;if(t.notes.status==="Complete")byAgent[t.agent].nok++;}});
   var list=Object.keys(byAgent).map(function(k){var a=byAgent[k];
-    return {name:k,n:a.n,pct:a.sum/a.n,pipes:Object.keys(a.p)};}).sort(function(a,b){return b.pct-a.pct;});
+    return {name:k,n:a.n,pct:a.sum/a.n,pipes:Object.keys(a.p),notes:a.nc?Math.round(100*a.nok/a.nc)+"%":"Not checked"};}).sort(function(a,b){return b.pct-a.pct;});
 
   var tb=document.querySelector("#rankTbl tbody");
   tb.innerHTML=list.length?(function(){var prev=null,r=0;return list.map(function(a,i){
@@ -1619,8 +1620,8 @@ function render(){
       a.pipes.map(function(p){return '<span class="pipe '+(p==="Customer Care"?"pCC":"pAM")+'">'+esc(p)+'</span>';}).join(" ")+
       '</td><td class="num">'+a.n+'</td><td class="num">'+(a.pct/20).toFixed(2)+'</td><td class="num" style="font-weight:700">'+a.pct.toFixed(1)+'%</td>'+
       '<td style="width:110px"><div class="bar"><i style="width:'+a.pct.toFixed(1)+'%;background:'+barColor(a.pct)+'"></i></div></td>'+
-      '<td><span class="badge b'+b+'">'+esc(bandName(b))+'</span></td></tr>';}).join("");})()
-    :'<tr><td colspan="8" class="empty">No agent has a full 10 ticket sample under this filter yet.</td></tr>';
+      '<td><span class="badge b'+b+'">'+esc(bandName(b))+'</span></td><td class="num" style="font-size:12.5px;color:'+(a.notes==="Not checked"?"var(--text3)":"var(--text)")+'">'+a.notes+'</td></tr>';}).join("");})()
+    :'<tr><td colspan="9" class="empty">No agent has a full 10 ticket sample under this filter yet.</td></tr>';
 
   var pa={};prelim.forEach(function(t){if(!pa[t.agent])pa[t.agent]={n:0,sum:0,p:{}};
     pa[t.agent].n++;pa[t.agent].sum+=overall(t.s)*20;pa[t.agent].p[t.pipeline]=1;});
@@ -1688,7 +1689,8 @@ function render(){
         return '<div class="sc" style="background:'+barColor(t.s[i]*20)+'"><div class="sl">'+esc(d)+'</div><div class="sv num">'+t.s[i]+' <small>/ 5</small></div></div>';}).join("")+'</div>'+
       '<div class="notes"><b>Keep doing</b><ul>'+t.keep.map(function(k){return '<li>'+esc(k)+'</li>';}).join("")+'</ul>'+
       '<div style="height:10px"></div><b>Do differently</b><ul>'+t.fix.map(function(f){return '<li>'+esc(f)+'</li>';}).join("")+'</ul>'+
-      '<div style="height:10px"></div><b>Primary category:</b> '+esc(t.category)+'</div></div>';
+      '<div style="height:10px"></div><b>Primary category:</b> '+esc(t.category)+
+      '<div style="height:6px"></div><b>HubSpot notes:</b> '+(t.notes?esc(t.notes.status)+(t.notes.issue?'. '+esc(t.notes.issue):''):'Not checked for this month')+'</div></div>';
   }).join(""):'<div class="empty card">No tickets match this filter.</div>';
 
   var rp=fPipe.value==="all"?Object.keys(ROSTER):[fPipe.value];
@@ -1712,8 +1714,9 @@ function render(){
       '<td class="num" style="font-weight:700">'+overall(t.s).toFixed(1)+'</td><td class="num" style="font-weight:700">'+tot.toFixed(0)+'</td>'+
       '<td><span class="badge b'+b+'">'+b+'</span></td>'+
       '<td style="white-space:nowrap;font-size:12.5px;color:'+(ir?"var(--text3)":"var(--text)")+'">'+(ir?"in range":"out of range")+'</td>'+
-      '<td style="font-size:12.5px;color:var(--text2)">'+esc(t.category)+'</td></tr>';
-  }).join(""):'<tr><td colspan="15" class="empty">No tickets match this filter.</td></tr>';
+      '<td style="font-size:12.5px;color:var(--text2)">'+esc(t.category)+'</td>'+
+      '<td style="white-space:nowrap;font-size:12.5px;color:'+(t.notes?(t.notes.status==="Complete"?"var(--text)":"var(--text)"):"var(--text3)")+'"'+(t.notes&&t.notes.issue?' title="'+esc(t.notes.issue)+'"':'')+'>'+(t.notes?(t.notes.status==="Complete"?"✓ ":"! ")+esc(t.notes.status):"Not checked")+'</td></tr>';
+  }).join(""):'<tr><td colspan="16" class="empty">No tickets match this filter.</td></tr>';
 }
 
 fPipe.addEventListener("change",function(){
