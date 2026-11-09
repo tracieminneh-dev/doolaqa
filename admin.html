@@ -128,6 +128,17 @@ tr:last-child td{border-bottom:0}
 .state.sent{background:var(--s-green)} .state.failed{background:var(--s-pink)}
 .actions{display:flex;gap:6px;flex-wrap:wrap}
 .err{font-size:12px;color:var(--text2);margin-top:4px;max-width:340px}
+.rv{background:var(--bg);border-radius:14px;padding:14px;margin-bottom:10px}
+.rv h4{margin:0 0 2px;font-size:14px}
+.rv .meta{font-size:12px;color:var(--text3);margin-bottom:8px}
+.rv .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:8px 0}
+.rv .grid label{display:block;margin-bottom:4px}
+.rv select,.rv textarea,.set input,.set select{font:600 13.5px Inter,sans-serif;padding:8px 10px;border-radius:10px;border:2px solid var(--line);width:100%;background:var(--surface);color:var(--text)}
+.rv textarea{font-weight:500;min-height:38px;resize:vertical}
+.rv .ai{font-size:11.5px;color:var(--text3);margin-top:3px}
+.tag2{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--chip);margin-left:6px}
+.tag2.ov{background:var(--s-yellow)} .tag2.ok{background:var(--s-green)}
+.set{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px}
 footer{margin-top:52px;padding-top:24px;font-size:12.5px;color:var(--text3);position:relative}
 footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--yellow),var(--blue),var(--green),var(--pink))}
 @media (max-width:600px){h1{font-size:25px}.pct{font-size:30px}}
@@ -199,6 +210,15 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
       </div>
     </div>
 
+    <h2 class="y">Ticket review</h2>
+    <div class="controls" style="background:var(--s-yellow)">
+      <div class="field" style="max-width:260px"><label for="rvMonth">Month</label><select id="rvMonth"></select></div>
+      <div class="field" style="max-width:300px"><label for="rvAgent">Agent</label><select id="rvAgent"></select></div>
+    </div>
+    <p class="sub" style="margin:0 0 12px">The AI's scores are suggestions. Confirm each ticket, or change any score with a short comment; changes show on the dashboard and in the agent's report, and the AI's original scores are kept.</p>
+    <div class="msg" id="rvMsg" hidden style="margin-bottom:12px"></div>
+    <div id="rvList"></div>
+
     <h2 class="p">Monthly approvals</h2>
     <div class="controls" style="background:var(--s-pink)">
       <div class="field" style="max-width:280px"><label for="apMonth">Month</label><select id="apMonth"></select></div>
@@ -207,10 +227,34 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
     </div>
     <div class="msg" id="apMsg" hidden style="margin-bottom:12px"></div>
     <div class="card" style="padding:0;overflow:hidden"><div class="tblwrap"><table id="apTbl">
-      <thead><tr><th>Agent</th><th>Team</th><th>Tickets</th><th>Combined</th><th>Band</th><th>Notes coverage</th><th>Approval</th><th>Report</th><th></th></tr></thead>
+      <thead><tr><th>Agent</th><th>Team</th><th>Tickets</th><th>Combined</th><th>Band</th><th>Notes coverage</th><th>Lead review</th><th>Approval</th><th>Report</th><th></th></tr></thead>
       <tbody></tbody>
     </table></div></div>
     <p class="note">Step 1: a team lead reviews each agent's month and presses Approve. Step 2: Send report delivers the "QA analysis - month" PDF to that agent's Slack DM. Only agents with a full 10 tickets can be approved; an approval can be undone until the report is sent.</p>
+
+    <h2>Settings</h2>
+    <div class="msg" id="setMsg" hidden style="margin-bottom:12px"></div>
+    <div class="set">
+      <div class="card">
+        <h3>Sampling and response standard</h3>
+        <p class="sub">Applies to the next QA cycle you start.</p>
+        <div class="field" style="margin-bottom:10px"><label for="setPer">Tickets per agent each month</label><input id="setPer" type="number" min="3" max="30"></div>
+        <div class="field" style="margin-bottom:12px"><label for="setSla">Response standard (minutes)</label><input id="setSla" type="number" min="5" max="1440"></div>
+        <button class="btn small" id="setSave" type="button">Save</button>
+      </div>
+      <div class="card">
+        <h3>Add an agent</h3>
+        <p class="sub">They're included from the next QA cycle.</p>
+        <div class="field" style="margin-bottom:10px"><label for="addName">Name, as in HubSpot</label><input id="addName" type="text" maxlength="60"></div>
+        <div class="field" style="margin-bottom:10px"><label for="addTeam">Team</label><select id="addTeam"><option>Customer Care</option><option>Account Management</option></select></div>
+        <div class="field" style="margin-bottom:12px"><label for="addOwner">HubSpot owner ID</label><input id="addOwner" type="text" inputmode="numeric"></div>
+        <button class="btn small green" id="addBtn" type="button">Add agent</button>
+      </div>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden;margin-top:14px"><div class="tblwrap"><table id="rosterTbl">
+      <thead><tr><th>Agent</th><th>Team</th><th>HubSpot owner ID</th><th>Status</th><th></th></tr></thead><tbody></tbody>
+    </table></div></div>
+    <p class="note">Paused agents are left out of new QA cycles and the dashboard roster; their past scores stay.</p>
   </main>
 
   <footer>Bands: A Exceptional 90 to 100, B Adequate 70 to 89, C Fair 60 to 69, D Weak below 60. Target 95%.</footer>
@@ -309,6 +353,7 @@ async function loadData(){
   fillMonthSelects();
   renderCharts();
   await loadApprovals();
+  fillReviewSelects();await loadReview();await loadSettings();
 }
 
 function monthsFor(filter){
@@ -586,6 +631,8 @@ function renderApprovals(){
       var checked=ts.filter(function(t){return t.notes;});
       var cov=checked.length?Math.round(100*checked.filter(function(t){return t.notes.status==="Complete";}).length/checked.length)+"%":"Not checked";
       tr.appendChild(el("td",{class:"num"},cov));
+      var rvd=ts.filter(function(t){return t.reviewed;}).length;
+      tr.appendChild(el("td",{class:"num"},rvd+" of "+ts.length+(ts.some(function(t){return t.overridden;})?" (adjusted)":"")));
       var short=function(iso){return new Date(iso).toLocaleDateString("en-GB",{day:"numeric",month:"short"});};
       var apc=el("td");
       if(!ap)apc.appendChild(el("span",{class:"state"},"Not approved"));
@@ -643,6 +690,101 @@ async function apAction(action,name,question,btn,resend){
 $("approveAllBtn").addEventListener("click",function(){var c=$("apMonth").selectedOptions[0];apAction("approve_all",null,"Approve every agent with a full 10 tickets for "+(c?c.textContent:"this month")+"?",$("approveAllBtn"));});
 $("sendAllBtn").addEventListener("click",function(){var c=$("apMonth").selectedOptions[0];apAction("send_all",null,"Send the QA analysis to every approved agent for "+(c?c.textContent:"this month")+" who hasn't received it yet?",$("sendAllBtn"));});
 $("apMonth").addEventListener("change",loadApprovals);
+
+/* ---------------- ticket review ---------------- */
+var DIM_SHORT=["Accuracy","Clarity","Empathy","Policy","Effort"];
+function fillReviewSelects(){
+  var m=$("rvMonth"),pm=m.value;m.textContent="";
+  state.cycles.slice().reverse().forEach(function(c){m.appendChild(el("option",{value:c.month},c.label));});
+  if(pm&&state.cycles.some(function(c){return c.month===pm;}))m.value=pm;
+  var a=$("rvAgent"),pa=a.value;a.textContent="";
+  Object.keys(state.roster).forEach(function(team){state.roster[team].forEach(function(n){a.appendChild(el("option",{value:n},n));});});
+  if(pa)a.value=pa;
+}
+function showMsg(id,text,ok){var m=$(id);m.textContent=text;m.className="msg"+(ok?" ok":"");show(id,Boolean(text));}
+async function loadReview(){
+  var month=$("rvMonth").value,agent=$("rvAgent").value,box=$("rvList");box.textContent="";
+  if(!month||!agent)return;
+  var r;try{r=await api("/api/admin/review?month="+encodeURIComponent(month)+"&agent="+encodeURIComponent(agent));}
+  catch(e){showMsg("rvMsg",e.message);return;}
+  showMsg("rvMsg","");
+  if(!r.tickets.length){box.appendChild(el("p",{class:"sub"},agent+" has no scored tickets this month."));return;}
+  r.tickets.forEach(function(t){box.appendChild(reviewCard(month,t));});
+}
+function reviewCard(month,t){
+  var c=el("div",{class:"rv"});
+  var h=el("h4",null,t.subject);
+  if(t.overridden)h.appendChild(el("span",{class:"tag2 ov"},"Adjusted by lead"));
+  else if(t.reviewed)h.appendChild(el("span",{class:"tag2 ok"},"✓ Confirmed"));
+  else h.appendChild(el("span",{class:"tag2"},"Not reviewed"));
+  c.appendChild(h);
+  var meta=t.date+" · Ticket "+t.id+" · "+total(t.s).toFixed(0)+"%";
+  if(t.timing)meta+=" · first reply "+t.timing.firstHours+" h";
+  if(t.notes)meta+=" · HubSpot notes "+t.notes.status;
+  if(t.review)meta+=" · reviewed by "+String(t.review.by||"").split("@")[0];
+  c.appendChild(el("div",{class:"meta"},meta));
+  var a=el("a",{href:"https://app.hubspot.com/contacts/23182676/record/0-5/"+t.id,target:"_blank",rel:"noopener"},"Open in HubSpot");a.style.fontSize="12.5px";c.appendChild(a);
+  var g=el("div",{class:"grid"}),sels=[];
+  DIM_SHORT.forEach(function(d,i){
+    var f=el("div");f.appendChild(el("label",null,d));
+    var s=el("select");[1,2,3,4,5].forEach(function(v){var o=el("option",{value:v},String(v));if(v===t.s[i])o.selected=true;s.appendChild(o);});
+    f.appendChild(s);var ai=t.aiS?t.aiS[i]:t.s[i];f.appendChild(el("div",{class:"ai"},"AI suggested "+ai));
+    g.appendChild(f);sels.push(s);
+  });
+  c.appendChild(g);
+  c.appendChild(el("div",{class:"meta"},"Keep: "+(t.keep||[]).join(" ")+"  Change: "+(t.fix||[]).join(" ")));
+  var ta=el("textarea",{placeholder:"Comment (required when you change a score)",maxlength:"600"});ta.value=t.review&&t.review.comment||"";c.appendChild(ta);
+  var w=el("div",{class:"actions"});w.style.marginTop="8px";
+  var save=el("button",{class:"btn small",type:"button"},t.review?"Update review":"Confirm or save changes");
+  save.addEventListener("click",async function(){
+    save.disabled=true;
+    try{var r=await api("/api/admin/review",{method:"POST",body:{month:month,ticketId:t.id,s:sels.map(function(x){return Number(x.value);}),comment:ta.value}});
+      c.replaceWith(reviewCard(month,r.ticket));showMsg("rvMsg",r.ticket.overridden?"Saved. The adjusted scores now show on the dashboard.":"Confirmed.",true);await refreshAfterReview();}
+    catch(e){showMsg("rvMsg",e.message);save.disabled=false;}
+  });
+  w.appendChild(save);
+  if(t.review){
+    var rs=el("button",{class:"btn small ghost",type:"button"},"Reset to AI scores");
+    rs.addEventListener("click",async function(){
+      if(!confirm("Remove the review on this ticket and go back to the AI's scores?"))return;
+      try{var r=await api("/api/admin/review",{method:"POST",body:{month:month,ticketId:t.id,action:"reset"}});c.replaceWith(reviewCard(month,r.ticket));showMsg("rvMsg","Back to the AI's scores.",true);await refreshAfterReview();}
+      catch(e){showMsg("rvMsg",e.message);}
+    });
+    w.appendChild(rs);
+  }
+  c.appendChild(w);
+  return c;
+}
+async function refreshAfterReview(){
+  var d=await api("/api/data");state.data=d;state.cycles=d.cycles;renderCharts();renderApprovals();
+}
+$("rvMonth").addEventListener("change",loadReview);
+$("rvAgent").addEventListener("change",loadReview);
+
+/* ---------------- settings ---------------- */
+async function loadSettings(){
+  var r;try{r=await api("/api/admin/settings");}catch(e){showMsg("setMsg",e.message);return;}
+  var s=r.settings;$("setPer").value=s.ticketsPerAgent;$("setSla").value=s.slaMinutes;
+  var tb=document.querySelector("#rosterTbl tbody");tb.textContent="";
+  s.roster.forEach(function(a){
+    var tr=el("tr");tr.appendChild(el("td",{style:"font-weight:600"},a.name));tr.appendChild(el("td",null,a.team));
+    tr.appendChild(el("td",{class:"num"},a.ownerId));
+    var st=el("td");st.appendChild(el("span",{class:"state"+(a.active?" sent":"")},a.active?"Included":"Paused"));tr.appendChild(st);
+    var act=el("td");var b=el("button",{class:"btn small ghost",type:"button"},a.active?"Pause":"Include");
+    b.addEventListener("click",function(){saveSettings({toggle:a.name},(a.active?"Paused ":"Included ")+a.name+".");});
+    act.appendChild(b);tr.appendChild(act);tb.appendChild(tr);
+  });
+}
+async function saveSettings(patch,okText){
+  try{await api("/api/admin/settings",{method:"POST",body:patch});showMsg("setMsg",okText,true);await loadSettings();await loadData();return true;}
+  catch(e){showMsg("setMsg",e.message);return false;}
+}
+$("setSave").addEventListener("click",function(){saveSettings({ticketsPerAgent:Number($("setPer").value),slaMinutes:Number($("setSla").value)},"Saved. These apply to the next QA cycle.");});
+$("addBtn").addEventListener("click",async function(){
+  var name=$("addName").value.trim();
+  if(!confirm("Add "+name+" to the QA roster? They'll be scored from the next QA cycle."))return;
+  if(await saveSettings({add:{name:name,team:$("addTeam").value,ownerId:$("addOwner").value.trim()}},"Added "+name+".")){$("addName").value="";$("addOwner").value="";}
+});
 
 init();
 </script>

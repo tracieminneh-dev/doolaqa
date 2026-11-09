@@ -257,13 +257,19 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
 
 <h2>Agent ranking</h2>
 <div class="card"><div class="tblwrap"><table id="rankTbl">
-  <thead><tr><th>#</th><th>Agent</th><th>Pipelines</th><th>Tickets</th><th>Overall</th><th>Combined %</th><th></th><th>Band</th><th title="Share of scored tickets whose HubSpot notes are Complete">Notes coverage</th></tr></thead>
+  <thead><tr><th>#</th><th>Agent</th><th>Pipelines</th><th>Tickets</th><th>Overall</th><th>Combined %</th><th></th><th title="Change in Combined % since the previous month">vs last month</th><th>Band</th><th title="Share of scored tickets whose HubSpot notes are Complete">Notes coverage</th></tr></thead>
   <tbody></tbody>
 </table></div></div>
 
 <h2>Preliminary, not ranked</h2>
 <div class="card"><div class="tblwrap"><table id="prelimTbl">
   <thead><tr><th>Agent</th><th>Pipelines</th><th>Tickets</th><th>Combined %</th><th>Status</th></tr></thead>
+  <tbody></tbody>
+</table></div></div>
+
+<h2>Agent scorecard by dimension</h2>
+<div class="card"><div class="tblwrap"><table id="agentDimTbl">
+  <thead><tr><th>Agent</th><th title="Accuracy &amp; Completeness">Accuracy</th><th title="Clarity &amp; Structure">Clarity</th><th title="Empathy &amp; Tone">Empathy</th><th title="Policy &amp; Process">Policy</th><th title="Effort Reduction">Effort</th><th>Overall</th><th title="Average hours from a client message to the first human reply">First reply (avg h)</th></tr></thead>
   <tbody></tbody>
 </table></div></div>
 
@@ -283,14 +289,14 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
 <div class="roster" id="roster"></div>
 
 <h2>Ticket index</h2>
-<p style="font-size:13.5px;margin-bottom:14px">Every ticket triaged, with its HubSpot link and dimension scores. Follows the filters above.</p>
+<p style="font-size:13.5px;margin-bottom:14px">Every ticket triaged, with its HubSpot link and dimension scores. Follows the filters above. <button class="reset" id="csvBtn" type="button" style="margin-left:8px;padding:8px 14px">Export CSV</button></p>
 <div class="card"><div class="tblwrap"><table id="idxTbl">
   <thead><tr>
     <th>Ticket</th><th>Subject</th><th>Agent</th><th>Pipeline</th><th>Closed</th>
     <th title="Accuracy and Completeness">Acc</th><th title="Clarity and Structure">Cla</th>
     <th title="Empathy and Tone">Emp</th><th title="Policy and Process">Pol</th>
     <th title="Effort Reduction">Eff</th>
-    <th>Overall</th><th>Total</th><th>Band</th><th>Calibration</th><th>Primary category</th><th>HubSpot notes</th>
+    <th>Overall</th><th>Total</th><th>Band</th><th>Calibration</th><th>Primary category</th><th>HubSpot notes</th><th title="Hours from the first client message to the first human reply">First reply</th><th>Lead review</th>
   </tr></thead>
   <tbody></tbody>
 </table></div></div>
@@ -1612,6 +1618,27 @@ function render(){
   var list=Object.keys(byAgent).map(function(k){var a=byAgent[k];
     return {name:k,n:a.n,pct:a.sum/a.n,pipes:Object.keys(a.p),notes:a.nc?Math.round(100*a.nok/a.nc)+"%":"Not checked"};}).sort(function(a,b){return b.pct-a.pct;});
 
+  // Previous published month, scored the same way (full samples first).
+  var months=CYCLES.map(function(c){return c.month;}).sort();
+  var prevMonth=months[months.indexOf(fMonth.value)-1];
+  var prevPct=function(name){
+    if(!prevMonth)return null;
+    var ts=T.filter(function(t){return t.month===prevMonth&&t.agent===name;});
+    var rk=ts.filter(function(t){return t.ranked;});var use=rk.length?rk:ts;
+    return use.length?use.reduce(function(n,t){return n+overall(t.s)*20;},0)/use.length:null;
+  };
+  var delta=function(name,pct){
+    var p=prevPct(name);if(p==null)return '<span style="color:var(--text3)">New</span>';
+    var d=pct-p;return (d>0?"\u25B2 +":d<0?"\u25BC ":"")+d.toFixed(1);
+  };
+  var byA={};base.forEach(function(t){(byA[t.agent]=byA[t.agent]||[]).push(t);});
+  document.querySelector("#agentDimTbl tbody").innerHTML=Object.keys(byA).length?Object.keys(byA).sort().map(function(n){
+    var ts=byA[n];var av=DIMS.map(function(_,i){return ts.reduce(function(x,t){return x+t.s[i];},0)/ts.length;});
+    var tm=ts.filter(function(t){return t.timing;});
+    var fr=tm.length?(tm.reduce(function(x,t){return x+t.timing.firstHours;},0)/tm.length).toFixed(1):"Not measured";
+    return '<tr><td class="name">'+esc(n)+'</td>'+av.map(function(v){return '<td class="num" style="font-weight:700;color:'+barColor(v*20)+'">'+v.toFixed(2)+'</td>';}).join("")+
+      '<td class="num" style="font-weight:700">'+(av.reduce(function(x,y){return x+y;},0)/5).toFixed(2)+'</td><td class="num" style="font-size:12.5px">'+fr+'</td></tr>';
+  }).join(""):'<tr><td colspan="8" class="empty">No tickets match this filter.</td></tr>';
   var tb=document.querySelector("#rankTbl tbody");
   tb.innerHTML=list.length?(function(){var prev=null,r=0;return list.map(function(a,i){
     if(prev===null||a.pct.toFixed(2)!==prev){r=i+1;prev=a.pct.toFixed(2);}
@@ -1620,8 +1647,9 @@ function render(){
       a.pipes.map(function(p){return '<span class="pipe '+(p==="Customer Care"?"pCC":"pAM")+'">'+esc(p)+'</span>';}).join(" ")+
       '</td><td class="num">'+a.n+'</td><td class="num">'+(a.pct/20).toFixed(2)+'</td><td class="num" style="font-weight:700">'+a.pct.toFixed(1)+'%</td>'+
       '<td style="width:110px"><div class="bar"><i style="width:'+a.pct.toFixed(1)+'%;background:'+barColor(a.pct)+'"></i></div></td>'+
+      '<td class="num" style="font-size:12.5px;white-space:nowrap">'+delta(a.name,a.pct)+'</td>'+
       '<td><span class="badge b'+b+'">'+esc(bandName(b))+'</span></td><td class="num" style="font-size:12.5px;color:'+(a.notes==="Not checked"?"var(--text3)":"var(--text)")+'">'+a.notes+'</td></tr>';}).join("");})()
-    :'<tr><td colspan="9" class="empty">No agent has a full 10 ticket sample under this filter yet.</td></tr>';
+    :'<tr><td colspan="10" class="empty">No agent has a full 10 ticket sample under this filter yet.</td></tr>';
 
   var pa={};prelim.forEach(function(t){if(!pa[t.agent])pa[t.agent]={n:0,sum:0,p:{}};
     pa[t.agent].n++;pa[t.agent].sum+=overall(t.s)*20;pa[t.agent].p[t.pipeline]=1;});
@@ -1683,14 +1711,16 @@ function render(){
       '<span class="badge b'+b+'">'+esc(bandName(b))+'</span>'+
       '<span class="tag num">'+overall(t.s).toFixed(1)+' / 5 &middot; '+tot.toFixed(0)+' / 100</span></div>'+
       '<div class="tmeta">'+esc(t.agent)+' &middot; closed '+esc(t.date)+' &middot; '+(ir?"in range":"out of range")+' vs median &middot; '+
-      (t.ranked?'':'<span class="tag">preliminary</span> &middot; ')+
+      (t.ranked?'':'<span class="tag">preliminary</span> &middot; ')+(t.overridden?'<span class="tag">adjusted by lead</span> &middot; ':t.reviewed?'<span class="tag">lead confirmed</span> &middot; ':'')+
       '<a href="https://app.hubspot.com/contacts/23182676/record/0-5/'+esc(t.id)+'" target="_blank" rel="noopener">open ticket '+esc(t.id)+'</a></div>'+
       '<div class="scores">'+DIMS.map(function(d,i){
         return '<div class="sc" style="background:'+barColor(t.s[i]*20)+'"><div class="sl">'+esc(d)+'</div><div class="sv num">'+t.s[i]+' <small>/ 5</small></div></div>';}).join("")+'</div>'+
       '<div class="notes"><b>Keep doing</b><ul>'+t.keep.map(function(k){return '<li>'+esc(k)+'</li>';}).join("")+'</ul>'+
       '<div style="height:10px"></div><b>Do differently</b><ul>'+t.fix.map(function(f){return '<li>'+esc(f)+'</li>';}).join("")+'</ul>'+
       '<div style="height:10px"></div><b>Primary category:</b> '+esc(t.category)+
-      '<div style="height:6px"></div><b>HubSpot notes:</b> '+(t.notes?esc(t.notes.status)+(t.notes.issue?'. '+esc(t.notes.issue):''):'Not checked for this month')+'</div></div>';
+      '<div style="height:6px"></div><b>HubSpot notes:</b> '+(t.notes?esc(t.notes.status)+(t.notes.issue?'. '+esc(t.notes.issue):''):'Not checked for this month')+
+      (t.timing?'<div style="height:6px"></div><b>Response times:</b> first reply '+t.timing.firstHours+' h'+(t.timing.slowestHours!=null?', slowest follow-up '+t.timing.slowestHours+' h':'')+', '+t.timing.overStandard+' of '+t.timing.replies+' replies over the '+t.timing.slaMinutes+' minute standard':'')+
+      (t.review?'<div style="height:6px"></div><b>Team lead review:</b> '+(t.overridden?'scores adjusted (AI suggested '+t.aiS.join(", ")+'). ':'confirmed. ')+esc(t.review.comment||''):'')+'</div></div>';
   }).join(""):'<div class="empty card">No tickets match this filter.</div>';
 
   var rp=fPipe.value==="all"?Object.keys(ROSTER):[fPipe.value];
@@ -1715,8 +1745,10 @@ function render(){
       '<td><span class="badge b'+b+'">'+b+'</span></td>'+
       '<td style="white-space:nowrap;font-size:12.5px;color:'+(ir?"var(--text3)":"var(--text)")+'">'+(ir?"in range":"out of range")+'</td>'+
       '<td style="font-size:12.5px;color:var(--text2)">'+esc(t.category)+'</td>'+
-      '<td style="white-space:nowrap;font-size:12.5px;color:'+(t.notes?(t.notes.status==="Complete"?"var(--text)":"var(--text)"):"var(--text3)")+'"'+(t.notes&&t.notes.issue?' title="'+esc(t.notes.issue)+'"':'')+'>'+(t.notes?(t.notes.status==="Complete"?"✓ ":"! ")+esc(t.notes.status):"Not checked")+'</td></tr>';
-  }).join(""):'<tr><td colspan="16" class="empty">No tickets match this filter.</td></tr>';
+      '<td style="white-space:nowrap;font-size:12.5px;color:'+(t.notes?(t.notes.status==="Complete"?"var(--text)":"var(--text)"):"var(--text3)")+'"'+(t.notes&&t.notes.issue?' title="'+esc(t.notes.issue)+'"':'')+'>'+(t.notes?(t.notes.status==="Complete"?"✓ ":"! ")+esc(t.notes.status):"Not checked")+'</td>'+
+      '<td class="num" style="font-size:12.5px;white-space:nowrap">'+(t.timing?t.timing.firstHours+' h':'<span style="color:var(--text3)">Not measured</span>')+'</td>'+
+      '<td style="font-size:12.5px;white-space:nowrap">'+(t.overridden?'Adjusted':t.reviewed?'Confirmed':'<span style="color:var(--text3)">Not reviewed</span>')+'</td></tr>';
+  }).join(""):'<tr><td colspan="18" class="empty">No tickets match this filter.</td></tr>';
 }
 
 fPipe.addEventListener("change",function(){
@@ -1725,6 +1757,14 @@ fPipe.addEventListener("change",function(){
   render();});
 fAgent.addEventListener("change",render);
 fMonth.addEventListener("change",render);
+// CSV of the ticket index under the current filters.
+document.getElementById("csvBtn").addEventListener("click",function(){
+  var q=function(v){v=v==null?"":String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
+  var head=["Ticket","Subject","Agent","Pipeline","Closed","Accuracy","Clarity","Empathy","Policy","Effort","Overall","Combined %","Band","Primary category","HubSpot notes","First reply (h)","Lead review","Keep doing","Do differently"];
+  var rows=filtered().map(function(t){var tot=overall(t.s)*20;return [t.id,t.subject,t.agent,t.pipeline,t.date].concat(t.s).concat([overall(t.s).toFixed(2),tot.toFixed(1),band(tot),t.category,t.notes?t.notes.status:"",t.timing?t.timing.firstHours:"",t.overridden?"Adjusted":t.reviewed?"Confirmed":"",(t.keep||[]).join(" | "),(t.fix||[]).join(" | ")]);});
+  var csv=[head].concat(rows).map(function(r){return r.map(q).join(",");}).join("\n");
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="cs-qa-"+fMonth.value+".csv";document.body.appendChild(a);a.click();a.remove();
+});
 function latestMonth(){return CYCLES.map(function(c){return c.month;}).sort().pop();}
 document.getElementById("reset").addEventListener("click",function(){fMonth.value=latestMonth();fPipe.value="all";fAgent.value="all";render();});
 fMonth.value=latestMonth();
