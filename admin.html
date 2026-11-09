@@ -243,6 +243,17 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
         <button class="btn small" id="setSave" type="button">Save</button>
       </div>
       <div class="card">
+        <h3>Dimension weights</h3>
+        <p class="sub">How much each dimension counts toward Combined %. They must add up to 100, and apply to every month on the dashboard, approvals and reports.</p>
+        <div id="wFields"></div>
+        <div class="sub" id="wSum" style="margin:6px 0 10px"></div>
+        <div class="actions">
+          <button class="btn small" id="wSave" type="button">Save weights</button>
+          <button class="btn small ghost" id="wEqual" type="button">Equal (20 each)</button>
+          <button class="btn small ghost" id="wRubric" type="button">Rubric proposal</button>
+        </div>
+      </div>
+      <div class="card">
         <h3>Add an agent</h3>
         <p class="sub">They're included from the next QA cycle.</p>
         <div class="field" style="margin-bottom:10px"><label for="addName">Name, as in HubSpot</label><input id="addName" type="text" maxlength="60"></div>
@@ -269,7 +280,7 @@ var $=function(id){return document.getElementById(id);};
 
 function band(t){return t>=90?"A":t>=70?"B":t>=60?"C":"D";}
 function bandName(b){return {A:"A Exceptional",B:"B Adequate",C:"C Fair",D:"D Weak"}[b];}
-function total(s){return s.reduce(function(a,b){return a+b;},0)/5*20;}
+function total(s){var w=state.data&&state.data.weights?["accuracy","clarity","empathy","policy","effort"].map(function(k){return Number(state.data.weights[k])||0;}):[20,20,20,20,20];var sum=w.reduce(function(a,b){return a+b;},0)||1;return s.reduce(function(n,v,i){return n+v*w[i];},0)/sum*20;}
 function avg(a){return a.length?a.reduce(function(x,y){return x+y;},0)/a.length:null;}
 function el(tag,attrs,text){var e=document.createElement(tag);if(attrs)for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e;}
 // CSS variables are not reliable inside SVG presentation attributes, so colour
@@ -765,6 +776,7 @@ $("rvAgent").addEventListener("change",loadReview);
 async function loadSettings(){
   var r;try{r=await api("/api/admin/settings");}catch(e){showMsg("setMsg",e.message);return;}
   var s=r.settings;$("setPer").value=s.ticketsPerAgent;$("setSla").value=s.slaMinutes;
+  renderWeights(s.weights);
   var tb=document.querySelector("#rosterTbl tbody");tb.textContent="";
   s.roster.forEach(function(a){
     var tr=el("tr");tr.appendChild(el("td",{style:"font-weight:600"},a.name));tr.appendChild(el("td",null,a.team));
@@ -779,6 +791,26 @@ async function saveSettings(patch,okText){
   try{await api("/api/admin/settings",{method:"POST",body:patch});showMsg("setMsg",okText,true);await loadSettings();await loadData();return true;}
   catch(e){showMsg("setMsg",e.message);return false;}
 }
+var W_KEYS=["accuracy","clarity","empathy","policy","effort"];
+var W_LABELS=["Accuracy & Completeness","Clarity & Structure","Empathy & Tone","Policy & Process","Effort Reduction"];
+function renderWeights(w){
+  var box=$("wFields");box.textContent="";
+  W_KEYS.forEach(function(k,i){
+    var f=el("div",{class:"field"});f.style.marginBottom="8px";
+    f.appendChild(el("label",{for:"w_"+k},W_LABELS[i]+" (%)"));
+    var inp=el("input",{id:"w_"+k,type:"number",min:"0",max:"100"});inp.value=w[k];inp.addEventListener("input",updateWSum);
+    f.appendChild(inp);box.appendChild(f);
+  });
+  updateWSum();
+}
+function readWeights(){var w={};W_KEYS.forEach(function(k){w[k]=Number($("w_"+k).value);});return w;}
+function updateWSum(){var w=readWeights(),sum=W_KEYS.reduce(function(a,k){return a+(w[k]||0);},0);$("wSum").textContent="Total "+sum+" of 100"+(sum===100?"":", adjust before saving");$("wSave").disabled=sum!==100;}
+$("wEqual").addEventListener("click",function(){renderWeights({accuracy:20,clarity:20,empathy:20,policy:20,effort:20});});
+$("wRubric").addEventListener("click",function(){renderWeights({accuracy:30,clarity:10,empathy:15,policy:25,effort:20});});
+$("wSave").addEventListener("click",function(){
+  if(!confirm("Save these weights? Combined % will be recalculated for every month on the dashboard, approvals and reports."))return;
+  saveSettings({weights:readWeights()},"Weights saved. Combined % now uses them everywhere.");
+});
 $("setSave").addEventListener("click",function(){saveSettings({ticketsPerAgent:Number($("setPer").value),slaMinutes:Number($("setSla").value)},"Saved. These apply to the next QA cycle.");});
 $("addBtn").addEventListener("click",async function(){
   var name=$("addName").value.trim();

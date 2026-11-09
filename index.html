@@ -268,6 +268,7 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
 </table></div></div>
 
 <h2>Agent scorecard by dimension</h2>
+<p class="sub" id="weightsNote" style="margin:-6px 0 12px">All five dimensions are weighted equally.</p>
 <div class="card"><div class="tblwrap"><table id="agentDimTbl">
   <thead><tr><th>Agent</th><th title="Accuracy &amp; Completeness">Accuracy</th><th title="Clarity &amp; Structure">Clarity</th><th title="Empathy &amp; Tone">Empathy</th><th title="Policy &amp; Process">Policy</th><th title="Effort Reduction">Effort</th><th>Overall</th><th title="Average hours from a client message to the first human reply">First reply (avg h)</th></tr></thead>
   <tbody></tbody>
@@ -302,7 +303,7 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
 </table></div></div>
 
 <footer>
-  Scoring scale: 5 exceptional, 4 strong, 3 adequate, 2 weak, 1 unacceptable. Overall = mean of the five dimensions. Combined % = Overall &times; 20. Bands: A Exceptional 90 to 100, B Adequate 70 to 89, C Fair 60 to 69, D Weak below 60. Calibration: within &plusmn;5 points of the cycle median is in range.<br>
+  Scoring scale: 5 exceptional, 4 strong, 3 adequate, 2 weak, 1 unacceptable. Overall = weighted mean of the five dimensions (equal weights unless changed in admin Settings). Combined % = Overall &times; 20. Bands: A Exceptional 90 to 100, B Adequate 70 to 89, C Fair 60 to 69, D Weak below 60. Calibration: within &plusmn;5 points of the cycle median is in range.<br>
   Source: HubSpot conversation threads, attributed by message sender. Rubric: QA Evaluation page, QA Central.
 </footer>
 </div>
@@ -1526,7 +1527,9 @@ T.forEach(function(t){if(!t.month)t.month="2026-09";});
 function band(t){return t>=90?"A":t>=70?"B":t>=60?"C":"D";}
 function bandName(b){return {A:"A Exceptional",B:"B Adequate",C:"C Fair",D:"D Weak"}[b];}
 function barColor(t){return t>=90?"var(--green)":t>=70?"var(--blue)":t>=60?"var(--yellow)":"var(--pink)";}
-function overall(s){return s.reduce(function(a,b){return a+b;},0)/5;}
+// Overall out of 5, weighted by the dimension weights set in admin Settings (equal by default).
+var WEIGHTS=[20,20,20,20,20];
+function overall(s){var w=WEIGHTS.reduce(function(a,b){return a+b;},0)||1;return s.reduce(function(n,v,i){return n+v*WEIGHTS[i];},0)/w;}
 function esc(x){return String(x).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function median(a){var b=a.slice().sort(function(x,y){return x-y;});var m=Math.floor(b.length/2);return b.length%2?b[m]:(b[m-1]+b[m])/2;}
 
@@ -1637,7 +1640,7 @@ function render(){
     var tm=ts.filter(function(t){return t.timing;});
     var fr=tm.length?(tm.reduce(function(x,t){return x+t.timing.firstHours;},0)/tm.length).toFixed(1):"Not measured";
     return '<tr><td class="name">'+esc(n)+'</td>'+av.map(function(v){return '<td class="num" style="font-weight:700;color:'+barColor(v*20)+'">'+v.toFixed(2)+'</td>';}).join("")+
-      '<td class="num" style="font-weight:700">'+(av.reduce(function(x,y){return x+y;},0)/5).toFixed(2)+'</td><td class="num" style="font-size:12.5px">'+fr+'</td></tr>';
+      '<td class="num" style="font-weight:700">'+overall(av).toFixed(2)+'</td><td class="num" style="font-size:12.5px">'+fr+'</td></tr>';
   }).join(""):'<tr><td colspan="8" class="empty">No tickets match this filter.</td></tr>';
   var tb=document.querySelector("#rankTbl tbody");
   tb.innerHTML=list.length?(function(){var prev=null,r=0;return list.map(function(a,i){
@@ -1757,6 +1760,11 @@ fPipe.addEventListener("change",function(){
   render();});
 fAgent.addEventListener("change",render);
 fMonth.addEventListener("change",render);
+function renderWeightsNote(){
+  var el=document.getElementById("weightsNote");if(!el)return;
+  var eq=WEIGHTS.every(function(w){return w===WEIGHTS[0];});
+  el.textContent=eq?"All five dimensions are weighted equally.":"Weighted Combined %: Accuracy "+WEIGHTS[0]+"%, Clarity "+WEIGHTS[1]+"%, Empathy "+WEIGHTS[2]+"%, Policy "+WEIGHTS[3]+"%, Effort "+WEIGHTS[4]+"%, applied to every month.";
+}
 // CSV of the ticket index under the current filters.
 document.getElementById("csvBtn").addEventListener("click",function(){
   var q=function(v){v=v==null?"":String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
@@ -1778,6 +1786,8 @@ fetch("/api/data",{cache:"no-store"}).then(function(r){return r.ok?r.json():null
   d.cycles.forEach(function(c){c.tickets.forEach(function(t){t.month=c.month;tickets.push(t);});});
   var hadLatest=fMonth.value===latestMonth();
   T=tickets;ROSTER=d.roster||ROSTER;PER_AGENT=d.perAgent||PER_AGENT;
+  if(d.weights)WEIGHTS=["accuracy","clarity","empathy","policy","effort"].map(function(k){return Number(d.weights[k])||0;});
+  renderWeightsNote();
   CYCLES=d.cycles.map(function(c){return {month:c.month,label:c.label,window:c.window};});
   fillMonths();fillAgents();
   if(hadLatest||!CYCLES.some(function(c){return c.month===fMonth.value;}))fMonth.value=latestMonth();

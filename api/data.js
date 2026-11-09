@@ -10,6 +10,7 @@ export const GET = route(async () => {
     roster: publicRosterFrom(settings),
     perAgent: settings.ticketsPerAgent,
     slaMinutes: settings.slaMinutes,
+    weights: settings.weights,
     cycles: cycles
       .sort((a, b) => (a.month < b.month ? -1 : 1))
       .map((c) => ({ month: c.month, label: c.label, window: c.window, publishedAt: c.publishedAt, tickets: c.tickets })),
