@@ -198,6 +198,7 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
         <button class="btn blue" id="pingBtn" type="button">Ping new QA cycle</button>
         <button class="btn ghost" id="cancelBtn" type="button" hidden>Cancel run</button>
       </div>
+      <div class="msg info" id="claudeRunNote" hidden>QA cycles are run through Claude. Ask Claude in the QA project to <b>run QA for</b> the month (for example "run QA for November 2026"). Claude reads each agent's HubSpot threads and notes, scores them against the rubric, and publishes the month here; then review and approve it below. The button stays off until a HubSpot token and Claude API key are added in Vercel.</div>
       <p class="sub" style="margin:0">Samples 10 closed tickets per agent from HubSpot, keeps the ones each agent answered, and scores them against the rubric. The month is published once every agent is finished. Keep this page open while it runs; if you close it, the run picks up where it left off next time.</p>
       <div id="runView" hidden>
         <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px">
@@ -340,7 +341,9 @@ async function init(){
 }
 
 function renderSetup(setup){
-  var items=[["login","Admin sign-in"],["storage","Storage (Upstash Redis)"],["hubspot","HubSpot token"],["claude","Claude API key"],["slack","Slack bot token"]];
+  // QA cycles are run through Claude, so the HubSpot token and Claude API key
+  // are optional: they only switch on the one-click Ping button.
+  var items=[["login","Admin sign-in"],["storage","Storage (Upstash Redis)"],["slack","Slack bot token"]];
   var list=$("setupList");list.textContent="";
   var missing=0;
   items.forEach(function(it){
@@ -348,6 +351,12 @@ function renderSetup(setup){
     var d=el("div");d.appendChild(el("i",{class:"dot"+(on?" on":"")}));
     d.appendChild(el("span",null,it[1]+(on?" connected":" not set")));list.appendChild(d);
   });
+  var oneClick=Boolean(setup.hubspot&&setup.claude);
+  var o=el("div");o.appendChild(el("i",{class:"dot"+(oneClick?" on":"")}));
+  o.appendChild(el("span",null,oneClick?"One-click QA runs on":"QA runs through Claude (one-click runs optional)"));list.appendChild(o);
+  show("claudeRunNote",!oneClick);
+  $("pingBtn").disabled=!oneClick;
+  state.oneClick=oneClick;
   if(setup.mock){var m=el("div");m.appendChild(el("i",{class:"dot"}));m.appendChild(el("span",null,"Local test mode: HubSpot, Claude and Slack are simulated"));list.appendChild(m);}
   show("setupCard",missing>0||setup.mock);
 }
@@ -542,7 +551,7 @@ function fillMonthSelects(){
 function renderRun(run){
   state.run=run;
   var running=run&&run.status==="running";
-  $("pingBtn").disabled=running;show("cancelBtn",running);
+  $("pingBtn").disabled=running||!state.oneClick;show("cancelBtn",running);
   if(!run){show("runView",false);return;}
   show("runView",true);
   $("runPct").textContent=run.percent+"%";
@@ -605,7 +614,7 @@ $("pingBtn").addEventListener("click",async function(){
   if(!confirm(text))return;
   $("pingBtn").disabled=true;
   try{var r=await api("/api/admin/run",{method:"POST",body:{action:"start",month:month}});renderRun(r.run);loop();}
-  catch(e){$("runMsg").textContent=e.message;$("runMsg").className="msg";show("runView",true);show("runMsg",true);$("pingBtn").disabled=false;}
+  catch(e){$("runMsg").textContent=e.message;$("runMsg").className="msg";show("runView",true);show("runMsg",true);$("pingBtn").disabled=!state.oneClick;}
 });
 $("cancelBtn").addEventListener("click",async function(){
   if(!confirm("Cancel this run? Nothing is published for the month."))return;

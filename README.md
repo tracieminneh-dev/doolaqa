@@ -32,22 +32,31 @@ Never put real values in this repository.
    password can sign in, and every admin can run cycles and approve. To narrow
    it, set `ADMIN_EMAIL` to specific emails and/or `@domain` entries, comma
    separated. Optional `SESSION_SECRET`: a long random string.
-3. **HubSpot.** Create a private app with scopes `tickets`, `crm.objects.notes.read` (for the HubSpot notes check),
-   `conversations.read` and `crm.objects.owners.read`, and set
-   `HUBSPOT_ACCESS_TOKEN`.
-4. **Claude.** Set `ANTHROPIC_API_KEY`. A full monthly run reads up to about
-   200 conversations, roughly 10 to 15 US dollars of API usage.
-5. **Slack.** Create a Slack app with bot scopes `users:read`,
+3. **Slack.** Create a Slack app with bot scopes `users:read`,
    `users:read.email`, `im:write`, `files:write` and `chat:write`, install it,
    and set `SLACK_BOT_TOKEN`. Agents are found by their HubSpot email; if an
    email differs in Slack, set `SLACK_USER_MAP` to JSON such as
-   `{"Anna H":"U0123ABC"}`.
+   `{"Anna H":"U0123ABC"}`. Without a HubSpot token the report can't look up
+   HubSpot emails, so list every agent in `SLACK_USER_MAP`.
+4. **Optional: one-click runs.** `HUBSPOT_ACCESS_TOKEN` (private app with
+   scopes `tickets`, `crm.objects.notes.read`, `conversations.read`,
+   `crm.objects.owners.read`) plus `ANTHROPIC_API_KEY` switch on the
+   **Ping new QA cycle** button. Not needed: by default cycles are run through
+   Claude (see below).
 
 The admin page shows a checklist of what is still missing.
 
 ## Running a monthly cycle
 
-On `/admin`, pick the month and press **Ping new QA cycle**. Keep the page
+**Default: through Claude.** After a month closes, ask Claude in this project
+to "run QA for <month>". Claude reads each agent's closed tickets through the
+HubSpot connector (conversations, HubSpot notes and response times), scores
+them against the rubric, writes `data/seed-YYYY-MM.js`, lists it in
+`data/seeds.js` and pushes to `main`. Vercel redeploys and the month appears
+on the dashboard and in admin, ready for ticket review and approvals. A month
+already in storage is never overwritten by a seed.
+
+**With the optional keys:** on `/admin`, pick the month and press **Ping new QA cycle**. Keep the page
 open: it works through the agents a ticket at a time and shows the
 percentage. If the page closes, the run picks up where it left off next time
 the admin page is opened. The month is published to the dashboard only when
