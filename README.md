@@ -28,15 +28,15 @@ Never put real values in this repository.
 
 1. **Storage.** Connect Upstash Redis from the Vercel Marketplace (Storage tab)
    to this project. It adds the connection variables automatically.
-2. **Google sign-in (recommended).** Set  to a Google OAuth
+2. **Google sign-in (recommended).** Set `GOOGLE_CLIENT_ID` to a Google OAuth
    client ID (Google Cloud Console, APIs & Services, Credentials, OAuth client
    ID, type Web application, Authorized JavaScript origin
-   ; no redirect URI needed). Admins then
+   `https://doolaqa-d76b.vercel.app`; no redirect URI needed). Admins then
    use **Sign in with Google**, only verified @doola.com Google Workspace
    accounts get in, and the shared password is switched off. Sessions are
-   signed with  (a long random string) or, if that is not
-   set, a key derived from , so keep one of them.
-   Without , sign-in falls back to the password below.
+   signed with `SESSION_SECRET` (a long random string) or, if that is not
+   set, a key derived from `ADMIN_PASSWORD`, so keep one of them.
+   Without `GOOGLE_CLIENT_ID`, sign-in falls back to the password below.
 3. **Admin sign-in (password fallback).** `ADMIN_PASSWORD`. Anyone with a doola.com email and this
    password can sign in, and every admin can run cycles and approve. To narrow
    it, set `ADMIN_EMAIL` to specific emails and/or `@domain` entries, comma
