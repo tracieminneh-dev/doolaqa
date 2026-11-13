@@ -28,17 +28,26 @@ Never put real values in this repository.
 
 1. **Storage.** Connect Upstash Redis from the Vercel Marketplace (Storage tab)
    to this project. It adds the connection variables automatically.
-2. **Admin sign-in.** `ADMIN_PASSWORD`. Anyone with a doola.com email and this
+2. **Google sign-in (recommended).** Set  to a Google OAuth
+   client ID (Google Cloud Console, APIs & Services, Credentials, OAuth client
+   ID, type Web application, Authorized JavaScript origin
+   ; no redirect URI needed). Admins then
+   use **Sign in with Google**, only verified @doola.com Google Workspace
+   accounts get in, and the shared password is switched off. Sessions are
+   signed with  (a long random string) or, if that is not
+   set, a key derived from , so keep one of them.
+   Without , sign-in falls back to the password below.
+3. **Admin sign-in (password fallback).** `ADMIN_PASSWORD`. Anyone with a doola.com email and this
    password can sign in, and every admin can run cycles and approve. To narrow
    it, set `ADMIN_EMAIL` to specific emails and/or `@domain` entries, comma
    separated. Optional `SESSION_SECRET`: a long random string.
-3. **Slack.** Create a Slack app with bot scopes `users:read`,
+4. **Slack.** Create a Slack app with bot scopes `users:read`,
    `users:read.email`, `im:write`, `files:write` and `chat:write`, install it,
    and set `SLACK_BOT_TOKEN`. Agents are found by their HubSpot email; if an
    email differs in Slack, set `SLACK_USER_MAP` to JSON such as
    `{"Anna H":"U0123ABC"}`. Without a HubSpot token the report can't look up
    HubSpot emails, so list every agent in `SLACK_USER_MAP`.
-4. **Optional: one-click runs.** `HUBSPOT_ACCESS_TOKEN` (private app with
+5. **Optional: one-click runs.** `HUBSPOT_ACCESS_TOKEN` (private app with
    scopes `tickets`, `crm.objects.notes.read`, `conversations.read`,
    `crm.objects.owners.read`) plus `ANTHROPIC_API_KEY` switch on the
    **Ping new QA cycle** button. Not needed: by default cycles are run through

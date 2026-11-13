@@ -15,6 +15,8 @@ export const GET = route(async (request) => {
     setup: admin ? setup : { login: setup.login },
     // Which emails may sign in (no secrets): the default doola.com rule, or a
     // narrower list set in ADMIN_EMAIL.
+    method: config.googleClientId() ? "google" : "password",
+    googleClientId: config.googleClientId() || null,
     access: config.adminEmails().join(",") === "@doola.com" ? "any @doola.com email" : "restricted list",
   });
 });

@@ -160,7 +160,11 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
 
   <section class="login" id="loginView" hidden>
     <h3>Sign in</h3>
-    <p class="sub" style="margin:0">Use your doola email address and the admin password.</p>
+    <p class="sub" style="margin:0" id="loginSub">Use your doola email address and the admin password.</p>
+    <div id="googleBox" hidden>
+      <div id="googleBtn" style="min-height:44px;margin-top:14px"></div>
+      <div class="msg" id="googleMsg" hidden></div>
+    </div>
     <form id="loginForm">
       <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" placeholder="name@doola.com" required></div>
       <div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required></div>
@@ -310,7 +314,43 @@ async function api(path,opts){
 function showLogin(msg){
   state.looping=false;
   show("adminView",false);show("signOut",false);show("loginView",true);
-  if(msg){$("loginMsg").textContent=msg;show("loginMsg",true);}
+  var google=state.loginMethod==="google";
+  show("googleBox",google);show("loginForm",!google);
+  if(google){
+    $("loginSub").textContent="Sign in with your doola Google account.";
+    if(msg){$("googleMsg").textContent=msg;show("googleMsg",true);}
+    renderGoogleButton();
+  }else if(msg){$("loginMsg").textContent=msg;show("loginMsg",true);}
+}
+/* Google Identity Services: loaded only when Google sign-in is switched on. */
+var googleReady=null;
+function loadGoogle(){
+  if(googleReady)return googleReady;
+  googleReady=new Promise(function(resolve,reject){
+    var sc=document.createElement("script");
+    sc.src="https://accounts.google.com/gsi/client";sc.async=true;
+    sc.onload=resolve;sc.onerror=function(){googleReady=null;reject(new Error("Couldn't load Google sign-in. Check your connection and reload."));};
+    document.head.appendChild(sc);
+  });
+  return googleReady;
+}
+async function renderGoogleButton(){
+  try{await loadGoogle();}
+  catch(e){$("googleMsg").textContent=e.message;show("googleMsg",true);return;}
+  google.accounts.id.initialize({
+    client_id:state.googleClientId,
+    hd:"doola.com",
+    ux_mode:"popup",
+    auto_select:false,
+    cancel_on_tap_outside:true,
+    callback:async function(resp){
+      show("googleMsg",false);
+      try{await api("/api/admin/google",{method:"POST",body:{credential:resp.credential}});await init();}
+      catch(err){$("googleMsg").textContent=err.message;show("googleMsg",true);}
+    }
+  });
+  $("googleBtn").textContent="";
+  google.accounts.id.renderButton($("googleBtn"),{theme:"outline",size:"large",text:"signin_with",shape:"pill",width:280});
 }
 $("loginForm").addEventListener("submit",async function(e){
   e.preventDefault();show("loginMsg",false);$("loginBtn").disabled=true;
@@ -322,6 +362,7 @@ $("loginForm").addEventListener("submit",async function(e){
 });
 $("signOut").addEventListener("click",async function(){
   try{await api("/api/admin/logout",{method:"POST",body:{}});}catch(e){}
+  if(window.google&&google.accounts&&google.accounts.id)google.accounts.id.disableAutoSelect();
   showLogin();
 });
 
@@ -329,8 +370,10 @@ async function init(){
   var s;
   try{s=await api("/api/admin/session");}
   catch(e){showLogin("The admin service is not reachable right now. "+e.message);return;}
+  state.loginMethod=s.method||"password";state.googleClientId=s.googleClientId||null;
   if(!s.authenticated){
-    showLogin(s.setup&&s.setup.login===false?"Admin sign-in is not set up yet. Add ADMIN_PASSWORD in Vercel, then redeploy.":null);
+    var notSet=state.loginMethod==="google"?"Google sign-in needs SESSION_SECRET (or ADMIN_PASSWORD) in Vercel. Add it, then redeploy.":"Admin sign-in is not set up yet. Add ADMIN_PASSWORD in Vercel, then redeploy.";
+    showLogin(s.setup&&s.setup.login===false?notSet:null);
     return;
   }
   show("loginView",false);show("adminView",true);show("signOut",true);
@@ -343,7 +386,7 @@ async function init(){
 function renderSetup(setup){
   // QA cycles are run through Claude, so the HubSpot token and Claude API key
   // are optional: they only switch on the one-click Ping button.
-  var items=[["login","Admin sign-in"],["storage","Storage (Upstash Redis)"],["slack","Slack bot token"]];
+  var items=[["login",setup.google?"Google sign-in":"Admin sign-in (password)"],["storage","Storage (Upstash Redis)"],["slack","Slack bot token"]];
   var list=$("setupList");list.textContent="";
   var missing=0;
   items.forEach(function(it){
