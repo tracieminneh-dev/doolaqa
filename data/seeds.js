@@ -2,5 +2,6 @@
 // first time it is connected; later months come from admin page runs.
 import september2026 from "./seed-2026-09.js";
 import october2026 from "./seed-2026-10.js";
+import november2026 from "./seed-2026-11.js";
 
-export default [september2026, october2026];
+export default [september2026, october2026, november2026];
