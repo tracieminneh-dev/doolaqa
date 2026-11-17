@@ -1,5 +1,6 @@
 // November 2026 QA cycle, month to date: tickets closed 1 to 16 Nov 2026, scored
-// in Claude through the HubSpot connector, with the HubSpot notes check and response times.
+// in Claude through the HubSpot connector against the 120 minute response standard,
+// with the HubSpot notes check and response times.
 export default {
  "month": "2026-11",
  "label": "November 2026",
@@ -7,7 +8,7 @@ export default {
   "from": "2026-11-01",
   "to": "2026-11-16"
  },
- "publishedAt": "2026-11-17T09:24:54.444Z",
+ "publishedAt": "2026-11-17T09:54:51.397Z",
  "source": "manual",
  "tickets": [
   {
@@ -30,7 +31,7 @@ export default {
    ],
    "fix": [
     "Customer asked for a downgrade to Starter and the subscription was set to cancel instead, which took two confused follow-ups to correct.",
-    "First response took around 6.8 hours against the 90 minute standard.",
+    "First response took around 6.8 hours against the 120 minute standard.",
     "Use the cancellation macro only for cancellations; the \"sorry to see you go\" and good standing warning did not fit a downgrade."
    ],
    "notes": {
@@ -42,7 +43,7 @@ export default {
     "slowestHours": 14.5,
     "replies": 5,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -66,7 +67,7 @@ export default {
    "fix": [
     "The reset steps spelled the customer's login email differently from the address on file, so following them as written would fail.",
     "Customer said the duplicate was already deleted and the real issue was being routed back to the formation flow; the reply repeated the reset flow that was already not working.",
-    "Ticket was closed without the customer confirming they could log in; first human reply came around 3.8 hours after the request."
+    "Ticket was closed without the customer confirming they could log in; first human reply came around 3.8 hours after the request, over the 120 minute standard."
    ],
    "notes": {
     "status": "Missing",
@@ -77,7 +78,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -100,7 +101,7 @@ export default {
     "Handled the counter request firmly with a clear final offer of 15% at $252.45, then confirmed the invoice was updated and when the link would arrive."
    ],
    "fix": [
-    "The acceptance waited around 7.5 hours for confirmation; aim to confirm within 90 minutes.",
+    "The acceptance waited around 7.5 hours for confirmation; aim to confirm within 120 minutes.",
     "Restate the final amount of $252.45 in the confirmation so the client has it in one place."
    ],
    "notes": {
@@ -112,7 +113,7 @@ export default {
     "slowestHours": 7.5,
     "replies": 3,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -135,7 +136,7 @@ export default {
    ],
    "fix": [
     "Told the client the director was added and bylaws updated, then 25 minutes later said a $299 state amendment was required; give the full answer in one reply.",
-    "First reply was a holding message around 19 hours after the intro with no return time; holding replies need a committed time.",
+    "First reply was a holding message around 19 hours after the intro, well over the 120 minute standard, with no return time; holding replies need a committed time.",
     "The share redistribution request was never addressed, and the client's name was misspelled as Marc in the final reply."
    ],
    "notes": {
@@ -147,7 +148,7 @@ export default {
     "slowestHours": 9.3,
     "replies": 5,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -171,7 +172,7 @@ export default {
    "fix": [
     "Customer asked four specific questions (2026 filing obligation, Form 5472 and pro forma 1120, KYC/AML, booking a call) and none were answered directly.",
     "Deferring to a tax call without a booking link leaves the customer to chase; include the link or the general rule for foreign-owned single member LLCs.",
-    "First human reply came around 28.9 hours after the original request against the 90 minute standard."
+    "First human reply came around 28.9 hours after the original request against the 120 minute standard."
    ],
    "notes": {
     "status": "Incomplete",
@@ -182,7 +183,7 @@ export default {
     "slowestHours": 0.7,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -206,7 +207,7 @@ export default {
    "fix": [
     "Mixed terms (amendment filing, updated EIN letter) confused the client and prompted a follow-up; use one consistent description of the 8822-B process.",
     "The clarification stayed vague; say what the IRS will send and roughly how long it takes.",
-    "Three replies took over the 90 minute standard, including a 3.7 hour first reply."
+    "Two replies took over the 120 minute standard: a 3.7 hour first reply and a 2.7 hour wait after the payment was made."
    ],
    "notes": {
     "status": "Incomplete",
@@ -216,8 +217,8 @@ export default {
     "firstHours": 3.7,
     "slowestHours": 2.7,
     "replies": 5,
-    "overStandard": 3,
-    "slaMinutes": 90
+    "overStandard": 2,
+    "slaMinutes": 120
    }
   },
   {
@@ -252,7 +253,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -266,17 +267,17 @@ export default {
     2,
     4,
     3,
-    3,
+    4,
     3
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Explained the next step plainly: EIN applied online once the state approves the formation, nothing needed from the client."
+    "Explained the next step plainly: EIN applied online once the state approves the formation, nothing needed from the client.",
+    "First reply came in around 1.7 hours, inside the 120 minute standard."
    ],
    "fix": [
     "Client said they have an ITIN, and the reply said \"Since you have an SSN\"; confirm the ID type before advising.",
-    "Did not address the same-day expectation or give a realistic EIN timeline.",
-    "First reply took around 1.7 hours, just over the 90 minute standard."
+    "Did not address the same-day expectation or give a realistic EIN timeline."
    ],
    "notes": {
     "status": "Incomplete",
@@ -286,8 +287,8 @@ export default {
     "firstHours": 1.7,
     "slowestHours": null,
     "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 90
+    "overStandard": 0,
+    "slaMinutes": 120
    }
   },
   {
@@ -311,7 +312,7 @@ export default {
    "fix": [
     "The billing address update in the first message was never acknowledged or done.",
     "The annual report question got a plan feature list instead of a direct answer that the New Hampshire report becomes the client's responsibility.",
-    "First reply took around 10.5 hours and all three replies were over 90 minutes; the closing message also has a broken fragment, \"Wishing you\"."
+    "First reply took around 10.5 hours and all three replies were over the 120 minute standard; the closing message also has a broken fragment, \"Wishing you\"."
    ],
    "notes": {
     "status": "Incomplete",
@@ -322,7 +323,7 @@ export default {
     "slowestHours": 4,
     "replies": 3,
     "overStandard": 3,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -357,7 +358,7 @@ export default {
     "slowestHours": 16.5,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -381,7 +382,7 @@ export default {
    ],
    "fix": [
     "Customer had already attached the annual report and tax return, yet the reply asked them to share the completed documents again.",
-    "Customer chased twice for the invoice and waited about 63 hours; the final set of six questions waited about 48 hours."
+    "Customer chased twice for the invoice and waited about 63 hours; the final set of six questions waited about 48 hours, far outside the 120 minute standard."
    ],
    "notes": {
     "status": "Missing",
@@ -392,7 +393,7 @@ export default {
     "slowestHours": 63.3,
     "replies": 11,
     "overStandard": 9,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -406,12 +407,13 @@ export default {
     2,
     4,
     3,
-    2,
+    3,
     2
    ],
-   "category": "Policy & Process",
+   "category": "Accuracy & Completeness",
    "keep": [
-    "Gave clear dashboard steps to update the payment method under Settings, Subscription, Billing Information."
+    "Gave clear dashboard steps to update the payment method under Settings, Subscription, Billing Information.",
+    "First reply went out in about 1.7 hours, inside the 120 minute standard."
    ],
    "fix": [
     "Customer asked to be charged in USD; the reply removed the card instead and never addressed the billing currency.",
@@ -426,8 +428,8 @@ export default {
     "firstHours": 1.7,
     "slowestHours": null,
     "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 90
+    "overStandard": 0,
+    "slaMinutes": 120
    }
   },
   {
@@ -450,7 +452,7 @@ export default {
     "Handled all three questions with labelled sections and updated the address the same day."
    ],
    "fix": [
-    "First reply took about 3.7 hours against the 90 minute standard.",
+    "First reply took about 3.7 hours and the follow up about 2.7 hours, both outside the 120 minute standard.",
     "The Mercury question was passed back to Mercury; say whether a reconnect is usually needed so the customer is not left to chase."
    ],
    "notes": {
@@ -462,7 +464,7 @@ export default {
     "slowestHours": 2.7,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -495,8 +497,8 @@ export default {
     "firstHours": 2.3,
     "slowestHours": 9,
     "replies": 3,
-    "overStandard": 3,
-    "slaMinutes": 90
+    "overStandard": 2,
+    "slaMinutes": 120
    }
   },
   {
@@ -531,7 +533,7 @@ export default {
     "slowestHours": 8.1,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -565,7 +567,7 @@ export default {
     "slowestHours": 12.8,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -587,7 +589,7 @@ export default {
     "Gave the $299 price including state fee plus step by step dashboard instructions to purchase the DBA."
    ],
    "fix": [
-    "First reply took about 2.5 hours against the 90 minute standard.",
+    "First reply took about 2.5 hours against the 120 minute standard.",
     "Add the expected processing time so the customer knows when the DBA will be in place."
    ],
    "notes": {
@@ -599,7 +601,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -634,7 +636,7 @@ export default {
     "slowestHours": 5,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -657,7 +659,7 @@ export default {
     "Answered the Mercury address and US operations questions with practical guidance and gave timelines that fit the November 25 deadline."
    ],
    "fix": [
-    "Customer said yes to the invoice and waited about 12 hours for it despite the stated deadline.",
+    "Customer said yes to the invoice and waited about 12 hours for it despite the stated deadline, well outside the 120 minute standard.",
     "Acknowledge the deadline pressure up front and confirm the certificate should arrive before November 25."
    ],
    "notes": {
@@ -669,7 +671,7 @@ export default {
     "slowestHours": 11.8,
     "replies": 6,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -693,7 +695,7 @@ export default {
    "fix": [
     "Include a direct link to Kintsugi instead of telling the customer to find their Support Center.",
     "Ask what sales tax help is needed before closing; a nexus or registration question may have a quick answer.",
-    "First reply took about 4 hours against the 90 minute standard."
+    "First reply took about 4 hours against the 120 minute standard."
    ],
    "notes": {
     "status": "Incomplete",
@@ -704,7 +706,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -740,7 +742,7 @@ export default {
     "slowestHours": 13.5,
     "replies": 3,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -764,7 +766,7 @@ export default {
    ],
    "fix": [
     "First reply asked the customer whether their provider would file Form 8832 when doola had already filed it; check the account before asking.",
-    "First response took about 3.9 hours and the detailed answer about 14.5 hours against the 90 minute standard."
+    "First response took about 3.9 hours and the detailed answer about 14.5 hours against the 120 minute standard."
    ],
    "notes": {
     "status": "Missing",
@@ -775,7 +777,7 @@ export default {
     "slowestHours": 14.5,
     "replies": 4,
     "overStandard": 3,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -811,7 +813,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -836,7 +838,7 @@ export default {
    "fix": [
     "Stated Form 8832 must be filed for the LLC to become a partnership; a two member LLC is a partnership by default, and the customer had to correct this.",
     "Pasted a generic employee-style member clause for a 50% owner and left the asked fee and timeline for drafting the documents and the BOI question unanswered.",
-    "First response took about 29.6 hours, and the second reply has an unfinished sentence about the January 2027 effective date."
+    "First response took about 29.6 hours against the 120 minute standard, and the second reply has an unfinished sentence about the January 2027 effective date."
    ],
    "notes": {
     "status": "Missing",
@@ -847,7 +849,7 @@ export default {
     "slowestHours": 12.9,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -870,7 +872,7 @@ export default {
     "Gave the referrals contact for follow ups so the customer knows where to go."
    ],
    "fix": [
-    "First response took about 18.5 hours for a simple question against the 90 minute standard.",
+    "First response took about 18.5 hours for a simple question against the 120 minute standard.",
     "Break the reward rules paragraph into short bullets so the key figures are easier to spot."
    ],
    "notes": {
@@ -882,7 +884,7 @@ export default {
     "slowestHours": 0.7,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -916,7 +918,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -950,7 +952,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -973,7 +975,7 @@ export default {
     "Clarified proof of address is the personal residence, preventing a wrong upload."
    ],
    "fix": [
-    "The detailed answer took about 57.7 hours against the 90 minute standard.",
+    "The detailed answer took about 57.7 hours against the 120 minute standard.",
     "The reply was sent cut off mid-sentence ('I'l'); proofread before sending."
    ],
    "notes": {
@@ -985,7 +987,7 @@ export default {
     "slowestHours": 57.7,
     "replies": 3,
     "overStandard": 3,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1020,7 +1022,7 @@ export default {
     "slowestHours": 2.3,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1054,7 +1056,7 @@ export default {
     "slowestHours": 0,
     "replies": 2,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1078,7 +1080,7 @@ export default {
    ],
    "fix": [
     "Ticket was closed while the franchise tax details were still outstanding, right after telling Harsh you would take it from there.",
-    "Picked up the thread about 37.7 hours after the customer's last message, against the 90 minute standard.",
+    "Picked up the thread about 37.7 hours after the customer's last message, well past the 120 minute standard.",
     "Send the request as a short numbered list with a deadline rather than repeating the full blank form twice."
    ],
    "notes": {
@@ -1090,7 +1092,7 @@ export default {
     "slowestHours": 37.7,
     "replies": 3,
     "overStandard": 3,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1124,7 +1126,7 @@ export default {
     "slowestHours": 12,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1146,7 +1148,7 @@ export default {
     "Explicitly confirmed no new EIN application or paid service would be started, matching the customer's instruction."
    ],
    "fix": [
-    "First response took about 36.6 hours against the 90 minute standard, and the holding reply gave no return date.",
+    "First response took about 36.6 hours against the 120 minute standard, and the holding reply gave no return date.",
     "Final reply only said records were uploaded; answer the three questions asked (was the SS-4 submitted, when, and was an EIN assigned) in the email itself."
    ],
    "notes": {
@@ -1158,7 +1160,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1172,7 +1174,7 @@ export default {
     4,
     4,
     5,
-    2,
+    3,
     4
    ],
    "category": "Policy & Process",
@@ -1192,8 +1194,8 @@ export default {
     "firstHours": 1.7,
     "slowestHours": null,
     "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 90
+    "overStandard": 0,
+    "slaMinutes": 120
    }
   },
   {
@@ -1217,7 +1219,7 @@ export default {
    "fix": [
     "Questions 3 and 4 told the customer to check plan coverage herself; look up her plan and state what is included and the cost to add 5472.",
     "Give the registered agent address and its permitted use directly instead of pointing to formation documents and asking her to confirm with the team.",
-    "Reply came about 13.2 hours after verification was provided, against the 90 minute standard."
+    "Reply came about 13.2 hours after verification was provided, well past the 120 minute standard."
    ],
    "notes": {
     "status": "Complete",
@@ -1228,7 +1230,7 @@ export default {
     "slowestHours": 13.2,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1251,7 +1253,7 @@ export default {
     "Warm, respectful tone that acknowledged the decision and closed gracefully when Amal chose to wait."
    ],
    "fix": [
-    "First response took about 4.2 hours against the 90 minute standard.",
+    "First response took about 4.2 hours against the 120 minute standard.",
     "Amal asked about partners for bank wind down and distributing funds; say whether doola offers or refers that help."
    ],
    "notes": {
@@ -1263,7 +1265,7 @@ export default {
     "slowestHours": 12.1,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1298,7 +1300,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1321,7 +1323,7 @@ export default {
     "Friendly, personal tone that kept Joyjit engaged across several updates."
    ],
    "fix": [
-    "Flagged URGENT and first response took about 33.8 hours against the 90 minute standard.",
+    "Flagged URGENT and first response took about 33.8 hours against the 120 minute standard.",
     "The phone number and Sole Member title request was answered with entity classification instead; confirm what will appear on the form.",
     "Name availability update came about 40 hours after promising to check, after the filing team had already told the customer."
    ],
@@ -1334,7 +1336,7 @@ export default {
     "slowestHours": 5.9,
     "replies": 5,
     "overStandard": 3,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1357,7 +1359,7 @@ export default {
    ],
    "fix": [
     "Second reply quoted a $660 total that dropped the $149 fee from your own first email, and the correction relabelled the $600 as annual report fees instead of the short year return.",
-    "First response took about 38 hours against the 90 minute standard.",
+    "First response took about 38 hours against the 120 minute standard.",
     "Gustavo asked whether any filing is included in the plan; answer that directly."
    ],
    "notes": {
@@ -1369,7 +1371,7 @@ export default {
     "slowestHours": 13.3,
     "replies": 4,
     "overStandard": 4,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1404,7 +1406,7 @@ export default {
     "slowestHours": 7.5,
     "replies": 4,
     "overStandard": 3,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1439,7 +1441,7 @@ export default {
     "slowestHours": 2.2,
     "replies": 3,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1461,7 +1463,7 @@ export default {
     "Restated the up to 90 day IRS timeline and confirmed the request was already submitted and being monitored."
    ],
    "fix": [
-    "First response took around 8.5 hours against the 90 minute standard.",
+    "First response took around 8.5 hours against the 120 minute standard.",
     "Give Owen the submission date and an expected window or check in date instead of an open ended promise to follow up."
    ],
    "notes": {
@@ -1473,7 +1475,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1509,7 +1511,7 @@ export default {
     "slowestHours": 59.6,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1531,7 +1533,7 @@ export default {
     "Was direct that doola does not offer sales tax permits and referred Maria to ResaleCertify and Kintsugi with a link."
    ],
    "fix": [
-    "First response took around 16.6 hours against the 90 minute standard.",
+    "First response took around 16.6 hours against the 120 minute standard.",
     "Questions 1 and 3 got no general guidance at all; share the basics (resale certificates usually follow a state registration where you have nexus) before referring out."
    ],
    "notes": {
@@ -1543,7 +1545,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1567,7 +1569,7 @@ export default {
    ],
    "fix": [
     "Ahmed asked about available extensions and his new renewal date after upgrading; neither was answered.",
-    "Third reply came around 11.1 hours after his message, over the 90 minute standard."
+    "Third reply came around 11.1 hours after his message, over the 120 minute standard."
    ],
    "notes": {
     "status": "Incomplete",
@@ -1578,7 +1580,7 @@ export default {
     "slowestHours": 11.1,
     "replies": 3,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1602,7 +1604,7 @@ export default {
    "fix": [
     "Nassim quoted the fax saying it is not an official verification document; address that wording instead of calling the fax fully valid.",
     "Ask for the rejection reason shown in his screenshot before pointing him to Mercury support.",
-    "First human reply came 2.2 hours after the original question and the rejection reply around 9.7 hours later."
+    "First human reply came 2.2 hours after the original question and the rejection reply around 9.7 hours later, both over the 120 minute standard."
    ],
    "notes": {
     "status": "Incomplete",
@@ -1613,7 +1615,7 @@ export default {
     "slowestHours": 9.7,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1636,7 +1638,7 @@ export default {
     "Follow up gave the Wyoming Department of Revenue link and a clear four step closure path."
    ],
    "fix": [
-    "Reply to Angie's follow up took around 12.6 hours against the 90 minute standard.",
+    "Reply to Angie's follow up took around 12.6 hours against the 120 minute standard.",
     "Close with how to reach us once she starts the dissolution flow so she knows the next step."
    ],
    "notes": {
@@ -1648,7 +1650,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1683,7 +1685,7 @@ export default {
     "slowestHours": 0.1,
     "replies": 3,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1717,7 +1719,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1752,7 +1754,7 @@ export default {
     "slowestHours": 44.9,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1775,7 +1777,7 @@ export default {
     "Added a clear reminder that he now owns registered agent, annual report and IRS filings to stay in good standing."
    ],
    "fix": [
-    "Khalid's confirmation request sat about 50 hours before your reply, against the 90 minute standard and only days before renewal.",
+    "Khalid's confirmation request sat about 50 hours before your reply, well past the 120 minute standard and only days before renewal.",
     "Add the one practical next step he flagged: file the Wyoming registered agent change before November 10 so there is no gap."
    ],
    "notes": {
@@ -1787,7 +1789,7 @@ export default {
     "slowestHours": 50.4,
     "replies": 3,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1811,7 +1813,7 @@ export default {
    "fix": [
     "Addressed the customer as Lixia when she signed every email as Julia; always use the name the customer uses.",
     "Saying she can trademark the domain once purchased is misleading; explain that owning the domain already gives her the rights to it and a trademark protects the brand name.",
-    "The question waited about 81 hours for a human reply, and the long trademark macro buried the one-line answer she needed."
+    "The question waited about 81 hours for a human reply, far past the 120 minute standard, and the long trademark macro buried the one-line answer she needed."
    ],
    "notes": {
     "status": "Complete",
@@ -1822,7 +1824,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1857,7 +1859,7 @@ export default {
     "slowestHours": 13.4,
     "replies": 5,
     "overStandard": 5,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1882,7 +1884,7 @@ export default {
    "fix": [
     "Two replies described the company as a Wyoming LLC with a $60 Wyoming annual report, then the last reply said New Mexico with no correction or apology; flag and own the error clearly.",
     "The final reply never confirmed the plan switch was actually done, and she asked for official filing links that were not given.",
-    "Replies took 2.0, 5.3 and 8.1 hours against the 90 minute standard."
+    "Replies took 2.0, 5.3 and 8.1 hours, all over the 120 minute standard; the first missed by under a minute and the later two by hours."
    ],
    "notes": {
     "status": "Incomplete",
@@ -1893,7 +1895,7 @@ export default {
     "slowestHours": 8.1,
     "replies": 3,
     "overStandard": 3,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1928,7 +1930,7 @@ export default {
     "slowestHours": 0,
     "replies": 2,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1952,7 +1954,7 @@ export default {
    "fix": [
     "Zunair asked for a refund of the $1,999 tax package that has not been delivered; the reply only cited formation and EIN as complete, which answers a different question.",
     "The cancellation request, the promo credit point and the November 13 dispute deadline were not addressed, then the ticket was closed.",
-    "First reply came after about 32 hours on a formal refund request with a chargeback warning; acknowledge quickly and route the refund decision before closing."
+    "First reply came after about 32 hours, far past the 120 minute standard, on a formal refund request with a chargeback warning; acknowledge quickly and route the refund decision before closing."
    ],
    "notes": {
     "status": "Complete",
@@ -1963,7 +1965,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -1998,7 +2000,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2033,7 +2035,7 @@ export default {
     "slowestHours": 4.3,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2055,7 +2057,7 @@ export default {
     "Confirmed the switch is complete, the address stays the same and the $99 charge date of November 26."
    ],
    "fix": [
-    "Julian's confirmation request waited about 60 hours against the 90 minute standard.",
+    "Julian's confirmation request waited about 60 hours, far past the 120 minute standard.",
     "He asked if $99 applies to future renewals and if IRS and state letters still reach the dashboard; answer each one explicitly rather than a general you will still have access to your mail.",
     "Open warmly and drop the duplicate closing macro so the confirmation reads cleanly."
    ],
@@ -2068,7 +2070,7 @@ export default {
     "slowestHours": 60.3,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2090,7 +2092,7 @@ export default {
     "Short, clear answer to the only open question and the invoice was actually voided, per the note."
    ],
    "fix": [
-    "Boris's hold request waited about 46 hours before a reply on an urgent government deadline ticket.",
+    "Boris's hold request waited about 46 hours before a reply, far past the 120 minute standard, on an urgent government deadline ticket.",
     "Confirm the invoice has been cancelled rather than we'll cancel it, and remind him the expedited option is ready if the agency asks for the formal certificate."
    ],
    "notes": {
@@ -2102,7 +2104,7 @@ export default {
     "slowestHours": 46.3,
     "replies": 3,
     "overStandard": 3,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2136,7 +2138,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2159,7 +2161,7 @@ export default {
    ],
    "fix": [
     "Athul asked twice for an update on the $209 dissolution filed October 12; neither reply mentioned it.",
-    "First reply was a generic retention macro sent about 6.7 hours after the email, against the 90 minute standard, and ignored that the LLC is being dissolved.",
+    "First reply was a generic retention macro sent about 6.7 hours after the email, against the 120 minute standard, and ignored that the LLC is being dissolved.",
     "Said registered agent coverage could not be guaranteed without offering how to protect the company until the dissolution completes."
    ],
    "notes": {
@@ -2171,7 +2173,7 @@ export default {
     "slowestHours": 0.5,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2206,7 +2208,7 @@ export default {
     "slowestHours": 0.3,
     "replies": 3,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2230,7 +2232,7 @@ export default {
    "fix": [
     "Customer asked for the effective date in writing; the macro reply never stated it.",
     "Macro told the customer to keep a registered agent and file annual reports even though the LLC is already dissolved.",
-    "Flagged urgent and the reply took about 2.4 hours against the 90 minute standard."
+    "Flagged urgent and the reply took about 2.4 hours, past the 120 minute standard."
    ],
    "notes": {
     "status": "Missing",
@@ -2241,7 +2243,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2275,7 +2277,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2309,7 +2311,7 @@ export default {
     "slowestHours": 0.9,
     "replies": 2,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2332,7 +2334,7 @@ export default {
     "Clear final answer on invoice export, explaining it now lives only in doola Books."
    ],
    "fix": [
-    "First reply came about 8.2 hours after the email, against the 90 minute standard.",
+    "First reply came about 8.2 hours after the email, well past the 120 minute standard.",
     "Holding replies said he would come back without a committed date."
    ],
    "notes": {
@@ -2344,7 +2346,7 @@ export default {
     "slowestHours": 0.5,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2358,16 +2360,16 @@ export default {
     3,
     4,
     4,
-    4,
+    5,
     3
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Set clear expectations that the consultation is live only and advised putting key questions in the booking questionnaire."
+    "Set clear expectations that the consultation is live only and advised putting key questions in the booking questionnaire.",
+    "Both replies landed inside the 120 minute standard, the first in about 1.7 hours."
    ],
    "fix": [
-    "Five detailed questions were all routed to a consultation; answer the factual ones, such as annual filing fees after an 8832 election, in writing.",
-    "First reply took about 1.7 hours against the 90 minute standard."
+    "Five detailed questions were all routed to a consultation; answer the factual ones, such as annual filing fees after an 8832 election, in writing."
    ],
    "notes": {
     "status": "Missing",
@@ -2377,8 +2379,8 @@ export default {
     "firstHours": 1.7,
     "slowestHours": 1,
     "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 90
+    "overStandard": 0,
+    "slaMinutes": 120
    }
   },
   {
@@ -2401,7 +2403,7 @@ export default {
     "Told Jorge exactly what to do next: mark the task complete, nothing is late."
    ],
    "fix": [
-    "First human reply came about 106 hours after the email, with the customer left on AI answers and asking again in between.",
+    "First human reply came about 106 hours after the email, far past the 120 minute standard, with the customer left on AI answers and asking again in between.",
     "Acknowledge the frustration about paying for support directly rather than a mid sentence greeting."
    ],
    "notes": {
@@ -2413,7 +2415,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2436,7 +2438,7 @@ export default {
    ],
    "fix": [
     "The same reply, including the e-meet greeting, was sent three times over a week while Dmytro wrote back \"Still no answer\".",
-    "First reply took about 73 hours and the question on whether Delaware or the IRS must be told was never answered.",
+    "First reply took about 73 hours, far past the 120 minute standard, and the question on whether Delaware or the IRS must be told was never answered.",
     "Ticket closed with the latest resend of the request unanswered in the thread."
    ],
    "notes": {
@@ -2448,7 +2450,7 @@ export default {
     "slowestHours": 3.1,
     "replies": 3,
     "overStandard": 3,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2472,7 +2474,7 @@ export default {
    "fix": [
     "Olga asked to keep the registered agent and business address on Starter; the reply never confirmed both are included.",
     "Document access was answered as just \"dashboard access\" without confirming her formation documents, EIN letter and past filings stay available.",
-    "First response took 2.0 hours against the 90 minute standard, and the reply went only to the CC address rather than the person who wrote in."
+    "First response took just over 2 hours, narrowly missing the 120 minute standard, and the reply went only to the CC address rather than the person who wrote in."
    ],
    "notes": {
     "status": "Missing",
@@ -2483,7 +2485,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2517,7 +2519,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2542,7 +2544,7 @@ export default {
    "fix": [
     "Final reply skipped two direct questions: whether the renewed plan covers the 2027 return and whether the $1,999 price is guaranteed.",
     "The discount request got only \"check Services > My plan for promotions\" instead of a clear yes or no.",
-    "Two of five waits ran over standard, including 6.5 hours on the detailed cost breakdown request."
+    "One of five waits ran over the 120 minute standard: 6.5 hours on the detailed cost breakdown request."
    ],
    "notes": {
     "status": "Missing",
@@ -2552,8 +2554,8 @@ export default {
     "firstHours": 1.8,
     "slowestHours": 6.5,
     "replies": 5,
-    "overStandard": 2,
-    "slaMinutes": 90
+    "overStandard": 1,
+    "slaMinutes": 120
    }
   },
   {
@@ -2577,7 +2579,7 @@ export default {
    "fix": [
     "When the customer asked \"What do you suggest?\" the reply repeated the policy instead of offering options such as a cheaper plan or what happens to the company if services lapse.",
     "Replies read as firm refusals; acknowledge the cash flow situation before restating the policy.",
-    "First response took 9.1 hours against the 90 minute standard."
+    "First response took 9.1 hours against the 120 minute standard."
    ],
    "notes": {
     "status": "Missing",
@@ -2588,7 +2590,7 @@ export default {
     "slowestHours": 1.3,
     "replies": 3,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2622,7 +2624,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2636,16 +2638,16 @@ export default {
     5,
     5,
     4,
-    4,
+    5,
     5
    ],
-   "category": "Policy & Process",
+   "category": "Empathy & Tone",
    "keep": [
     "Turned a one line confused message into a full picture: formation done on October 7, the invoice is for Pulse at $300 after the trial, and EIN status with timeline.",
     "Gave clear if/then options to keep or cancel Pulse and pointed to where the documents live in the dashboard."
    ],
    "fix": [
-    "First response took 1.8 hours against the 90 minute standard."
+    "Open with a short acknowledgement of the frustration about being asked to pay again before explaining the invoice."
    ],
    "notes": {
     "status": "Missing",
@@ -2655,8 +2657,8 @@ export default {
     "firstHours": 1.8,
     "slowestHours": null,
     "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 90
+    "overStandard": 0,
+    "slaMinutes": 120
    }
   },
   {
@@ -2691,7 +2693,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2725,7 +2727,7 @@ export default {
     "slowestHours": 0.5,
     "replies": 2,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2748,7 +2750,7 @@ export default {
     "Followed through with sample Article IV language and updated the members on the dashboard once documents arrived."
    ],
    "fix": [
-    "Three of four waits ran over standard, including 9.6 hours before sending the promised clause language.",
+    "Two of four waits ran over the 120 minute standard: 3.7 hours on the first reply and 9.6 hours before sending the promised clause language.",
     "The first reply is long; short headings per topic would make the action items easier to spot."
    ],
    "notes": {
@@ -2759,8 +2761,8 @@ export default {
     "firstHours": 3.7,
     "slowestHours": 9.6,
     "replies": 4,
-    "overStandard": 3,
-    "slaMinutes": 90
+    "overStandard": 2,
+    "slaMinutes": 120
    }
   },
   {
@@ -2774,7 +2776,7 @@ export default {
     5,
     5,
     4,
-    4,
+    5,
     5
    ],
    "category": "Empathy & Tone",
@@ -2783,7 +2785,7 @@ export default {
     "Preempted follow ups by flagging automated reminder emails and that cancelling does not dissolve the company."
    ],
    "fix": [
-    "First response took 1.8 hours against the 90 minute standard."
+    "Add a brief acknowledgement that Alec no longer uses the service so the confirmation feels less like a template."
    ],
    "notes": {
     "status": "Incomplete",
@@ -2793,8 +2795,8 @@ export default {
     "firstHours": 1.8,
     "slowestHours": null,
     "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 90
+    "overStandard": 0,
+    "slaMinutes": 120
    }
   },
   {
@@ -2817,7 +2819,7 @@ export default {
     "Owned the reopened case and offered to be the single contact, which directly addressed the client's frustration about the earlier closure."
    ],
    "fix": [
-    "First reply took about 11.5 hours against the 90 minute standard on a client already upset about a closed ticket.",
+    "First reply took about 11.5 hours against the 120 minute standard on a client already upset about a closed ticket.",
     "Ticket was closed two days later while still waiting on the signed Operating Agreement and the promised banking help, so the case the client asked to keep open was closed again.",
     "Banking guidance was deferred entirely; share at least the likely bank options for a Chilean owner now so the client can prepare."
    ],
@@ -2830,7 +2832,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2852,7 +2854,7 @@ export default {
     "Confirmed the payment was received for the yearly Business Plan and that services were active again, with nothing else needed from the client."
    ],
    "fix": [
-    "Reply came about 41 hours after the client's message against the 90 minute standard; a one line confirmation like this should go out the same shift.",
+    "Reply came about 41 hours after the client's message against the 120 minute standard; a one line confirmation like this should go out the same shift.",
     "Trim the generic closing paragraph; it adds length to what should be a two line confirmation."
    ],
    "notes": {
@@ -2864,7 +2866,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2888,7 +2890,7 @@ export default {
    "fix": [
     "First reply was a generic dissolution macro: it mentioned a full 2025 return for a company formed in March 2026, did not answer whether the final Form 5472 and pro forma 1120 are included, and gave no total including the $60 state fee.",
     "The client's December 31 goal was not addressed directly; state whether submitting now meets it given the 15 to 20 business day timeline.",
-    "First reply took about 47 hours against the 90 minute standard, and \"For more details, click here\" was sent with no working link."
+    "First reply took about 47 hours and the follow up about 2.9 hours, both past the 120 minute standard, and \"For more details, click here\" was sent with no working link."
    ],
    "notes": {
     "status": "Missing",
@@ -2899,7 +2901,7 @@ export default {
     "slowestHours": 2.9,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2919,12 +2921,12 @@ export default {
    "category": "Accuracy & Completeness",
    "keep": [
     "Handled an escalating client threatening chargebacks calmly, explained honestly why no guaranteed IRS date could be given, and committed to an update within 48 hours, which was kept when the EIN was issued about 24 hours later.",
-    "Talked the client out of cancelling by explaining that a new application would restart the IRS queue."
+    "Talked the client out of cancelling by explaining that a new application would restart the IRS queue, in a first reply sent inside the 120 minute standard."
    ],
    "fix": [
     "The \"approximately 2 weeks\" estimate was given without a source, which the client immediately challenged; share what the IRS specialist actually confirmed instead of a soft estimate.",
     "Several replies opened with a stray backslash before \"Hi\" and reintroduced yourself mid thread; proofread before sending.",
-    "The reply after the client's escalation took about 31 hours; with a 48 hour ultimatum, aim to acknowledge the same day."
+    "The reply after the client's escalation took about 31 hours, far past the 120 minute standard; with a 48 hour ultimatum, aim to acknowledge the same day."
    ],
    "notes": {
     "status": "Missing",
@@ -2934,8 +2936,8 @@ export default {
     "firstHours": 1.5,
     "slowestHours": 30.7,
     "replies": 4,
-    "overStandard": 4,
-    "slaMinutes": 90
+    "overStandard": 3,
+    "slaMinutes": 120
    }
   },
   {
@@ -2970,7 +2972,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -2993,7 +2995,7 @@ export default {
     "Laid out keep or cancel options with the consequence of each, including the need for a new registered agent."
    ],
    "fix": [
-    "Reply came about 3 hours after the client's first message, past the 90 minute standard, after the AI reply had not answered the question.",
+    "Reply came about 2.9 hours after the client's first message, past the 120 minute standard, after the AI reply had not answered the question.",
     "Add a direct link to update the card in the dashboard so the client can act in one click."
    ],
    "notes": {
@@ -3005,7 +3007,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3029,7 +3031,7 @@ export default {
    "fix": [
     "Four direct questions went unanswered: whether filings can be in before December 1, whether an EIN was obtained for either company, whether any 2025 Form 5472 was filed, and confirmation of no renewals.",
     "The reply was a pasted macro with a VIP plan caveat and \"click here\" with no link; tailor it to the two companies and their deadline.",
-    "Ticket was closed without the client's open questions resolved; first reply also took about 5.6 hours."
+    "Ticket was closed without the client's open questions resolved; first reply also took about 5.6 hours against the 120 minute standard."
    ],
    "notes": {
     "status": "Missing",
@@ -3040,7 +3042,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3063,7 +3065,7 @@ export default {
     "Followed through by approving the access request and giving a fallback if it did not appear, which the client praised as thorough."
    ],
    "fix": [
-    "First reply took about 3.8 hours against the 90 minute standard, and the client's follow up waited about 12 hours for a human reply."
+    "First reply took about 3.8 hours against the 120 minute standard, and the client's follow up waited about 12 hours for a human reply."
    ],
    "notes": {
     "status": "Missing",
@@ -3074,7 +3076,7 @@ export default {
     "slowestHours": 12,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3097,7 +3099,7 @@ export default {
    ],
    "fix": [
     "\"We'll take care of the next steps on our end\" is vague; say what happens next, for example that the doola subscription and registered agent service will be cancelled so there is no renewal.",
-    "Reply opened with a stray backslash before \"Hi\" and came about 6 hours after the client's message."
+    "Reply opened with a stray backslash before \"Hi\" and came about 6 hours after the client's message, past the 120 minute standard."
    ],
    "notes": {
     "status": "Missing",
@@ -3108,7 +3110,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3132,7 +3134,7 @@ export default {
    ],
    "fix": [
     "Confirm internally that the Form 8822-B update is really included at no extra cost before promising it in writing.",
-    "Address the two named members by name rather than \"Team TeKoTeK\", and aim to reply sooner than the 18.5 hours this took."
+    "Address the two named members by name rather than \"Team TeKoTeK\", and aim to reply within the 120 minute standard rather than the 18.5 hours this took."
    ],
    "notes": {
     "status": "Missing",
@@ -3143,7 +3145,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3168,7 +3170,7 @@ export default {
    "fix": [
     "First reply said the Delaware conversion was covered, then the Tax team confirmed a second return in the conversion year costs extra; confirm coverage before saying yes.",
     "Questions on the CPA or EA signer and the Starter credit were deflected in the first reply, which created the second round of questions.",
-    "First response took about 3.7 hours against the 90 minute standard, and the holding reply promised 'first thing next week' but the answer came Tuesday evening."
+    "First response took about 3.7 hours against the 120 minute standard, and the holding reply promised 'first thing next week' but the answer came Tuesday evening."
    ],
    "notes": {
     "status": "Incomplete",
@@ -3179,7 +3181,7 @@ export default {
     "slowestHours": 0.1,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3203,7 +3205,7 @@ export default {
    ],
    "fix": [
     "The vendor check question (preparer credentials and doola's legal entity) was dismissed as 'your 3rd concern' instead of being answered or explained.",
-    "First response took about 2.1 hours against the 90 minute standard."
+    "First response took about 2.1 hours, just over the 120 minute standard."
    ],
    "notes": {
     "status": "Incomplete",
@@ -3214,7 +3216,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3237,7 +3239,7 @@ export default {
     "Preempted the next issue: payout account must match the LLC's exact legal name in Stripe, plus application tips and the eligibility page link."
    ],
    "fix": [
-    "First response took about 5 hours against the 90 minute standard for a customer worried about payout interruption."
+    "First response took about 5 hours against the 120 minute standard for a customer worried about payout interruption."
    ],
    "notes": {
     "status": "Incomplete",
@@ -3248,7 +3250,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3273,7 +3275,7 @@ export default {
    "fix": [
     "Cancellation confirmation gave the end date as 10/10/2026, a date already in the past, when the renewal was November 10.",
     "Cancellation reply was addressed to Priyesh although the request came from the Lucia team inbox.",
-    "Renewal question reply took about 10 hours and the cancellation request sent on renewal day waited about 4.7 hours."
+    "Renewal question reply took about 10 hours and the cancellation request sent on renewal day waited about 4.7 hours, both over the 120 minute standard."
    ],
    "notes": {
     "status": "Incomplete",
@@ -3283,8 +3285,8 @@ export default {
     "firstHours": 1.7,
     "slowestHours": 10.2,
     "replies": 3,
-    "overStandard": 3,
-    "slaMinutes": 90
+    "overStandard": 2,
+    "slaMinutes": 120
    }
   },
   {
@@ -3318,7 +3320,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3354,7 +3356,7 @@ export default {
     "slowestHours": 1,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3389,7 +3391,7 @@ export default {
     "slowestHours": 1,
     "replies": 2,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3425,7 +3427,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3461,7 +3463,7 @@ export default {
     "slowestHours": 64.5,
     "replies": 7,
     "overStandard": 4,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3485,7 +3487,7 @@ export default {
    "fix": [
     "Sent with an unfilled template placeholder in brackets for the non customer booking steps, so the customer has no way to book.",
     "Fee and filing scope questions were not answered; give at least the known service prices for Form 1065, 8822-B and the Massachusetts registration.",
-    "First response took about 4.8 hours against the 90 minute standard."
+    "First response took about 4.8 hours against the 120 minute standard."
    ],
    "notes": {
     "status": "Incomplete",
@@ -3496,7 +3498,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3531,7 +3533,7 @@ export default {
     "slowestHours": 55.3,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3567,7 +3569,7 @@ export default {
     "slowestHours": 1.4,
     "replies": 3,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3602,7 +3604,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3636,7 +3638,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3650,16 +3652,16 @@ export default {
     5,
     5,
     4,
-    4,
+    5,
     5
    ],
-   "category": "Policy & Process",
+   "category": "Empathy & Tone",
    "keep": [
     "Sent the payment link with the 24 hour expiry noted and explained what happens once paid.",
     "Confirmed activation for the right company and gave the renewal date of November 9, 2027 without being asked."
    ],
    "fix": [
-    "First reply took about 1.6 hours against the 90 minute standard for a simple request."
+    "Trim the closing to one short sign off; three stacked offers to reach out make a warm reply read like a template."
    ],
    "notes": {
     "status": "Missing",
@@ -3669,8 +3671,8 @@ export default {
     "firstHours": 1.6,
     "slowestHours": 1.2,
     "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 90
+    "overStandard": 0,
+    "slaMinutes": 120
    }
   },
   {
@@ -3705,7 +3707,7 @@ export default {
     "slowestHours": 3.4,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3729,7 +3731,7 @@ export default {
    "fix": [
     "Christian said that if no refund applied he wanted to downgrade at the next billing cycle; the reply told him to keep the plan and change his mind later, ignoring that instruction.",
     "Confirm the downgrade is scheduled for renewal and give the renewal date, then close.",
-    "Replies took about 29 and 54 hours, both well over the 90 minute standard."
+    "Replies took about 29 and 54 hours, both well over the 120 minute standard."
    ],
    "notes": {
     "status": "Missing",
@@ -3740,7 +3742,7 @@ export default {
     "slowestHours": 54.2,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3774,7 +3776,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3810,7 +3812,7 @@ export default {
     "slowestHours": 3.1,
     "replies": 4,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3843,7 +3845,7 @@ export default {
     "slowestHours": 0.4,
     "replies": 3,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3866,7 +3868,7 @@ export default {
     "Follow-up gave a concrete EIN timeline: submitted October 28, 6 to 8 weeks, letter uploaded to the dashboard."
    ],
    "fix": [
-    "First reply came about 47 hours after the customer wrote, against the 90 minute standard.",
+    "First reply came about 47 hours after the customer wrote, against the 120 minute standard.",
     "Customer asked to stop the reminders every second day; the reply never acknowledged or addressed that frustration.",
     "Use one name consistently; the first reply said Rale and the second Radoljub."
    ],
@@ -3879,7 +3881,7 @@ export default {
     "slowestHours": 0.1,
     "replies": 2,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3914,7 +3916,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 0,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -3949,8 +3951,8 @@ export default {
     "firstHours": 4.3,
     "slowestHours": 6.9,
     "replies": 6,
-    "overStandard": 4,
-    "slaMinutes": 90
+    "overStandard": 3,
+    "slaMinutes": 120
    }
   },
   {
@@ -3985,8 +3987,8 @@ export default {
     "firstHours": 191.8,
     "slowestHours": 19.2,
     "replies": 6,
-    "overStandard": 3,
-    "slaMinutes": 90
+    "overStandard": 2,
+    "slaMinutes": 120
    }
   },
   {
@@ -4008,7 +4010,7 @@ export default {
     "Refunded the duplicate $297, gave a 5 to 10 business day window, and confirmed the plan renews November 7, 2027 without a double charge."
    ],
    "fix": [
-    "First reply came about 37.6 hours after the customer wrote, against the 90 minute standard.",
+    "First reply came about 37.6 hours after the customer wrote, against the 120 minute standard.",
     "The refund sentence is repeated twice word for word; proofread before sending."
    ],
    "notes": {
@@ -4020,7 +4022,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -4056,7 +4058,7 @@ export default {
     "slowestHours": 6.4,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -4091,7 +4093,7 @@ export default {
     "slowestHours": null,
     "replies": 1,
     "overStandard": 1,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -4126,7 +4128,7 @@ export default {
     "slowestHours": 5,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   },
   {
@@ -4149,7 +4151,7 @@ export default {
     "Handled the price match ask with a $50 goodwill discount and sent a discounted payment link."
    ],
    "fix": [
-    "First reply took about 6.7 hours and every gap exceeded the 90 minute standard.",
+    "First reply took about 6.7 hours and the final reply about 2.9 hours, both over the 120 minute standard.",
     "State contact email question got a vague answer; say plainly whether notices sent to the doola filings address are forwarded.",
     "Customer asked to clear the annual report reminder after filing; that was not acknowledged."
    ],
@@ -4161,8 +4163,8 @@ export default {
     "firstHours": 6.7,
     "slowestHours": 2.9,
     "replies": 3,
-    "overStandard": 3,
-    "slaMinutes": 90
+    "overStandard": 2,
+    "slaMinutes": 120
    }
   },
   {
@@ -4197,7 +4199,7 @@ export default {
     "slowestHours": 44.6,
     "replies": 2,
     "overStandard": 2,
-    "slaMinutes": 90
+    "slaMinutes": 120
    }
   }
  ]
