@@ -17,7 +17,20 @@ if (fs.existsSync(envFile)) {
 }
 
 const PORT = Number(process.env.PORT || 3123);
-const PAGES = { "/": "index.html", "/index.html": "index.html", "/admin": "admin.html", "/admin.html": "admin.html" };
+const PAGES = { "/": "index.html", "/index.html": "index.html", "/admin": "admin.html", "/admin.html": "admin.html", "/signed-out": "signed-out.html" };
+const { default: middleware } = await import(pathToFileURL(path.join(root, "middleware.js")).href);
+
+// Runs middleware.js like Vercel does (everything except /api/auth/ and /signed-out).
+async function gate(req, res, url) {
+  if (url.pathname.startsWith("/api/auth/") || url.pathname.startsWith("/signed-out")) return false;
+  const r = await middleware(new Request(url, { headers: req.headers }));
+  if (!r) return false;
+  const headers = {};
+  r.headers.forEach((v, k) => (headers[k] = v));
+  res.writeHead(r.status, headers);
+  res.end(Buffer.from(await r.arrayBuffer()));
+  return true;
+}
 
 async function handleApi(req, res, url) {
   const file = path.join(root, `${url.pathname.replace(/\/$/, "")}.js`);
@@ -50,6 +63,7 @@ async function handleApi(req, res, url) {
 http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
   try {
+    if (await gate(req, res, url)) return;
     if (url.pathname.startsWith("/api/")) return await handleApi(req, res, url);
     const page = PAGES[url.pathname];
     if (!page) {

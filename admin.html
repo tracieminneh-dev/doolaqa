@@ -319,38 +319,9 @@ function showLogin(msg){
   if(google){
     $("loginSub").textContent="Sign in with your doola Google account.";
     if(msg){$("googleMsg").textContent=msg;show("googleMsg",true);}
-    renderGoogleButton();
+    // Server-side Google sign-in: a plain link, no Google script on the page.
+    $("googleBtn").innerHTML='<a class="btn" href="/api/auth/google-login?next=%2Fadmin">Sign in with Google</a>';
   }else if(msg){$("loginMsg").textContent=msg;show("loginMsg",true);}
-}
-/* Google Identity Services: loaded only when Google sign-in is switched on. */
-var googleReady=null;
-function loadGoogle(){
-  if(googleReady)return googleReady;
-  googleReady=new Promise(function(resolve,reject){
-    var sc=document.createElement("script");
-    sc.src="https://accounts.google.com/gsi/client";sc.async=true;
-    sc.onload=resolve;sc.onerror=function(){googleReady=null;reject(new Error("Couldn't load Google sign-in. Check your connection and reload."));};
-    document.head.appendChild(sc);
-  });
-  return googleReady;
-}
-async function renderGoogleButton(){
-  try{await loadGoogle();}
-  catch(e){$("googleMsg").textContent=e.message;show("googleMsg",true);return;}
-  google.accounts.id.initialize({
-    client_id:state.googleClientId,
-    hd:"doola.com",
-    ux_mode:"popup",
-    auto_select:false,
-    cancel_on_tap_outside:true,
-    callback:async function(resp){
-      show("googleMsg",false);
-      try{await api("/api/admin/google",{method:"POST",body:{credential:resp.credential}});await init();}
-      catch(err){$("googleMsg").textContent=err.message;show("googleMsg",true);}
-    }
-  });
-  $("googleBtn").textContent="";
-  google.accounts.id.renderButton($("googleBtn"),{theme:"outline",size:"large",text:"signin_with",shape:"pill",width:280});
 }
 $("loginForm").addEventListener("submit",async function(e){
   e.preventDefault();show("loginMsg",false);$("loginBtn").disabled=true;
@@ -361,8 +332,8 @@ $("loginForm").addEventListener("submit",async function(e){
   finally{$("loginBtn").disabled=false;}
 });
 $("signOut").addEventListener("click",async function(){
+  if(state.loginMethod==="google"){window.location.href="/api/auth/logout";return;}
   try{await api("/api/admin/logout",{method:"POST",body:{}});}catch(e){}
-  if(window.google&&google.accounts&&google.accounts.id)google.accounts.id.disableAutoSelect();
   showLogin();
 });
 
@@ -370,7 +341,7 @@ async function init(){
   var s;
   try{s=await api("/api/admin/session");}
   catch(e){showLogin("The admin service is not reachable right now. "+e.message);return;}
-  state.loginMethod=s.method||"password";state.googleClientId=s.googleClientId||null;
+  state.loginMethod=s.method||"password";
   if(!s.authenticated){
     var notSet=state.loginMethod==="google"?"Google sign-in needs SESSION_SECRET (or ADMIN_PASSWORD) in Vercel. Add it, then redeploy.":"Admin sign-in is not set up yet. Add ADMIN_PASSWORD in Vercel, then redeploy.";
     showLogin(s.setup&&s.setup.login===false?notSet:null);
