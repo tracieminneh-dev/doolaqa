@@ -33,7 +33,9 @@ async function gate(req, res, url) {
 }
 
 async function handleApi(req, res, url) {
-  const file = path.join(root, `${url.pathname.replace(/\/$/, "")}.js`);
+  let file = path.join(root, `${url.pathname.replace(/\/$/, "")}.js`);
+  // Vercel dynamic segment, e.g. api/auth/[action].js
+  if (!fs.existsSync(file)) file = path.join(path.dirname(file), "[action].js");
   if (!file.startsWith(path.join(root, "api")) || !fs.existsSync(file)) {
     res.writeHead(404, { "Content-Type": "application/json" });
     return res.end(JSON.stringify({ error: "Not found" }));

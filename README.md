@@ -33,7 +33,7 @@ Never put real values in this repository.
    OAuth client exactly) and `SESSION_SECRET` (32+ random characters). Then the whole
    site, dashboard, admin, APIs and data files, sits behind Sign in with Google
    (`middleware.js`), only verified @doola.com Google Workspace accounts get in, and
-   the shared password is off. Routes: `/api/auth/google-login`, `/api/auth/google-callback`,
+   the shared password is off. Routes (one function, `api/auth/[action].js`): `/api/auth/google-login`, `/api/auth/google-callback`,
    `/api/auth/logout`. Never commit the Google client JSON file.
 3. **Admin sign-in (password fallback).** `ADMIN_PASSWORD`. Anyone with a doola.com email and this
    password can sign in, and every admin can run cycles and approve. To narrow
