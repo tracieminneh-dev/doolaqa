@@ -1,5 +1,5 @@
-// Keeps the whole CS QA site (pages, data files and APIs) behind Google
-// sign-in once it is configured. Runs on Vercel before every request except
+// Keeps the CS QA admin page, its APIs and the raw data files behind Google
+// sign-in once it is configured; the dashboard itself stays public. Runs on Vercel before every request except
 // the sign-in routes and the signed-out page. Until GOOGLE_CLIENT_ID,
 // GOOGLE_CLIENT_SECRET and GOOGLE_REDIRECT_URI are all set it lets everything
 // through, so the site keeps working while Google is being set up.
@@ -42,10 +42,15 @@ async function validSession(request) {
   }
 }
 
+// The dashboard and the one API it reads are public. Everything else (the
+// admin page and its APIs, raw data files, source files) needs sign-in.
+const PUBLIC = new Set(["/", "/index", "/index.html", "/api/data"]);
+
 export default async function middleware(request) {
   if (!enabled()) return;
-  if (await validSession(request)) return;
   const url = new URL(request.url);
+  if (PUBLIC.has(url.pathname.replace(/(.)\/+$/, "$1"))) return;
+  if (await validSession(request)) return;
   if (url.pathname.startsWith("/api/")) {
     return new Response(JSON.stringify({ error: "Please sign in." }), { status: 401, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" } });
   }
