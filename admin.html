@@ -770,23 +770,35 @@ function reviewCard(month,t){
   var ta=el("textarea",{placeholder:"Comment (required when you change a score)",maxlength:"600"});ta.value=t.review&&t.review.comment||"";c.appendChild(ta);
   var w=el("div",{class:"actions"});w.style.marginTop="8px";
   var save=el("button",{class:"btn small",type:"button"},t.review?"Update review":"Confirm or save changes");
+  // Result shows right under this ticket, not only at the top of the section.
+  var note=el("div",{class:"msg"});note.hidden=true;note.style.marginTop="8px";
+  function say(text,ok){note.textContent=text;note.className="msg rvnote"+(ok?" ok":"");note.hidden=!text;}
   save.addEventListener("click",async function(){
-    save.disabled=true;
-    try{var r=await api("/api/admin/review",{method:"POST",body:{month:month,ticketId:t.id,s:sels.map(function(x){return Number(x.value);}),comment:ta.value}});
-      c.replaceWith(reviewCard(month,r.ticket));showMsg("rvMsg",r.ticket.overridden?"Saved. The adjusted scores now show on the dashboard.":"Confirmed.",true);await refreshAfterReview();}
-    catch(e){showMsg("rvMsg",e.message);save.disabled=false;}
+    save.disabled=true;var old=save.textContent;save.textContent="Saving…";say("");
+    var r;
+    try{r=await api("/api/admin/review",{method:"POST",body:{month:month,ticketId:t.id,s:sels.map(function(x){return Number(x.value);}),comment:ta.value}});}
+    catch(e){say("Not saved: "+e.message);save.disabled=false;save.textContent=old;return;}
+    var fresh=reviewCard(month,r.ticket);c.replaceWith(fresh);
+    fresh.querySelector(".rvnote").textContent=r.ticket.overridden?"Saved. The adjusted scores now show on the dashboard.":"Confirmed.";
+    fresh.querySelector(".rvnote").className="msg ok rvnote";fresh.querySelector(".rvnote").hidden=false;
+    try{await refreshAfterReview();}catch(e){/* the review is saved; charts refresh on next load */}
   });
+  note.classList.add("rvnote");
   w.appendChild(save);
   if(t.review){
     var rs=el("button",{class:"btn small ghost",type:"button"},"Reset to AI scores");
     rs.addEventListener("click",async function(){
       if(!confirm("Remove the review on this ticket and go back to the AI's scores?"))return;
-      try{var r=await api("/api/admin/review",{method:"POST",body:{month:month,ticketId:t.id,action:"reset"}});c.replaceWith(reviewCard(month,r.ticket));showMsg("rvMsg","Back to the AI's scores.",true);await refreshAfterReview();}
-      catch(e){showMsg("rvMsg",e.message);}
+      var r;
+      try{r=await api("/api/admin/review",{method:"POST",body:{month:month,ticketId:t.id,action:"reset"}});}
+      catch(e){say("Not reset: "+e.message);return;}
+      var fresh=reviewCard(month,r.ticket);c.replaceWith(fresh);
+      var n=fresh.querySelector(".rvnote");n.textContent="Back to the AI's scores.";n.className="msg ok rvnote";n.hidden=false;
+      try{await refreshAfterReview();}catch(e){}
     });
     w.appendChild(rs);
   }
-  c.appendChild(w);
+  c.appendChild(w);c.appendChild(note);
   return c;
 }
 async function refreshAfterReview(){
