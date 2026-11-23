@@ -7,7 +7,7 @@ export default {
   "from": "2026-10-01",
   "to": "2026-10-19"
  },
- "publishedAt": "2026-11-23T07:36:47.930Z",
+ "publishedAt": "2026-11-23T07:41:25.331Z",
  "source": "manual",
  "tickets": [
   {
@@ -128,7 +128,7 @@ export default {
    "fix": [
     "The three dissolution steps were pasted as plain unnumbered lines inside a dense template. Number them so a first-timer can follow.",
     "Andrija apologised for the delay and asked for clearer instructions as a self-described beginner. Acknowledge that and pair the call link with a short plain-language summary of the steps.",
-    "Reply gaps of about 6 hours and 5.7 hours against the 90 minute standard, and 24.5 hours to confirm the payment."
+    
    ]
   },
   {
