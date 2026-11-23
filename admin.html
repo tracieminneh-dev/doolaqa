@@ -235,7 +235,7 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
       <thead><tr><th>Agent</th><th>Team</th><th>Tickets</th><th>Combined</th><th>Band</th><th>Notes coverage</th><th>Lead review</th><th>Approval</th><th>Report</th><th></th></tr></thead>
       <tbody></tbody>
     </table></div></div>
-    <p class="note">Step 1: a team lead reviews each agent's month and presses Approve. Step 2: Send report delivers the "QA analysis - month" PDF to that agent's Slack DM. Only agents with a full 10 tickets can be approved; an approval can be undone until the report is sent.</p>
+    <p class="note">Step 1: a team lead reviews each agent's month and presses Approve. Step 2: Send report delivers the "QA analysis - month" PDF to that agent's Slack DM. Only agents with a full 10 tickets can be approved; an approval can be undone until the report is sent. Scores can still be edited after a report is sent: the report is then marked as changed, and Resend updated report sends the new version.</p>
 
     <h2>Settings</h2>
     <div class="msg" id="setMsg" hidden style="margin-bottom:12px"></div>
@@ -674,7 +674,8 @@ function renderApprovals(){
       tr.appendChild(apc);
       var rep=ap&&ap.report||{};
       var rc=el("td");
-      if(rep.status==="sent")rc.appendChild(el("span",{class:"state sent"},"✓ Sent "+short(rep.at)));
+      if(rep.status==="sent"&&rep.outdated){rc.appendChild(el("span",{class:"state failed"},"! Scores changed since sent "+short(rep.at)));rc.appendChild(el("div",{class:"err"},"Resend so "+name.split(" ")[0]+" has the updated report."));}
+      else if(rep.status==="sent")rc.appendChild(el("span",{class:"state sent"},"✓ Sent "+short(rep.at)));
       else if(rep.status==="failed"){rc.appendChild(el("span",{class:"state failed"},"! Not sent"));if(rep.error)rc.appendChild(el("div",{class:"err"},rep.error));}
       else rc.appendChild(el("span",{class:"state"},ap?"Ready to send":"Waiting for approval"));
       tr.appendChild(rc);
@@ -688,7 +689,7 @@ function renderApprovals(){
         wrap.appendChild(ab);
       }else{
         var sent=rep.status==="sent";
-        var sb=el("button",{class:"btn small blue",type:"button"},sent?"Resend report":rep.status==="failed"?"Retry send":"Send report");
+        var sb=el("button",{class:"btn small blue",type:"button"},sent?(rep.outdated?"Resend updated report":"Resend report"):rep.status==="failed"?"Retry send":"Send report");
         sb.addEventListener("click",function(){apAction("send",name,(sent?"Send ":"Send ")+name+"'s QA analysis for "+cycle.label+" to their Slack DM"+(sent?" again":"")+"?",sb,sent);});
         wrap.appendChild(sb);
         if(!sent){
@@ -779,7 +780,7 @@ function reviewCard(month,t){
     try{r=await api("/api/admin/review",{method:"POST",body:{month:month,ticketId:t.id,s:sels.map(function(x){return Number(x.value);}),comment:ta.value}});}
     catch(e){say("Not saved: "+e.message);save.disabled=false;save.textContent=old;return;}
     var fresh=reviewCard(month,r.ticket);c.replaceWith(fresh);
-    fresh.querySelector(".rvnote").textContent=r.ticket.overridden?"Saved. The adjusted scores now show on the dashboard.":"Confirmed.";
+    fresh.querySelector(".rvnote").textContent=(r.ticket.overridden?"Saved. The adjusted scores now show on the dashboard.":"Confirmed.")+(r.ticket.reportOutdated?" This agent's report was already sent: resend it from Monthly approvals so they get the update.":"");
     fresh.querySelector(".rvnote").className="msg ok rvnote";fresh.querySelector(".rvnote").hidden=false;
     try{await refreshAfterReview();}catch(e){/* the review is saved; charts refresh on next load */}
   });
