@@ -9,7 +9,6 @@ export const GET = route(async () => {
   return json({
     roster: publicRosterFrom(settings),
     perAgent: settings.ticketsPerAgent,
-    slaMinutes: settings.slaMinutes,
     weights: settings.weights,
     cycles: cycles
       .sort((a, b) => (a.month < b.month ? -1 : 1))

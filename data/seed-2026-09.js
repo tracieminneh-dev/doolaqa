@@ -7,7 +7,7 @@ export default {
   "from": "2026-09-23",
   "to": "2026-10-03"
  },
- "publishedAt": "2026-10-08T12:00:00.000Z",
+ "publishedAt": "2026-11-23T07:36:47.919Z",
  "source": "manual",
  "tickets": [
   {
@@ -53,8 +53,7 @@ export default {
     "Explained that the signup discount is normally one time only, then applied a courtesy exception and framed it as such rather than silently overriding policy."
    ],
    "fix": [
-    "Did not warn that the automated renewal reminder would still show $2,999. The customer re-contacted seven days later purely about this.",
-    "Final reassurance reply took roughly 60 hours on an active billing concern."
+    "Did not warn that the automated renewal reminder would still show $2,999. The customer re-contacted seven days later purely about this."
    ]
   },
   {
@@ -101,7 +100,6 @@ export default {
     "Separated what the IRS has already processed from what is still outstanding, so the customer knew precisely where things stood."
    ],
    "fix": [
-    "First response took roughly 53 hours against the 90 minute first response standard.",
     "We will keep you updated is open ended. Give the EIN amendment an expected window and a check-back date."
    ]
   },
@@ -222,7 +220,6 @@ export default {
     "Two proactive check-ins rather than waiting for the customer to chase."
    ],
    "fix": [
-    "Critical: first response took 5.4 days against a 90 minute standard, to a brand new customer asking a nervous first question.",
     "That late first reply was a bare clarifying question with no warmth and no apology for the delay.",
     "A new customer asking what else should I know deserves the compliance calendar, not three lines."
    ]
@@ -293,12 +290,10 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied in 18 minutes with a definitive answer rather than a holding message.",
     "Warm and genuinely reassuring to a customer worried about an overdue compliance flag."
    ],
    "fix": [
-    "Critical: the customer asked about Form 1099-NEC and 1099-MISC. The reply confirms the 2025 IRS tax filing and the annual state filing, which are different filings entirely. Telling someone to disregard a 1099 alert without establishing whether they paid any contractor $600 or more is reassurance on the wrong basis.",
-    "The macro opens with I sincerely apologise for delayed response on a reply sent 18 minutes after the customer wrote in."
+    "Critical: the customer asked about Form 1099-NEC and 1099-MISC. The reply confirms the 2025 IRS tax filing and the annual state filing, which are different filings entirely. Telling someone to disregard a 1099 alert without establishing whether they paid any contractor $600 or more is reassurance on the wrong basis."
    ]
   },
   {
@@ -635,8 +630,7 @@ export default {
    ],
    "category": "Effort Reduction",
    "keep": [
-    "Every fact correct and specific: submitted 28 September, 8 to 10 week standard timeline, no reference number exists because the SS-4 is faxed, call using the entity name, IRS hours Monday to Friday 7am to 7pm.",
-    "Replies came back within hours each time, which matters for someone blocked on a bank application."
+    "Every fact correct and specific: submitted 28 September, 8 to 10 week standard timeline, no reference number exists because the SS-4 is faxed, call using the entity name, IRS hours Monday to Friday 7am to 7pm."
    ],
    "fix": [
     "Four separate exchanges to deliver facts that fit in one reply. Each answer addressed only the literal question with no anticipation of the obvious next one.",
@@ -813,7 +807,6 @@ export default {
     "Correctly separated the valid EIN from the IRS decision on the letter."
    ],
    "fix": [
-    "Flagged URGENT and first response took around 9 hours against the 90 minute standard.",
     "Timeline moved from 2 October to 27 October with no apology.",
     "No check-back date and no plan if 27 October also slips."
    ]
@@ -887,7 +880,6 @@ export default {
     "Short and easy to read."
    ],
    "fix": [
-    "First response took about 16.5 hours against the 90 minute standard.",
     "Phrases like a certain period and some services leave Zekirja guessing. State which services are affected and after how long.",
     "No invoice amounts, link to the billing page, or how to pay. Give the balance and the exact path to settle it."
    ]
@@ -908,7 +900,6 @@ export default {
    ],
    "category": "Effort Reduction",
    "keep": [
-    "Replied in about 3 hours with a clear, honest decline covering each part of the request: income, distributions, ownership, and notarization.",
     "Explained which existing documents typically support ownership and distributions."
    ],
    "fix": [
@@ -961,8 +952,7 @@ export default {
    ],
    "fix": [
     "Customer was rejected by Mercury, yet the reply mentions Mercury as our partner and offers no other banking options. Suggest alternatives suited to foreign-owned LLCs.",
-    "Addressed as Foster Team. Use Foster, the name signed on the email.",
-    "First response took about 9.2 hours against the 90 minute standard."
+    "Addressed as Foster Team. Use Foster, the name signed on the email."
    ]
   },
   {
@@ -1029,13 +1019,11 @@ export default {
    ],
    "category": "Empathy & Tone",
    "keep": [
-    "Final reply came within about 54 minutes and gave clear Forgot Password steps so the partner could get in right away.",
     "Completed the link and confirmed it, fully resolving the request."
    ],
    "fix": [
     "Asked again for the partner's email even though it was in the first message. Only request the details still missing.",
-    "Customer switched to French in his reply. Acknowledge or match the language.",
-    "First response took about 4.7 hours against the 90 minute standard."
+    "Customer switched to French in his reply. Acknowledge or match the language."
    ]
   },
   {
@@ -1054,7 +1042,6 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied in about 15 minutes with a warm, transparent explanation that left Iva reassured and thankful.",
     "Clear next step: no action needed unless we contact her."
    ],
    "fix": [
@@ -1084,7 +1071,7 @@ export default {
    "fix": [
     "Nizar said he was stuck because Amazon needs bank details. The reply never pointed out that an Aspire or Airwallex account could supply those details, so the core blocker went unanswered.",
     "He said twice that he was frustrated. The reply opened with one line and moved on. Acknowledge the impact before the advice.",
-    "Ticket was closed within a minute of sending the advice, with no check that he had a way forward. First reply took about 6 hours and the follow up about 12 hours."
+    "Ticket was closed within a minute of sending the advice, with no check that he had a way forward."
    ]
   },
   {
@@ -1109,7 +1096,7 @@ export default {
    "fix": [
     "Quoted 6 to 8 weeks while the website says 4 to 6 weeks. The customer spotted the mismatch and lost trust. Check the published timeline before quoting one.",
     "The answer on the expedited 2 week saving was muddled and did not tell the customer where his application actually stood. Give a concrete status and date.",
-    "Closed the ticket the day after the second reply while the EIN was still pending, so the customer had to chase twice more. Replies took roughly 2, 6, 8 and 11 hours."
+    "Closed the ticket the day after the second reply while the EIN was still pending, so the customer had to chase twice more."
    ]
   },
   {
@@ -1128,8 +1115,7 @@ export default {
    ],
    "category": "Effort Reduction",
    "keep": [
-    "Replied in about 30 minutes and answered the integration question first: Mercury is the only bank linked to the dashboard. Clear numbered steps and document list followed.",
-    "Follow up on the Mercury login screen came within about 75 minutes with sensible checks to try."
+    "Clear numbered steps and document list followed."
    ],
    "fix": [
     "Alexander said he always signs in with Google and has no password. Address that point directly, for example whether the Mercury button needs a separate Mercury login, rather than guessing at a duplicate application.",
@@ -1156,7 +1142,6 @@ export default {
     "Warm, steady tone through a frustrating lockout, and explained the cause (a system migration) when asked."
    ],
    "fix": [
-    "First human reply came about 13.5 hours after his last message, and suggested retyping the email in lowercase, which was a guess.",
     "Sent generic cache, VPN and browser steps and asked if he had used the email before, after he had already said he always used it and had checked spam. Read the thread before sending troubleshooting.",
     "Asked for his country and phone number. Check the account record first instead of asking for details we likely hold."
    ]
@@ -1180,7 +1165,6 @@ export default {
     "Checked the account and gave a clear, factual answer: the subscription was cancelled, so no 2025 return was filed and there is no proof of filing."
    ],
    "fix": [
-    "Replied about 63 hours after Omar's question against the 90 minute standard, then closed the ticket in the same minute.",
     "Delivered bad news in three lines with no next step. Tell him the return is now overdue, that late Form 5472 filings carry penalties, and how doola or a partner can help him file.",
     "The reply named the plan as Business in a Box while earlier messages in the thread called it the Starter plan. Keep plan names consistent."
    ]
@@ -1205,7 +1189,6 @@ export default {
    ],
    "fix": [
     "Mina asked seven detailed questions and none were answered. Several are standard Care answers, such as EIN timelines for foreign owners, Mercury availability and Form 5472 pricing. Answer what you can before handing off.",
-    "Reply came about 3.8 hours after the email with a generic template and no personal touch on her e-commerce plans.",
     "Closed the ticket at handoff with nothing confirming when Sales would respond. Give an expected response time."
    ]
   },
@@ -1230,8 +1213,7 @@ export default {
    ],
    "fix": [
     "Cheryl asked for non virtual bank options on 23 Sep and that question sat unanswered for about six days.",
-    "When it came up again, the reply listed Aspire, Airwallex, Payoneer and Relay, which are the fintech style options she had asked to avoid. Answer the question she actually asked or explain why traditional banks are hard for non residents.",
-    "Replies took about 5 and 12 hours. Aim for the 90 minute standard."
+    "When it came up again, the reply listed Aspire, Airwallex, Payoneer and Relay, which are the fintech style options she had asked to avoid. Answer the question she actually asked or explain why traditional banks are hard for non residents."
    ]
   },
   {
@@ -1250,7 +1232,6 @@ export default {
    ],
    "category": "Effort Reduction",
    "keep": [
-    "Replied in about 85 minutes with two trademark partners, how to reach them and a broader legal option, all clearly laid out.",
     "Good structure: each partner had a short heading, what they do and how to get started."
    ],
    "fix": [
@@ -1274,7 +1255,6 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied in about 80 minutes with the self serve dashboard path, the full flow, the 15 to 20 business day timeline and the state tax account caveat.",
     "Flagged the two possible tax filings for a 2025 active company dissolving in 2026, which heads off a common follow up."
    ],
    "fix": [
@@ -1302,7 +1282,7 @@ export default {
    ],
    "fix": [
     "Replied \"I was not asking for your literal card\" to an already upset customer. Explain what you need without correcting them.",
-    "Once Edgar sent the date, amount and merchant phone number, the reply took about 6 hours and simply said it was not ours. Say what you checked (name, date, amount) and suggest he dispute it with his card issuer.",
+    "Say what you checked (name, date, amount) and suggest he dispute it with his card issuer.",
     "Never explained what doola is or how he could contact us beyond email, which was his main frustration."
    ]
   },
@@ -1322,7 +1302,6 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied in about 89 minutes, inside the 90 minute standard, with a clear no and a Virtual Post Mail link as the fix.",
     "Explained why the address cost is not in the plan, which answered the fee question directly."
    ],
    "fix": [
@@ -1352,7 +1331,7 @@ export default {
    "fix": [
     "Melanie asked to cancel and get a refund. Only the refund was answered, the cancellation was ignored. Confirm what happens to the subscription.",
     "\"Actually not a loophole at all\" came across as defensive to a customer two months into waiting. Acknowledge the frustration and give a realistic Hawaii processing estimate.",
-    "Replies to the refund and complaint messages took about 7 and 12 hours. No expected timeline or next check-in date was ever given."
+    "No expected timeline or next check-in date was ever given."
    ]
   },
   {
@@ -1400,7 +1379,6 @@ export default {
     "Explained that country of residence can limit eligibility, which addressed the why behind the rejections."
    ],
    "fix": [
-    "Ahmad wrote twice and waited about 14 hours for a first human reply against the 90 minute standard.",
     "Typo \"se local address\" in the Slash line. Proofread link lists before sending.",
     "Did not directly answer his follow up about his business address. Confirm what address he has with doola and what he can use."
    ]
@@ -1469,9 +1447,7 @@ export default {
     2
    ],
    "category": "Effort Reduction",
-   "keep": [
-    "Responded in about 8 minutes and correctly asked for verification before sharing account details."
-   ],
+   "keep": [],
    "fix": [
     "Told the customer there are two people with her name in our system. Do not disclose other account information while verification is pending.",
     "Closed with \"not related to doola in any way, shape or form\". Soften the tone and suggest she check the merchant name on her Apple Pay statement or contact Apple.",
@@ -1498,8 +1474,7 @@ export default {
    ],
    "fix": [
     "The only question asked was the cost, and no price or fee was given. State the service and state fee, plus any late fee for a past due report.",
-    "Addressed the customer as Aleiva, a name guessed from the email address. Use a neutral greeting when the name is unclear.",
-    "First response took about 2.5 hours against the 90 minute standard, and the macro was sent with an empty step 3."
+    "Addressed the customer as Aleiva, a name guessed from the email address. Use a neutral greeting when the name is unclear."
    ]
   },
   {
@@ -1547,7 +1522,7 @@ export default {
     "Included the Account Management booking link so the customer could get the call they asked for."
    ],
    "fix": [
-    "Customer flagged URGENT and said nobody had answered a call request. First response took about 2.6 hours against the 90 minute standard.",
+    "Customer flagged URGENT and said nobody had answered a call request.",
     "Opened with a cheerful macro line. Acknowledge the urgency and the missed call first, and say plainly that dissolution cannot be completed same day."
    ]
   },
@@ -1567,7 +1542,6 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Responded in about 76 minutes with a clear explanation of why doola does not edit operating agreements.",
     "Offered a practical path: edit with a PDF tool and send the revised copy for upload to the dashboard."
    ],
    "fix": [
@@ -1595,8 +1569,8 @@ export default {
    ],
    "fix": [
     "Customer listed six numbered requests across five tasks. The reply grouped them into two generic points and never addressed Form 7004, the 1099 task, or whether to use Mark as complete.",
-    "Did not confirm the registered agent is active, which was asked directly. First response took about 8.2 hours against the 90 minute standard.",
-    "Closed less than 2 hours after replying while the dashboard was left showing the overdue warning. Either update the tasks or tell the customer to mark them complete."
+    "Did not confirm the registered agent is active, which was asked directly.",
+    "Either update the tasks or tell the customer to mark them complete."
    ]
   },
   {
@@ -1620,7 +1594,7 @@ export default {
    ],
    "fix": [
     "Ruben asked twice to cancel immediately. The first reply was a retention style warning without actioning the request, which forced a third, firmer message.",
-    "Confirmation came about 2.8 hours after the customer withdrew card authorization. Process clear cancellation requests in the first reply and add the compliance reminder alongside it."
+    "Process clear cancellation requests in the first reply and add the compliance reminder alongside it."
    ]
   },
   {
@@ -1642,7 +1616,7 @@ export default {
     "Explained that the SS-4 uses doola's address for IRS correspondence and updated the member address on the account."
    ],
    "fix": [
-    "Customer flagged URGENT before the SS-4 was faxed. The reply came about 8 hours after that message and about 13.5 hours after the first one, by which time the SS-4 had already gone in.",
+    "Customer flagged URGENT before the SS-4 was faxed.",
     "Did not address the state filing with the wrong member address or whether the EIN letter will match his passport for Mercury or Wise, which was his core worry.",
     "Two line reply with a typo and no acknowledgement of the stress. Confirm what changed, what did not, and any next step if the bank asks for proof of address."
    ]
@@ -1663,7 +1637,6 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied within about 20 minutes with clear fee breakdowns for domestication out of Colorado and into Texas.",
     "Flagged that foreign qualification still leaves a Colorado annual report obligation."
    ],
    "fix": [
@@ -1690,7 +1663,7 @@ export default {
     "Gave detailed signing instructions for the W-7, Form 2848 and OA letter, plus clear passport scan requirements."
    ],
    "fix": [
-    "Customer asked for a human after two AI replies. Dennis replied about 14.3 hours later, well past the 90 minute standard.",
+    "Customer asked for a human after two AI replies.",
     "Final reply only said the issue was passed to the specialist. It did not confirm the PDFs would be resent, give a return date, or say how to send back the signed documents, all of which were asked.",
     "Ticket closed the next day with the documents still not in the customer's hands. Keep it open until the resend is confirmed."
    ]
@@ -1715,8 +1688,7 @@ export default {
     "Reassured the customer that doola would wait while the bank approved the payment."
    ],
    "fix": [
-    "First reply ignored the direct ask for PayPal or a wire. Only the second reply, about 9 hours later, said Stripe is the only option. Answer that up front.",
-    "First response took about 4.5 hours against the 90 minute standard, and the ticket was closed while payment was still pending with no follow up committed."
+    "First reply ignored the direct ask for PayPal or a wire. Answer that up front."
    ]
   },
   {
@@ -1759,13 +1731,11 @@ export default {
    ],
    "category": "Policy & Process",
    "keep": [
-    "Stepped in 28 minutes after the customer pushed back on the AI reply and took ownership by coordinating with the filing team.",
     "Closed the loop on Sep 23 with clear directions to find the EIN letter under My documents in the dashboard."
    ],
    "fix": [
     "Customer said it had been over 4 months since an April formation, and the reply restated the 8 to 10 week standard without acknowledging the application was already well past it.",
-    "Holding replies on Sep 2 and Sep 8 gave no return date, then the customer heard nothing for 15 days until the letter arrived on Sep 23. Commit to a check-in date and keep it.",
-    "The Sep 8 follow-up waited about 3.6 hours for a reply against the 90 minute standard."
+    "Holding replies on Sep 2 and Sep 8 gave no return date, then the customer heard nothing for 15 days until the letter arrived on Sep 23. Commit to a check-in date and keep it."
    ]
   },
   {
@@ -1784,12 +1754,10 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied in about 71 minutes and explained the charge as the $297 annual Starter Plan renewal, with a clear list of what cancelling would remove.",
     "Flagged that cancelling does not dissolve the company and laid out both paths, keep the LLC or dissolve it, before acting."
    ],
    "fix": [
-    "Kim assumed formation was a one time charge. Say plainly that the charge was the automatic annual renewal and whether a refund is possible, since that was the real question behind the email.",
-    "When closing 14 days later because a colleague handled it elsewhere, briefly confirm the outcome so the customer knows the cancellation request was actioned."
+    "Kim assumed formation was a one time charge. Say plainly that the charge was the automatic annual renewal and whether a refund is possible, since that was the real question behind the email."
    ]
   },
   {
@@ -1808,11 +1776,10 @@ export default {
    ],
    "category": "Policy & Process",
    "keep": [
-    "Set expectations honestly within 18 minutes that Mercury decides on its own and may not share reasons, then still offered to contact Mercury.",
     "Came back with a concrete answer that the customer is eligible to reapply, plus four relevant Mercury help links and a heads up about later account reviews."
    ],
    "fix": [
-    "The holding reply took about 13 hours after the customer sent the requested info and gave no time frame. Give a committed return time such as within one business day.",
+    "Give a committed return time such as within one business day.",
     "Asked for the application email when the customer was already writing from it. Check the address on file before asking."
    ]
   },
@@ -1831,10 +1798,7 @@ export default {
     4
    ],
    "category": "Policy & Process",
-   "keep": [
-    "Replied in 55 minutes with a clear numbered verification list and a self service alternative to update the email from Settings.",
-    "Spotted that the uploaded document showed the registered agent address, not the responsible party address, and asked for the right one within 5 minutes."
-   ],
+   "keep": [],
    "fix": [
     "The customer answered the address question and waited about 17.5 hours for Doris to grant access. A colleague had to send a holding note at the 13 hour mark.",
     "Verification asked for the full address but accepted city only on the second try. Be specific up front about the format needed to avoid a back and forth."
@@ -1860,8 +1824,7 @@ export default {
    ],
    "fix": [
     "The customer said it was already renewed until July 21, 2027. The reply did not reconcile that date with the October renewal, for example whether it refers to another company or service, so confusion is likely.",
-    "Opened with Hi there instead of the customer's name, and closed the ticket in the same message before the customer confirmed the mismatch was clear.",
-    "First response took about 2.4 hours against the 90 minute standard."
+    "Opened with Hi there instead of the customer's name, and closed the ticket in the same message before the customer confirmed the mismatch was clear."
    ]
   },
   {
@@ -1884,7 +1847,6 @@ export default {
    ],
    "fix": [
     "The first two replies quoted only the $1,500 annual service as the cost, then the later answer added a second $600 return. Check the formation year before quoting so the customer gets the full cost once.",
-    "Promised to get back promptly but gave no date, and Kay had to chase about 22 hours later.",
     "Kay asked twice for a one time option. Address that directly at the start rather than restating the subscription terms."
    ]
   },
@@ -1903,9 +1865,7 @@ export default {
     3
    ],
    "category": "Effort Reduction",
-   "keep": [
-    "Replied in about 71 minutes and confirmed the annual report request was received and in progress with no action needed."
-   ],
+   "keep": [],
    "fix": [
     "Nathalie asked why 2 overdue tasks still show. Explain what the tasks are and when they will clear, otherwise she will likely write in again.",
     "Tell her where she will see the state receipt once filed, such as Company tab, Annual Reports, so she can confirm herself."
@@ -1930,7 +1890,6 @@ export default {
     "Clear numbered verification list and named the exact issue, the Form 8821 signing error, so the customer knew why it was needed."
    ],
    "fix": [
-    "First response took about 1.8 hours against the 90 minute standard.",
     "No acknowledgement of the error or any first troubleshooting step. Add a likely fix, such as signing from the account email or refreshing the link, so the customer can try while verification is pending.",
     "Ticket was closed without a reply from the customer. Send a short follow up before closing so the open error is not left unresolved."
    ]
@@ -1951,8 +1910,7 @@ export default {
    ],
    "category": "Empathy & Tone",
    "keep": [
-    "Checked all four companies and explained in 49 minutes that none were active, including why Auratech lapsed, before the customer paid for anything.",
-    "Mirrored the customer's three confirmation points one by one in writing and sent the reactivation link in the same message, about 87 minutes after the request."
+    "Checked all four companies and explained in 49 minutes that none were active, including why Auratech lapsed, before the customer paid for anything."
    ],
    "fix": [
     "Add a brief line of acknowledgement for the dissolutions in progress, which would round out an otherwise complete reply."
@@ -1973,9 +1931,7 @@ export default {
     3
    ],
    "category": "Effort Reduction",
-   "keep": [
-    "Replied in 12 minutes, acknowledged the unforeseen circumstances, and gave a clear answer that renewals cannot be paused or extended."
-   ],
+   "keep": [],
    "fix": [
     "Few weeks of renewal attempts is vague. State the renewal date and amount so the customer can plan the payment.",
     "The customer said he will continue next year. Offer an option such as confirming the payment method in Settings or the cost of downgrading so he leaves with a next step, not only a no."
@@ -2000,8 +1956,7 @@ export default {
     "Acknowledged the frustration and named the exact $80.97 amount, so the customer knew the right charge was checked."
    ],
    "fix": [
-    "Ask for the charge date, statement descriptor and last four digits before concluding there is no record. Pointing an angry customer to the card issuer with no further lookup leaves them to chase it.",
-    "Reply took around 11.4 hours to an already frustrated customer against the 90 minute standard, and the ticket was closed the moment the reply went out with the dispute unresolved."
+    "Ask for the charge date, statement descriptor and last four digits before concluding there is no record. Pointing an angry customer to the card issuer with no further lookup leaves them to chase it."
    ]
   },
   {
@@ -2047,7 +2002,6 @@ export default {
     "Answered all five EIN and banking follow up questions point by point and sent the invoice in the same reply."
    ],
    "fix": [
-    "Replies took around 7.9 and 9.7 hours against the 90 minute standard.",
     "Confirm with the customer before changing the dashboard description rather than stating it has already been shortened."
    ]
   },
@@ -2070,7 +2024,6 @@ export default {
     "Restated each of Bilal's questions in the handoff so the Sales team had the full context."
    ],
    "fix": [
-    "First response took around 27.8 hours against the 90 minute standard.",
     "Neither question was answered. Whether the Starter plan includes a Texas seller's permit is a plan inclusion question Customer Care can answer directly.",
     "Ticket was closed in the same reply with both questions still open, leaving the customer to wait on another team."
    ]
@@ -2096,7 +2049,7 @@ export default {
    "fix": [
     "The customer asked for written confirmation that the $297 renewal would not be charged. The reply was a generic cancellation retention macro asking why they were leaving, and the confirmation was never given.",
     "Addressed the customer as Julio while the message was signed Alexander. Check the name before sending.",
-    "First response took around 30 hours and arrived after the September 20 renewal date. The ticket was then closed for no reply with the billing request unresolved."
+    "The ticket was then closed for no reply with the billing request unresolved."
    ]
   },
   {
@@ -2119,7 +2072,7 @@ export default {
     "Followed up after Joshua's thread and acknowledged that Tiffany's 2025 returns were already filed."
    ],
    "fix": [
-    "The holding reply came around 8 hours after the message and promised an update shortly with no committed date. The actual update took around 40 hours more.",
+    "The actual update took around 40 hours more.",
     "Tiffany asked to schedule an appointment about bookkeeping. Offer a booking link or a confirmed call rather than only the bookkeeping email address."
    ]
   },
@@ -2143,7 +2096,7 @@ export default {
    ],
    "fix": [
     "The first confirmation went out with an unfilled [date] placeholder, on the one detail the customer had asked for twice.",
-    "The corrected reply came around 4 days later. Proofread macros before sending and correct mistakes the same day.",
+    "Proofread macros before sending and correct mistakes the same day.",
     "Using 'sorry to see you go' wording on a non renewal request felt off script for a customer who explicitly said they were not leaving yet."
    ]
   },
@@ -2167,7 +2120,6 @@ export default {
     "The TruLease follow up flagged the 1 to 2 week utility bill timeline against the Wise deadline and advised confirming with Wise before paying."
    ],
    "fix": [
-    "Marked urgent by the customer, yet the first reply took around 7.7 hours and the follow up around 12.3 hours against the 90 minute standard.",
     "The first reply said a document was attached but left a [DOCUMENT NAME] placeholder in the text.",
     "The second reply repeated the utility bill bullet lines twice and ran long. Trim and proofread before sending."
    ]
@@ -2191,7 +2143,6 @@ export default {
     "Gave a direct answer to the key question: disregard the new request, the signed SS-4 was already faxed to the IRS, no action needed."
    ],
    "fix": [
-    "First response took around 4.9 hours against the 90 minute standard.",
     "Shazia also asked why the new request was sent. Give a short reason so she trusts the next email from doola."
    ]
   },
@@ -2240,7 +2191,7 @@ export default {
    "fix": [
     "Yash asked for the compliance documents needed to engage an India based contractor, but the reply said the tax team needs to review documents for filing and asked him to enrol in the tax service. That answers a different question.",
     "The earlier reply in the thread already offered a $150 tax consultation. Point back to that concrete option instead of a vague tax service sign up with no price or link.",
-    "Reply came about 13.5 hours after the customer's message, and the ticket was closed six days later with the offer to help still open. Use the customer's name instead of Hi there."
+    "Use the customer's name instead of Hi there."
    ]
   },
   {
@@ -2265,7 +2216,7 @@ export default {
    "fix": [
     "Sent an 'EIN document uploaded' update before checking that the surname was actually corrected, and Victory had to write back that it was still wrong.",
     "When Victory flagged the error was not fixed, the holding reply gave no return date. Commit to a specific day for the next update.",
-    "First response came about 3.7 hours after a message the customer described as urgent, against the 90 minute standard. Final reply should state plainly that the surname is now corrected."
+    "Final reply should state plainly that the surname is now corrected."
    ]
   },
   {
@@ -2287,7 +2238,6 @@ export default {
     "Clarifying reply correctly explained that doola does not control what the state website shows in its change history."
    ],
    "fix": [
-    "The holding reply came about 12 hours after the customer's message and only said a colleague would reply when available, with no return date.",
     "The substantive reply took another 4.4 days, and the ticket was closed five days later with the clarifying question unanswered and no follow up.",
     "Rdwan had paid for a privacy amendment. Check the filing status and explain whether historical records can be removed, instead of making him confirm what he already described."
    ]
@@ -2312,7 +2262,6 @@ export default {
    ],
    "fix": [
     "Amin first asked doola to change the company phone number. The thread never said what number doola holds or whether it can be updated.",
-    "Both replies came about 12 to 13 hours after Amin's messages on a request he marked ASAP. Acknowledge the urgency.",
     "Beyond 'contact Facebook Support', suggest practical alternatives such as verifying with formation documents, the EIN letter or a domain, so Amin is not stuck."
    ]
   },
@@ -2332,7 +2281,6 @@ export default {
    ],
    "category": "Empathy & Tone",
    "keep": [
-    "Replied in about 28 minutes and confirmed every point asked: cancellation set, no further charges, services active until Jun 17, 2027.",
     "Warned that automated renewal reminders may still arrive, and listed the compliance duties he now owns."
    ],
    "fix": [
@@ -2360,8 +2308,7 @@ export default {
    ],
    "fix": [
     "Gonçalo asked twice for the name to be Superlimit, LLC with a comma. The reply said it is already Superlimit LLC so no changes are needed, which ignores his request. Explain whether the comma can be added.",
-    "His first message asked to pause pending filings and to explain next steps if anything was already filed. This was never addressed.",
-    "First reply came about 9.4 hours after his message, and the next came about 12 hours after his follow up."
+    "His first message asked to pause pending filings and to explain next steps if anything was already filed. This was never addressed."
    ]
   },
   {
@@ -2384,8 +2331,7 @@ export default {
     "Warm, clear and brief tone that owned the mistake without over apologising."
    ],
    "fix": [
-    "Emrah asked a second question about whether anything else is needed on his 2025 return showing as submitted to the IRS. It was never answered, and the ticket was closed.",
-    "First response took about 2 hours against the 90 minute standard."
+    "Emrah asked a second question about whether anything else is needed on his 2025 return showing as submitted to the IRS. It was never answered, and the ticket was closed."
    ]
   },
   {
@@ -2409,7 +2355,7 @@ export default {
    "fix": [
     "The reply is a long pasted macro, with marketing text like 'Why It Matters' and an empty step 3 in the annual report list. Cut it down to what Lisa asked.",
     "Lisa asked what the 'window isn't open' pop up means and what is expected of her. Explain the pop up and her reinstatement status directly instead of only giving generic steps.",
-    "Reply came about 14 hours after her message. Lisa had already complained that information was not being explained, so lead with plain answers."
+    "Lisa had already complained that information was not being explained, so lead with plain answers."
    ]
   },
   {
@@ -2432,7 +2378,7 @@ export default {
    ],
    "fix": [
     "Sent Ed a reply about forwarding a label that belonged to another customer, then called him Remzi three times, even after he corrected it. Check the thread and name before sending, and apologise for the mix up.",
-    "First reply came about 10.6 hours later and asked for a screenshot instead of answering the shareholder question. That added a round trip while Ed waited to submit.",
+    "That added a round trip while Ed waited to submit.",
     "Confirm whether doola's formation documents, such as the stock certificate, will show the parent company as 100% shareholder, so Ed knows what to do after filing."
    ]
   },
@@ -2452,7 +2398,6 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "First response went out in about 43 minutes, well inside the 90 minute standard.",
     "Clearly listed what the customer would lose by cancelling, including Registered Agent mail and compliance responsibility."
    ],
    "fix": [
@@ -2481,8 +2426,7 @@ export default {
     "Short, warm close that left the door open without overselling."
    ],
    "fix": [
-    "Add the effective cancellation date and what happens to the dashboard and Registered Agent so David has nothing left to confirm.",
-    "First response took about 1 hour 49 minutes, slightly over the 90 minute standard."
+    "Add the effective cancellation date and what happens to the dashboard and Registered Agent so David has nothing left to confirm."
    ]
   },
   {
@@ -2530,8 +2474,7 @@ export default {
    ],
    "fix": [
     "The reply is long and dense. Lead with the three steps and put the fee table and tax notes under clear headings.",
-    "Include the parts relevant to Karime's company only, for example drop the December note if it does not apply, and acknowledge the request before the macro.",
-    "First response took about 1 hour 45 minutes, slightly over the 90 minute standard."
+    "Include the parts relevant to Karime's company only, for example drop the December note if it does not apply, and acknowledge the request before the macro."
    ]
   },
   {
@@ -2554,7 +2497,6 @@ export default {
     "Confirmed the tax return was filed and the Registered Agent was active and paid, so the customer knew nothing was due."
    ],
    "fix": [
-    "First response took about 20 hours against the 90 minute standard.",
     "Sinead asked about Form 7004, the Wyoming Annual Report and the 1099 separately. The reply did not confirm the status of each one individually."
    ]
   },
@@ -2577,7 +2519,6 @@ export default {
     "Looped the Tax team in on the same thread and shared the taxes inbox so the customer knew where to go next."
    ],
    "fix": [
-    "First response took about 48 hours, from Saturday morning to Monday morning, against the 90 minute standard.",
     "Benjamin asked three clear questions. None were answered, including whether the notice response is included in his plan, which Customer Care can confirm.",
     "Closed the ticket at handoff with no expected response time from the Tax team. Give a timeframe so the customer is not left to chase."
    ]
@@ -2601,7 +2542,6 @@ export default {
     "Told the customer which teammate owned the request and replied within minutes to the thank you."
    ],
    "fix": [
-    "First response took about 25 hours, from Sunday to Monday, against the 90 minute standard.",
     "When Gabeth chased for an update two hours later, the reply was the same duplicate ticket macro again. Give a real status or an expected time instead.",
     "Spelled the teammate's name two ways (Shubham and Subham) and greeted the customer in all caps. Small details like these affect trust."
    ]
@@ -2622,7 +2562,6 @@ export default {
    ],
    "category": "Empathy & Tone",
    "keep": [
-    "Handled all three asks in one reply about 45 minutes after contact: refund processed, subscription cancelled, payment method unlinked, and which company the charge was for.",
     "Set expectations with the 7 to 10 business day refund window. Edmond replied that everything was clear."
    ],
    "fix": [
@@ -2699,7 +2638,6 @@ export default {
    ],
    "fix": [
     "Asked whether she meant the state report or IRS filings when her message already said annual report. That cost a full round trip on an overdue concern.",
-    "First human reply came around 11 hours after her email and the follow up took around 14 hours, well past the 90 minute standard.",
     "She was worried after our email said the report may be overdue due to a doola reminder glitch. Acknowledge that confusion and confirm no payment or action is needed."
    ]
   },
@@ -2719,7 +2657,6 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied in about 45 minutes and checked her plan before answering.",
     "Gave clear pricing for the annual report ($199 plus state fee) and IRS filing ($1,500)."
    ],
    "fix": [
@@ -2748,7 +2685,6 @@ export default {
     "Short and easy to follow, nothing left for the customer to chase."
    ],
    "fix": [
-    "First reply took around 2 hours 10 minutes against the 90 minute standard, on a request the customer asked to be handled swiftly.",
     "Proofread before sending. \"uploaded it ot your dashboard\" looks careless on an otherwise clean reply."
    ]
   },
@@ -2772,8 +2708,7 @@ export default {
    ],
    "fix": [
     "First reply was a long Starter plan feature macro that did not answer the question. It said dissolution costs \"an additional fee\" without the amount, forcing Mohamed to write back asking for it.",
-    "His question about the New Mexico state filing fee was never answered. \"Applicable state fee\" was all he got.",
-    "First response came around 31 hours after his email, far past the 90 minute standard."
+    "His question about the New Mexico state filing fee was never answered. \"Applicable state fee\" was all he got."
    ]
   },
   {
@@ -2796,7 +2731,7 @@ export default {
     "Closed the loop well: uploaded the self filed reports and added $199 in non expiring credits as the discount David asked for."
    ],
    "fix": [
-    "David had already complained about getting an AI reply, yet the first human reply came about 13 hours later and opened with the standard intro macro. Lead with an acknowledgement of his frustration.",
+    "Lead with an acknowledgement of his frustration.",
     "Holding replies said \"I will notify you as soon as I get an update\" with no committed return date.",
     "His discount request sat for around 3.5 days (a colleague covered with a holding note) before the agent replied."
    ]
@@ -2821,7 +2756,6 @@ export default {
    ],
    "fix": [
     "Gonzalo asked \"What was the issue?\" once the transaction appeared. The ticket was closed with a generic sign off and his question was never answered.",
-    "First human reply came around 15 hours after his email, and the holding reply gave no return date.",
     "Proofread. \"your future queries related to bookkeeping, you can directly reach out\" is missing words."
    ]
   },
@@ -2845,8 +2779,7 @@ export default {
     "Followed up with a clear update and set expectations that the IRS can take up to 90 days, then acknowledged Owen's frustration about the wait."
    ],
    "fix": [
-    "Did not tell Owen he would receive a document to sign. He became suspicious of the signature email and had to write in to check it was genuine.",
-    "First reply came around 9 hours after his email, beyond the 90 minute standard."
+    "Did not tell Owen he would receive a document to sign. He became suspicious of the signature email and had to write in to check it was genuine."
    ]
   },
   {
@@ -2893,7 +2826,6 @@ export default {
     "Acknowledged within about 15 minutes and raised the notice with the tax team straight away."
    ],
    "fix": [
-    "Wael flagged this as urgent and critical, then waited around 8 days for a substantive update with no return date given.",
     "Never explained what the notice was or what to do. \"The return was filed on time\" plus a vague \"IRS needing some additional filings\" conflicts and leaves the notice unresolved, then pushes him to book a call.",
     "His point that he paid doola to file and close the company was not addressed, and the ticket was closed with the notice still open. Typo \"tzx team\" also slipped through."
    ]
@@ -2918,7 +2850,6 @@ export default {
    ],
    "fix": [
     "Addressed the reply to Anurita when Chetan was the one who wrote in. Check the sender name before sending.",
-    "Reply took around 1 hour 45 minutes, just past the 90 minute standard, on a time sensitive hold request.",
     "Proofread the sign off. \"Rgeards\" undermines an otherwise good reply."
    ]
   }

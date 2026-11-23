@@ -1,4 +1,4 @@
-// Read and change admin settings: roster, tickets per agent, response standard.
+// Read and change admin settings: roster, tickets per agent, dimension weights.
 import { requireAdmin } from "../../lib/auth.js";
 import { getSettings, saveSettings } from "../../lib/settings.js";
 import { json, route, readJsonBody } from "../../lib/http.js";

@@ -1,6 +1,6 @@
 // November 2026 QA cycle, month to date: tickets closed 1 to 16 Nov 2026, scored
-// in Claude through the HubSpot connector against the 120 minute response standard,
-// with the HubSpot notes check and response times.
+// in Claude through the HubSpot connector with the HubSpot notes check. Response
+// time is not scored.
 export default {
  "month": "2026-11",
  "label": "November 2026",
@@ -8,7 +8,7 @@ export default {
   "from": "2026-11-01",
   "to": "2026-11-16"
  },
- "publishedAt": "2026-11-17T09:54:51.397Z",
+ "publishedAt": "2026-11-23T07:39:40.834Z",
  "source": "manual",
  "tickets": [
   {
@@ -31,19 +31,12 @@ export default {
    ],
    "fix": [
     "Customer asked for a downgrade to Starter and the subscription was set to cancel instead, which took two confused follow-ups to correct.",
-    "First response took around 6.8 hours against the 120 minute standard.",
+    "The card was removed from the payment details as part of the cancellation, yet a $297 Starter invoice is still due on November 29th; tell the client how that invoice will be paid.",
     "Use the cancellation macro only for cancellations; the \"sorry to see you go\" and good standing warning did not fit a downgrade."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No HubSpot notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 6.8,
-    "slowestHours": 14.5,
-    "replies": 5,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -57,28 +50,21 @@ export default {
     2,
     4,
     3,
-    2,
+    3,
     2
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Apologised for the delay and gave numbered login steps that are easy to follow."
+    "Gave numbered login steps that are easy to follow and asked Taha to confirm whether he could log in."
    ],
    "fix": [
     "The reset steps spelled the customer's login email differently from the address on file, so following them as written would fail.",
     "Customer said the duplicate was already deleted and the real issue was being routed back to the formation flow; the reply repeated the reset flow that was already not working.",
-    "Ticket was closed without the customer confirming they could log in; first human reply came around 3.8 hours after the request, over the 120 minute standard."
+    "Ticket was closed without the customer confirming they could log in; keep it open until access is confirmed."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No HubSpot notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 3.8,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -92,28 +78,21 @@ export default {
     5,
     5,
     4,
-    4,
+    5,
     5
    ],
-   "category": "Policy & Process",
+   "category": "Empathy & Tone",
    "keep": [
-    "Replied within about 20 minutes with the renewal date and an exact discounted price of $267.30.",
+    "Opened with the renewal date and an exact discounted price of $267.30.",
     "Handled the counter request firmly with a clear final offer of 15% at $252.45, then confirmed the invoice was updated and when the link would arrive."
    ],
    "fix": [
-    "The acceptance waited around 7.5 hours for confirmation; aim to confirm within 120 minutes.",
+    "The client mentioned their struggling startup team; a short acknowledgement before the final offer would soften the no to 20%.",
     "Restate the final amount of $252.45 in the confirmation so the client has it in one place."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No HubSpot notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 0.3,
-    "slowestHours": 7.5,
-    "replies": 3,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -127,7 +106,7 @@ export default {
     2,
     3,
     3,
-    2,
+    3,
     3
    ],
    "category": "Accuracy & Completeness",
@@ -136,19 +115,12 @@ export default {
    ],
    "fix": [
     "Told the client the director was added and bylaws updated, then 25 minutes later said a $299 state amendment was required; give the full answer in one reply.",
-    "First reply was a holding message around 19 hours after the intro, well over the 120 minute standard, with no return time; holding replies need a committed time.",
+    "The first reply was a holding message with no return time; holding replies need a committed time for the next update.",
     "The share redistribution request was never addressed, and the client's name was misspelled as Marc in the final reply."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Single note was logged before the final update confirming the amendment was filed, and it has no Next Step owner."
-   },
-   "timing": {
-    "firstHours": 19.1,
-    "slowestHours": 9.3,
-    "replies": 5,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -162,7 +134,7 @@ export default {
     2,
     4,
     3,
-    2,
+    4,
     2
    ],
    "category": "Accuracy & Completeness",
@@ -171,19 +143,11 @@ export default {
    ],
    "fix": [
     "Customer asked four specific questions (2026 filing obligation, Form 5472 and pro forma 1120, KYC/AML, booking a call) and none were answered directly.",
-    "Deferring to a tax call without a booking link leaves the customer to chase; include the link or the general rule for foreign-owned single member LLCs.",
-    "First human reply came around 28.9 hours after the original request against the 120 minute standard."
+    "Deferring to a tax call without a booking link leaves the customer to chase; include the link or the general rule for foreign-owned single member LLCs."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Next Step is only NFA with no owner."
-   },
-   "timing": {
-    "firstHours": 28.9,
-    "slowestHours": 0.7,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -197,7 +161,7 @@ export default {
     3,
     3,
     4,
-    3,
+    4,
     4
    ],
    "category": "Clarity & Structure",
@@ -207,18 +171,11 @@ export default {
    "fix": [
     "Mixed terms (amendment filing, updated EIN letter) confused the client and prompted a follow-up; use one consistent description of the 8822-B process.",
     "The clarification stayed vague; say what the IRS will send and roughly how long it takes.",
-    "Two replies took over the 120 minute standard: a 3.7 hour first reply and a 2.7 hour wait after the payment was made."
+    "Give a committed date for when the 8822-B will be sent for signature, so the client knows when to expect it."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Next Step says no further action despite the 8822-B pending with Ops, and has no owner."
-   },
-   "timing": {
-    "firstHours": 3.7,
-    "slowestHours": 2.7,
-    "replies": 5,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -237,7 +194,7 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied in about 15 minutes with an itemised price list for the annual report, dissolution and short-year return."
+    "Gave an itemised price list for the annual report, dissolution and short-year return, and flagged state tax accounts and foreign registrations."
    ],
    "fix": [
     "Client asked whether dissolution is included in the plan, how to coordinate subscription and registered agent cancellation, what documents are needed and the completion date; none were answered.",
@@ -247,13 +204,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "No Resolution status or Next Step with an owner."
-   },
-   "timing": {
-    "firstHours": 0.3,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -272,8 +222,7 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Explained the next step plainly: EIN applied online once the state approves the formation, nothing needed from the client.",
-    "First reply came in around 1.7 hours, inside the 120 minute standard."
+    "Explained the next step plainly: EIN applied online once the state approves the formation, nothing needed from the client."
    ],
    "fix": [
     "Client said they have an ITIN, and the reply said \"Since you have an SSN\"; confirm the ID type before advising.",
@@ -282,13 +231,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Next Step is only NFA with no owner, and the note repeats the SSN error."
-   },
-   "timing": {
-    "firstHours": 1.7,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -302,7 +244,7 @@ export default {
     2,
     3,
     4,
-    2,
+    3,
     3
    ],
    "category": "Accuracy & Completeness",
@@ -310,20 +252,13 @@ export default {
     "Respected the request not to be pitched and confirmed the switch date of December 12th and the $297 invoice."
    ],
    "fix": [
-    "The billing address update in the first message was never acknowledged or done.",
+    "The billing address update in the first message was never acknowledged or done, and the ticket was closed with it still outstanding.",
     "The annual report question got a plan feature list instead of a direct answer that the New Hampshire report becomes the client's responsibility.",
-    "First reply took around 10.5 hours and all three replies were over the 120 minute standard; the closing message also has a broken fragment, \"Wishing you\"."
+    "The closing message has a broken fragment, \"Wishing you\"; proofread before sending."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Next Step has no owner and the note says the client was unresponsive though they replied later."
-   },
-   "timing": {
-    "firstHours": 10.5,
-    "slowestHours": 4,
-    "replies": 3,
-    "overStandard": 3,
-    "slaMinutes": 120
    }
   },
   {
@@ -352,13 +287,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Next Step is only NFA with no owner, and the SSN outcome is not recorded."
-   },
-   "timing": {
-    "firstHours": 1.2,
-    "slowestHours": 16.5,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -372,7 +300,7 @@ export default {
     4,
     5,
     4,
-    3,
+    5,
     3
    ],
    "category": "Effort Reduction",
@@ -382,18 +310,11 @@ export default {
    ],
    "fix": [
     "Customer had already attached the annual report and tax return, yet the reply asked them to share the completed documents again.",
-    "Customer chased twice for the invoice and waited about 63 hours; the final set of six questions waited about 48 hours, far outside the 120 minute standard."
+    "The last reply did not say whether copies and filing confirmation of Forms 1120 and 5472 will be shared with the customer; answer every numbered question so they do not have to ask again."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Only one note for five customer updates, and it has no Next Step."
-   },
-   "timing": {
-    "firstHours": 5.2,
-    "slowestHours": 63.3,
-    "replies": 11,
-    "overStandard": 9,
-    "slaMinutes": 120
    }
   },
   {
@@ -412,8 +333,7 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Gave clear dashboard steps to update the payment method under Settings, Subscription, Billing Information.",
-    "First reply went out in about 1.7 hours, inside the 120 minute standard."
+    "Gave clear dashboard steps to update the payment method under Settings, Subscription, Billing Information."
    ],
    "fix": [
     "Customer asked to be charged in USD; the reply removed the card instead and never addressed the billing currency.",
@@ -423,13 +343,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Note only says the client was contacted via Gmail, with no Summary, Resolution or Next Step."
-   },
-   "timing": {
-    "firstHours": 1.7,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -443,28 +356,21 @@ export default {
     4,
     4,
     4,
-    3,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Effort Reduction",
    "keep": [
     "Explained the 1099 NEC threshold of $600 to contractors and confirmed the alert could be ignored once no contractors were hired.",
     "Handled all three questions with labelled sections and updated the address the same day."
    ],
    "fix": [
-    "First reply took about 3.7 hours and the follow up about 2.7 hours, both outside the 120 minute standard.",
-    "The Mercury question was passed back to Mercury; say whether a reconnect is usually needed so the customer is not left to chase."
+    "The Mercury question was passed back to Mercury; say whether a reconnect is usually needed so the customer is not left to chase.",
+    "Repeat the new address as entered in the confirmation so the customer can check it was recorded correctly."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Note has Summary and Resolution but no Next Step with an owner."
-   },
-   "timing": {
-    "firstHours": 3.7,
-    "slowestHours": 2.7,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -478,7 +384,7 @@ export default {
     4,
     5,
     3,
-    3,
+    4,
     3
    ],
    "category": "Effort Reduction",
@@ -492,13 +398,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "Updates over several days are covered by one note with no Next Step."
-   },
-   "timing": {
-    "firstHours": 2.3,
-    "slowestHours": 9,
-    "replies": 3,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -512,7 +411,7 @@ export default {
     3,
     4,
     3,
-    3,
+    5,
     3
    ],
    "category": "Empathy & Tone",
@@ -527,13 +426,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "Two updates on different days with one note and no Next Step."
-   },
-   "timing": {
-    "firstHours": 2.5,
-    "slowestHours": 8.1,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -547,7 +439,7 @@ export default {
     4,
     4,
     4,
-    2,
+    3,
     3
    ],
    "category": "Policy & Process",
@@ -561,13 +453,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "Only one note reading 'Email follow up after the call' for two updates, with no Summary, Resolution or Next Step."
-   },
-   "timing": {
-    "firstHours": 9.4,
-    "slowestHours": 12.8,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -581,27 +466,19 @@ export default {
     4,
     4,
     4,
-    3,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Accuracy & Completeness",
    "keep": [
     "Gave the $299 price including state fee plus step by step dashboard instructions to purchase the DBA."
    ],
    "fix": [
-    "First reply took about 2.5 hours against the 120 minute standard.",
     "Add the expected processing time so the customer knows when the DBA will be in place."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No note logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 2.5,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -630,13 +507,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No note logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 2.1,
-    "slowestHours": 5,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -650,7 +520,7 @@ export default {
     5,
     5,
     4,
-    4,
+    5,
     4
    ],
    "category": "Empathy & Tone",
@@ -659,19 +529,11 @@ export default {
     "Answered the Mercury address and US operations questions with practical guidance and gave timelines that fit the November 25 deadline."
    ],
    "fix": [
-    "Customer said yes to the invoice and waited about 12 hours for it despite the stated deadline, well outside the 120 minute standard.",
     "Acknowledge the deadline pressure up front and confirm the certificate should arrive before November 25."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Note has Summary and Resolution but no Next Step with an owner."
-   },
-   "timing": {
-    "firstHours": 0.6,
-    "slowestHours": 11.8,
-    "replies": 6,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -685,7 +547,7 @@ export default {
     3,
     4,
     3,
-    3,
+    4,
     2
    ],
    "category": "Effort Reduction",
@@ -694,19 +556,11 @@ export default {
    ],
    "fix": [
     "Include a direct link to Kintsugi instead of telling the customer to find their Support Center.",
-    "Ask what sales tax help is needed before closing; a nexus or registration question may have a quick answer.",
-    "First reply took about 4 hours against the 120 minute standard."
+    "Ask what sales tax help is needed before closing; a nexus or registration question may have a quick answer."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Note only says 'Response to the check in email', with no Summary, Resolution or Next Step."
-   },
-   "timing": {
-    "firstHours": 4,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -720,7 +574,7 @@ export default {
     3,
     2,
     4,
-    3,
+    4,
     3
    ],
    "category": "Clarity & Structure",
@@ -736,13 +590,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes logged on the ticket for any of the three updates."
-   },
-   "timing": {
-    "firstHours": 9.4,
-    "slowestHours": 13.5,
-    "replies": 3,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -756,7 +603,7 @@ export default {
     4,
     5,
     5,
-    4,
+    5,
     4
    ],
    "category": "Accuracy & Completeness",
@@ -765,19 +612,11 @@ export default {
     "Kept the promise to confirm the registered agent email and followed up unprompted."
    ],
    "fix": [
-    "First reply asked the customer whether their provider would file Form 8832 when doola had already filed it; check the account before asking.",
-    "First response took about 3.9 hours and the detailed answer about 14.5 hours against the 120 minute standard."
+    "First reply asked the customer whether their provider would file Form 8832 when doola had already filed it; check the account before asking."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Only one note with a Slack link; three of four updates have no note and none has Summary, Resolution or Next Step."
-   },
-   "timing": {
-    "firstHours": 3.9,
-    "slowestHours": 14.5,
-    "replies": 4,
-    "overStandard": 3,
-    "slaMinutes": 120
    }
   },
   {
@@ -807,13 +646,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "Only a Slack link note on the first update; the final answer has no note and none has Summary, Resolution or Next Step."
-   },
-   "timing": {
-    "firstHours": 5.4,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -827,7 +659,7 @@ export default {
     2,
     3,
     3,
-    3,
+    4,
     2
    ],
    "category": "Accuracy & Completeness",
@@ -838,18 +670,11 @@ export default {
    "fix": [
     "Stated Form 8832 must be filed for the LLC to become a partnership; a two member LLC is a partnership by default, and the customer had to correct this.",
     "Pasted a generic employee-style member clause for a 50% owner and left the asked fee and timeline for drafting the documents and the BOI question unanswered.",
-    "First response took about 29.6 hours against the 120 minute standard, and the second reply has an unfinished sentence about the January 2027 effective date."
+    "The second reply has an unfinished sentence about the January 2027 effective date, and it sends the customer's correct Form 8832 point to a Tax Advisor instead of acknowledging the earlier error; proofread and own the correction."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No notes logged on the ticket for either update."
-   },
-   "timing": {
-    "firstHours": 29.6,
-    "slowestHours": 12.9,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -863,28 +688,20 @@ export default {
     5,
     4,
     4,
-    3,
+    5,
     5
    ],
-   "category": "Policy & Process",
+   "category": "Clarity & Structure",
    "keep": [
     "Complete referral steps including the 10% friend discount, up to 30% reward and Tremendous payout timing.",
     "Gave the referrals contact for follow ups so the customer knows where to go."
    ],
    "fix": [
-    "First response took about 18.5 hours for a simple question against the 120 minute standard.",
     "Break the reward rules paragraph into short bullets so the key figures are easier to spot."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No notes logged on the ticket for either update."
-   },
-   "timing": {
-    "firstHours": 18.5,
-    "slowestHours": 0.7,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -898,7 +715,7 @@ export default {
     3,
     5,
     3,
-    4,
+    5,
     3
    ],
    "category": "Accuracy & Completeness",
@@ -912,13 +729,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 3.8,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -937,7 +747,7 @@ export default {
    ],
    "category": "Effort Reduction",
    "keep": [
-    "Replied within about 40 minutes and built rapport by noting she is also based in the Philippines."
+    "Congratulated the customer on the new EIN and built rapport by noting she is also based in the Philippines."
    ],
    "fix": [
     "The customer's goal was opening a US bank account, but the reply gives no options, documents or steps, only a meeting link.",
@@ -946,13 +756,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 0.7,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -966,28 +769,21 @@ export default {
     5,
     4,
     4,
-    3,
+    5,
     5
    ],
-   "category": "Policy & Process",
+   "category": "Clarity & Structure",
    "keep": [
     "Answered every numbered question: passport timing, which documents doola provides, industry choice, a second project under the same LLC and formation review.",
     "Clarified proof of address is the personal residence, preventing a wrong upload."
    ],
    "fix": [
-    "The detailed answer took about 57.7 hours against the 120 minute standard.",
-    "The reply was sent cut off mid-sentence ('I'l'); proofread before sending."
+    "The reply was sent cut off mid-sentence ('I'l'); proofread before sending.",
+    "Say in the first document list that proof of address means your personal residence, so the customer does not have to ask whether doola provides it."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No notes logged on the ticket for any of the three updates."
-   },
-   "timing": {
-    "firstHours": 6.2,
-    "slowestHours": 57.7,
-    "replies": 3,
-    "overStandard": 3,
-    "slaMinutes": 120
    }
   },
   {
@@ -1016,13 +812,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes logged on the ticket for either update."
-   },
-   "timing": {
-    "firstHours": 3.6,
-    "slowestHours": 2.3,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -1041,7 +830,7 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied in about 14 minutes and routed the customer to the sales tax partner, who answered the same day.",
+    "Clearly explained sales tax is outside doola's scope and pointed the customer to the sales tax partner Kintsugi, who resolved it.",
     "Warm, personalised tone that matched the customer's message."
    ],
    "fix": [
@@ -1050,13 +839,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes logged on the ticket for either update."
-   },
-   "timing": {
-    "firstHours": 0.2,
-    "slowestHours": 0,
-    "replies": 2,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -1070,7 +852,7 @@ export default {
     4,
     3,
     4,
-    2,
+    3,
     3
    ],
    "category": "Policy & Process",
@@ -1080,19 +862,11 @@ export default {
    ],
    "fix": [
     "Ticket was closed while the franchise tax details were still outstanding, right after telling Harsh you would take it from there.",
-    "Picked up the thread about 37.7 hours after the customer's last message, well past the 120 minute standard.",
     "Send the request as a short numbered list with a deadline rather than repeating the full blank form twice."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Three customer updates but only one note, and its Next Step says no action while details were still awaited."
-   },
-   "timing": {
-    "firstHours": 16.8,
-    "slowestHours": 37.7,
-    "replies": 3,
-    "overStandard": 3,
-    "slaMinutes": 120
    }
   },
   {
@@ -1106,12 +880,12 @@ export default {
     3,
     4,
     3,
-    4,
+    5,
     3
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied within about 1.1 hours and restated the exact old and new names so the request was clear."
+    "Restated the exact old and new names so the request was clear."
    ],
    "fix": [
     "Asked why the customer wanted the change instead of explaining the name change options, timeline and cost up front.",
@@ -1120,13 +894,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "Two customer updates but only one note, which has no real summary or owner."
-   },
-   "timing": {
-    "firstHours": 1.1,
-    "slowestHours": 12,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -1140,27 +907,20 @@ export default {
     3,
     4,
     4,
-    2,
+    4,
     3
    ],
-   "category": "Policy & Process",
+   "category": "Accuracy & Completeness",
    "keep": [
     "Explicitly confirmed no new EIN application or paid service would be started, matching the customer's instruction."
    ],
    "fix": [
-    "First response took about 36.6 hours against the 120 minute standard, and the holding reply gave no return date.",
-    "Final reply only said records were uploaded; answer the three questions asked (was the SS-4 submitted, when, and was an EIN assigned) in the email itself."
+    "Final reply only said records were uploaded; answer the three questions asked (was the SS-4 submitted, when, and was an EIN assigned) in the email itself.",
+    "The holding reply said you would circle back but gave no return date; commit to a specific day you will update Jonathan."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "First note is only a Slack link with no Summary, Resolution or Next Step."
-   },
-   "timing": {
-    "firstHours": 36.6,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -1189,13 +949,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "First note is only a Slack link and the second Next Step has no owner or date."
-   },
-   "timing": {
-    "firstHours": 1.7,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -1209,7 +962,7 @@ export default {
     3,
     4,
     4,
-    3,
+    4,
     2
    ],
    "category": "Effort Reduction",
@@ -1219,18 +972,11 @@ export default {
    "fix": [
     "Questions 3 and 4 told the customer to check plan coverage herself; look up her plan and state what is included and the cost to add 5472.",
     "Give the registered agent address and its permitted use directly instead of pointing to formation documents and asking her to confirm with the team.",
-    "Reply came about 13.2 hours after verification was provided, well past the 120 minute standard."
+    "You offered to review her plan but the ticket was closed without that answer; keep it open until the plan question is resolved."
    ],
    "notes": {
     "status": "Complete",
     "issue": ""
-   },
-   "timing": {
-    "firstHours": 34.7,
-    "slowestHours": 13.2,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -1244,28 +990,21 @@ export default {
     4,
     5,
     5,
-    3,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Accuracy & Completeness",
    "keep": [
     "Clear dissolution walkthrough with dashboard steps, timeline, $149 plus $60 fees and the $600 short year return.",
     "Warm, respectful tone that acknowledged the decision and closed gracefully when Amal chose to wait."
    ],
    "fix": [
-    "First response took about 4.2 hours against the 120 minute standard.",
-    "Amal asked about partners for bank wind down and distributing funds; say whether doola offers or refers that help."
+    "Amal asked about partners for bank wind down and distributing funds; say whether doola offers or refers that help.",
+    "The fee list says doola processing fee; always write doola in lowercase."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Two customer updates but only one note, and the closing update has no note."
-   },
-   "timing": {
-    "firstHours": 4.2,
-    "slowestHours": 12.1,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -1284,7 +1023,7 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Spotted the duplicate ticket quickly, about 1.3 hours after the request came in."
+    "Spotted the duplicate ticket and named Dennis as the owner, so Marcel knew where his request was being handled."
    ],
    "fix": [
     "Customer asked for four things; the reply only said a refund was processed without confirming both charges, explaining the $67.12, or confirming all subscriptions were cancelled.",
@@ -1294,13 +1033,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Note is a link and the word duplicate, with no Summary, Resolution or Next Step owner."
-   },
-   "timing": {
-    "firstHours": 1.3,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -1314,29 +1046,22 @@ export default {
     3,
     4,
     4,
-    2,
+    4,
     3
    ],
-   "category": "Policy & Process",
+   "category": "Accuracy & Completeness",
    "keep": [
     "Explained why the registered agent address is used on the SS-4 and confirmed the EIN representative clearly.",
     "Friendly, personal tone that kept Joyjit engaged across several updates."
    ],
    "fix": [
-    "Flagged URGENT and first response took about 33.8 hours against the 120 minute standard.",
     "The phone number and Sole Member title request was answered with entity classification instead; confirm what will appear on the form.",
-    "Name availability update came about 40 hours after promising to check, after the filing team had already told the customer."
+    "The holding reply on the name check gave no return date; commit to a specific day you will come back.",
+    "Check with the filing team before sending an update; your name update asked for an alternative name after Racine had already resolved it and the company was formed."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Six customer updates but three notes, and one note is only a Slack link."
-   },
-   "timing": {
-    "firstHours": 33.8,
-    "slowestHours": 5.9,
-    "replies": 5,
-    "overStandard": 3,
-    "slaMinutes": 120
    }
   },
   {
@@ -1350,7 +1075,7 @@ export default {
     2,
     3,
     4,
-    2,
+    4,
     3
    ],
    "category": "Accuracy & Completeness",
@@ -1359,19 +1084,12 @@ export default {
    ],
    "fix": [
     "Second reply quoted a $660 total that dropped the $149 fee from your own first email, and the correction relabelled the $600 as annual report fees instead of the short year return.",
-    "First response took about 38 hours against the 120 minute standard.",
+    "Check the dashboard checkout before quoting a closure total so the quote matches what the customer will actually be charged.",
     "Gustavo asked whether any filing is included in the plan; answer that directly."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Three updates by Anna and no notes from her on the ticket."
-   },
-   "timing": {
-    "firstHours": 38,
-    "slowestHours": 13.3,
-    "replies": 4,
-    "overStandard": 4,
-    "slaMinutes": 120
    }
   },
   {
@@ -1385,28 +1103,21 @@ export default {
     4,
     4,
     4,
-    3,
+    4,
     4
    ],
    "category": "Policy & Process",
    "keep": [
     "Final updates confirmed the exact line 9a and line 10 wording, the fax to the IRS and an up to 8 week EIN timeline.",
-    "Sent the revised SS-4 for review within about an hour when the customer could not find it."
+    "Sent the revised SS-4 in the thread for review when the customer could not find it, and got his approval before it went to the IRS."
    ],
    "fix": [
-    "Holding replies gave no return date and there was a gap of about 3 days between the tax team update and the next message.",
+    "Holding replies said the team would update Burim but gave no return date; commit to a specific day each time.",
     "Told Burim the revised SS-4 had been emailed for signature when it had not arrived; verify before saying it was sent."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Five updates by Anna but three notes, and two of them are only Slack links."
-   },
-   "timing": {
-    "firstHours": 2.2,
-    "slowestHours": 7.5,
-    "replies": 4,
-    "overStandard": 3,
-    "slaMinutes": 120
    }
   },
   {
@@ -1435,13 +1146,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Note has Issue Summary and Action Taken but no Resolution or Next Step with an owner, only NFA."
-   },
-   "timing": {
-    "firstHours": 0,
-    "slowestHours": 2.2,
-    "replies": 3,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -1455,27 +1159,19 @@ export default {
     4,
     5,
     4,
-    3,
+    4,
     3
    ],
-   "category": "Policy & Process",
+   "category": "Effort Reduction",
    "keep": [
     "Restated the up to 90 day IRS timeline and confirmed the request was already submitted and being monitored."
    ],
    "fix": [
-    "First response took around 8.5 hours against the 120 minute standard.",
-    "Give Owen the submission date and an expected window or check in date instead of an open ended promise to follow up."
+    "Give Owen the submission date and an expected window or check in date instead of an open ended promise to follow up, so he does not have to chase again."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Note has Issue Summary and Action Taken but no Resolution or Next Step with an owner, only NFA."
-   },
-   "timing": {
-    "firstHours": 8.5,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -1489,29 +1185,21 @@ export default {
     3,
     4,
     4,
-    2,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Accuracy & Completeness",
    "keep": [
-    "First reply in about 1.2 hours offered troubleshooting plus a manual add with the exact fields needed.",
+    "First reply offered troubleshooting plus a manual add with the exact fields needed.",
     "Final reply confirmed the members were added and explained the next step (state formation document)."
    ],
    "fix": [
-    "Customer asked for this ASAP and the follow up took around 59.6 hours.",
     "Osa also corrected ownership to 40/40/20; confirm the percentages on the dashboard match, not just that members were added.",
     "Customer said they had tried repeatedly; skip generic browser troubleshooting and offer the manual add up front."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Both notes lack a Resolution and a Next Step with an owner; the second only says NFA."
-   },
-   "timing": {
-    "firstHours": 1.2,
-    "slowestHours": 59.6,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -1525,27 +1213,19 @@ export default {
     3,
     5,
     4,
-    2,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Accuracy & Completeness",
    "keep": [
     "Was direct that doola does not offer sales tax permits and referred Maria to ResaleCertify and Kintsugi with a link."
    ],
    "fix": [
-    "First response took around 16.6 hours against the 120 minute standard.",
     "Questions 1 and 3 got no general guidance at all; share the basics (resale certificates usually follow a state registration where you have nexus) before referring out."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Note has Issue Summary and Action Taken but no Resolution or Next Step with an owner, only NFA."
-   },
-   "timing": {
-    "firstHours": 16.6,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -1559,7 +1239,7 @@ export default {
     4,
     5,
     5,
-    4,
+    5,
     4
    ],
    "category": "Accuracy & Completeness",
@@ -1568,19 +1248,11 @@ export default {
     "Was honest that the ECI and structure questions need the Tax Team and gave booking steps for a consultation."
    ],
    "fix": [
-    "Ahmed asked about available extensions and his new renewal date after upgrading; neither was answered.",
-    "Third reply came around 11.1 hours after his message, over the 120 minute standard."
+    "Ahmed asked about available extensions and his new renewal date after upgrading; neither was answered."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Notes lack Resolution and Next Step owner, and the third note copies the second instead of logging the tax consultation advice."
-   },
-   "timing": {
-    "firstHours": 1,
-    "slowestHours": 11.1,
-    "replies": 3,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -1594,7 +1266,7 @@ export default {
     3,
     4,
     4,
-    3,
+    5,
     4
    ],
    "category": "Accuracy & Completeness",
@@ -1603,19 +1275,11 @@ export default {
    ],
    "fix": [
     "Nassim quoted the fax saying it is not an official verification document; address that wording instead of calling the fax fully valid.",
-    "Ask for the rejection reason shown in his screenshot before pointing him to Mercury support.",
-    "First human reply came 2.2 hours after the original question and the rejection reply around 9.7 hours later, both over the 120 minute standard."
+    "Ask for the rejection reason shown in his screenshot before pointing him to Mercury support."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Both notes have Issue Summary and Action Taken but no Resolution or Next Step with an owner, only NFA."
-   },
-   "timing": {
-    "firstHours": 2.2,
-    "slowestHours": 9.7,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -1629,28 +1293,20 @@ export default {
     4,
     5,
     4,
-    3,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Effort Reduction",
    "keep": [
     "Initial outreach covered the dashboard path, timeline, every fee and when to close the bank account.",
     "Follow up gave the Wyoming Department of Revenue link and a clear four step closure path."
    ],
    "fix": [
-    "Reply to Angie's follow up took around 12.6 hours against the 120 minute standard.",
     "Close with how to reach us once she starts the dissolution flow so she knows the next step."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Second note duplicates the first and neither has a Resolution or Next Step with an owner."
-   },
-   "timing": {
-    "firstHours": 12.6,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -1669,7 +1325,7 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Quick follow ups (under 10 minutes) confirmed Simeon could send the IRS form and tied it to 1099 reporting."
+    "Follow ups confirmed Simeon could safely send the IRS form to his creators, tied it to 1099 reporting, and told him to use the official IRS copy."
    ],
    "fix": [
     "Used a macro on how to fill out your own W-9 when Simeon is the requester collecting forms from creators, which caused another follow up.",
@@ -1679,13 +1335,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Three identical notes with no Resolution or Next Step owner, and they describe fill out instructions rather than what was resolved."
-   },
-   "timing": {
-    "firstHours": 5.3,
-    "slowestHours": 0.1,
-    "replies": 3,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -1704,7 +1353,7 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Answered all three questions within 0.4 hours with the partner notary link for non-US residents and the steps.",
+    "Answered all three questions with the partner notary link for non-US residents and the steps.",
     "Asked Maciej to send back the notarized copy so it is stored on the dashboard, and flagged the three month window."
    ],
    "fix": [
@@ -1713,13 +1362,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Note has Issue Summary and Action Taken but no Resolution or Next Step with an owner, only NFA."
-   },
-   "timing": {
-    "firstHours": 0.4,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -1733,28 +1375,20 @@ export default {
     4,
     5,
     4,
-    3,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Accuracy & Completeness",
    "keep": [
-    "Sent the $99 invoice within about 1.4 hours and flagged the 24 hour link expiry.",
+    "Sent the $99 invoice link and flagged the 24 hour link expiry.",
     "Kept the commitment to cancel the Starter Plan once payment cleared so Bryn was not double charged."
    ],
    "fix": [
-    "Bryn confirmed payment and waited around 44.9 hours for the cancellation confirmation.",
     "Tell him when the RA plan renews and whether any unused Starter Plan time is credited."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Notes lack Resolution and a Next Step with an owner; the first only says awaiting payment."
-   },
-   "timing": {
-    "firstHours": 1.4,
-    "slowestHours": 44.9,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -1768,28 +1402,21 @@ export default {
     5,
     5,
     4,
-    3,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Effort Reduction",
    "keep": [
     "Confirmed the plan is set to cancel at period end on November 10 with no further charge, exactly what Khalid asked for.",
     "Added a clear reminder that he now owns registered agent, annual report and IRS filings to stay in good standing."
    ],
    "fix": [
-    "Khalid's confirmation request sat about 50 hours before your reply, well past the 120 minute standard and only days before renewal.",
-    "Add the one practical next step he flagged: file the Wyoming registered agent change before November 10 so there is no gap."
+    "Add the one practical next step he flagged: file the Wyoming registered agent change before November 10 so there is no gap.",
+    "Khalid said he is already moving his registered agent to another provider; acknowledge that plan directly so the reply answers him rather than reading as a standard cancellation template."
    ],
    "notes": {
     "status": "Complete",
     "issue": ""
-   },
-   "timing": {
-    "firstHours": 1.1,
-    "slowestHours": 50.4,
-    "replies": 3,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -1803,7 +1430,7 @@ export default {
     2,
     2,
     2,
-    2,
+    3,
     3
    ],
    "category": "Empathy & Tone",
@@ -1813,18 +1440,11 @@ export default {
    "fix": [
     "Addressed the customer as Lixia when she signed every email as Julia; always use the name the customer uses.",
     "Saying she can trademark the domain once purchased is misleading; explain that owning the domain already gives her the rights to it and a trademark protects the brand name.",
-    "The question waited about 81 hours for a human reply, far past the 120 minute standard, and the long trademark macro buried the one-line answer she needed."
+    "The long trademark macro buried the one-line answer she needed, and the ticket was closed before her actual question was clearly answered; lead with the direct answer and keep the partner details short."
    ],
    "notes": {
     "status": "Complete",
     "issue": ""
-   },
-   "timing": {
-    "firstHours": 80.6,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -1853,13 +1473,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "Your November 5 reply declining goodwill has no note, and the existing note marks NFAN while the filing is pending."
-   },
-   "timing": {
-    "firstHours": 9.2,
-    "slowestHours": 13.4,
-    "replies": 5,
-    "overStandard": 5,
-    "slaMinutes": 120
    }
   },
   {
@@ -1884,18 +1497,11 @@ export default {
    "fix": [
     "Two replies described the company as a Wyoming LLC with a $60 Wyoming annual report, then the last reply said New Mexico with no correction or apology; flag and own the error clearly.",
     "The final reply never confirmed the plan switch was actually done, and she asked for official filing links that were not given.",
-    "Replies took 2.0, 5.3 and 8.1 hours, all over the 120 minute standard; the first missed by under a minute and the later two by hours."
+    "Holding lines such as we will share the exact expiry date shortly and I'm checking on this and will update you soonest gave no return date; commit to a specific day you will come back."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Summary note marks NFAN with no Next Step owner while the RA plan switch was still pending."
-   },
-   "timing": {
-    "firstHours": 2,
-    "slowestHours": 8.1,
-    "replies": 3,
-    "overStandard": 3,
-    "slaMinutes": 120
    }
   },
   {
@@ -1914,7 +1520,7 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied within an hour and gave a fee breakdown of $199 plus the $100 state fee."
+    "Gave a clear fee breakdown of $199 plus the $100 state fee so Nazar could see what the invoice covered."
    ],
    "fix": [
     "You first said the invoice was for a completed DBA and could be ignored, then minutes later said the charge was correct and in progress; check the billing history before answering so the information does not conflict.",
@@ -1924,13 +1530,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Note omits the duplicate payment refund request and how it was answered."
-   },
-   "timing": {
-    "firstHours": 0.8,
-    "slowestHours": 0,
-    "replies": 2,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -1954,18 +1553,11 @@ export default {
    "fix": [
     "Zunair asked for a refund of the $1,999 tax package that has not been delivered; the reply only cited formation and EIN as complete, which answers a different question.",
     "The cancellation request, the promo credit point and the November 13 dispute deadline were not addressed, then the ticket was closed.",
-    "First reply came after about 32 hours, far past the 120 minute standard, on a formal refund request with a chargeback warning; acknowledge quickly and route the refund decision before closing."
+    "Opening with sorry the banking side hasn't moved misreads a formal cancellation and refund letter; acknowledge the request he actually made before anything else."
    ],
    "notes": {
     "status": "Complete",
     "issue": ""
-   },
-   "timing": {
-    "firstHours": 32.4,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -1994,13 +1586,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No note logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 2.6,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -2014,12 +1599,12 @@ export default {
     3,
     4,
     3,
-    3,
+    4,
     3
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied in about 40 minutes and correctly verified identity before discussing any account or billing details."
+    "Correctly verified identity before discussing any account or billing details."
    ],
    "fix": [
     "Larry said he was writing again and is upset about a charge; acknowledge the frustration before asking for details.",
@@ -2029,13 +1614,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No note logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 0.7,
-    "slowestHours": 4.3,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -2049,28 +1627,20 @@ export default {
     4,
     4,
     3,
-    3,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Empathy & Tone",
    "keep": [
     "Confirmed the switch is complete, the address stays the same and the $99 charge date of November 26."
    ],
    "fix": [
-    "Julian's confirmation request waited about 60 hours, far past the 120 minute standard.",
     "He asked if $99 applies to future renewals and if IRS and state letters still reach the dashboard; answer each one explicitly rather than a general you will still have access to your mail.",
     "Open warmly and drop the duplicate closing macro so the confirmation reads cleanly."
    ],
    "notes": {
     "status": "Complete",
     "issue": ""
-   },
-   "timing": {
-    "firstHours": 2.4,
-    "slowestHours": 60.3,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -2084,27 +1654,20 @@ export default {
     4,
     5,
     3,
-    3,
+    5,
     3
    ],
-   "category": "Policy & Process",
+   "category": "Empathy & Tone",
    "keep": [
     "Short, clear answer to the only open question and the invoice was actually voided, per the note."
    ],
    "fix": [
-    "Boris's hold request waited about 46 hours before a reply, far past the 120 minute standard, on an urgent government deadline ticket.",
+    "Boris thanked the team warmly and shared that the agency accepted his status screenshot; acknowledge that good news and his thanks instead of a one-line reply followed by the closing macro.",
     "Confirm the invoice has been cancelled rather than we'll cancel it, and remind him the expedited option is ready if the agency asks for the formal certificate."
    ],
    "notes": {
     "status": "Complete",
     "issue": ""
-   },
-   "timing": {
-    "firstHours": 5.5,
-    "slowestHours": 46.3,
-    "replies": 3,
-    "overStandard": 3,
-    "slaMinutes": 120
    }
   },
   {
@@ -2123,22 +1686,15 @@ export default {
    ],
    "category": "Policy & Process",
    "keep": [
-    "First reply landed in about 23 minutes and checked the account before answering."
+    "Checked the account before answering, told Cong plainly that the IRS letter had not arrived yet, and raised it with the processing team."
    ],
    "fix": [
-    "The holding reply promised to follow up without a committed return date; the update came about 19 hours later.",
+    "The holding reply promised to follow up without a committed return date.",
     "The customer also asked for the dashboard EIN status to be updated; the final reply only confirmed the letter upload and never addressed the status."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Only a bare Slack link note exists; the second update has no note and neither has Summary, Resolution or Next Step."
-   },
-   "timing": {
-    "firstHours": 0.4,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -2152,28 +1708,21 @@ export default {
     2,
     4,
     3,
-    2,
+    3,
     2
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Second reply came within about 31 minutes and confirmed the subscription is set to cancel with no further charge."
+    "Confirmed the subscription is set to cancel at the end of the billing period with no further charge, and explained that renewal reminder emails can be ignored."
    ],
    "fix": [
     "Athul asked twice for an update on the $209 dissolution filed October 12; neither reply mentioned it.",
-    "First reply was a generic retention macro sent about 6.7 hours after the email, against the 120 minute standard, and ignored that the LLC is being dissolved.",
+    "First reply was a generic retention macro that ignored that the LLC is being dissolved.",
     "Said registered agent coverage could not be guaranteed without offering how to protect the company until the dissolution completes."
    ],
    "notes": {
     "status": "Missing",
     "issue": "First update has a note with no Next Step owner; the cancellation update has no note."
-   },
-   "timing": {
-    "firstHours": 6.7,
-    "slowestHours": 0.5,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -2202,13 +1751,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes on the ticket for any of the agent's updates."
-   },
-   "timing": {
-    "firstHours": 0.3,
-    "slowestHours": 0.3,
-    "replies": 3,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -2222,7 +1764,7 @@ export default {
     3,
     4,
     3,
-    3,
+    4,
     3
    ],
    "category": "Accuracy & Completeness",
@@ -2231,19 +1773,11 @@ export default {
    ],
    "fix": [
     "Customer asked for the effective date in writing; the macro reply never stated it.",
-    "Macro told the customer to keep a registered agent and file annual reports even though the LLC is already dissolved.",
-    "Flagged urgent and the reply took about 2.4 hours, past the 120 minute standard."
+    "Macro told the customer to keep a registered agent and file annual reports even though the LLC is already dissolved."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No notes on the ticket for the agent's update."
-   },
-   "timing": {
-    "firstHours": 2.4,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -2271,13 +1805,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Note is only a Slack link with no Summary, Resolution or Next Step."
-   },
-   "timing": {
-    "firstHours": 1,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -2305,13 +1832,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes on the ticket for either update."
-   },
-   "timing": {
-    "firstHours": 1.1,
-    "slowestHours": 0.9,
-    "replies": 2,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -2325,7 +1845,7 @@ export default {
     5,
     5,
     5,
-    3,
+    4,
     4
    ],
    "category": "Policy & Process",
@@ -2334,19 +1854,11 @@ export default {
     "Clear final answer on invoice export, explaining it now lives only in doola Books."
    ],
    "fix": [
-    "First reply came about 8.2 hours after the email, well past the 120 minute standard.",
     "Holding replies said he would come back without a committed date."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Only one Slack link note for three updates, with no Summary, Resolution or Next Step."
-   },
-   "timing": {
-    "firstHours": 8.2,
-    "slowestHours": 0.5,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -2366,7 +1878,7 @@ export default {
    "category": "Accuracy & Completeness",
    "keep": [
     "Set clear expectations that the consultation is live only and advised putting key questions in the booking questionnaire.",
-    "Both replies landed inside the 120 minute standard, the first in about 1.7 hours."
+    "Confirmed the tax consultation is included in the plan and quoted the $149 fee for filing Form 8832."
    ],
    "fix": [
     "Five detailed questions were all routed to a consultation; answer the factual ones, such as annual filing fees after an 8832 election, in writing."
@@ -2374,13 +1886,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes on the ticket for either update."
-   },
-   "timing": {
-    "firstHours": 1.7,
-    "slowestHours": 1,
-    "replies": 2,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -2394,28 +1899,20 @@ export default {
     5,
     5,
     4,
-    2,
+    5,
     5
    ],
-   "category": "Policy & Process",
+   "category": "Empathy & Tone",
    "keep": [
     "Corrected the earlier AI replies with a precise answer: payments to corporations like LinkedIn, Meta and doola need no 1099.",
     "Told Jorge exactly what to do next: mark the task complete, nothing is late."
    ],
    "fix": [
-    "First human reply came about 106 hours after the email, far past the 120 minute standard, with the customer left on AI answers and asking again in between.",
     "Acknowledge the frustration about paying for support directly rather than a mid sentence greeting."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No notes on the ticket for the agent's update."
-   },
-   "timing": {
-    "firstHours": 106.4,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -2437,20 +1934,13 @@ export default {
     "Asked for Form 8822-B before changing the responsible party, which protects record accuracy."
    ],
    "fix": [
-    "The same reply, including the e-meet greeting, was sent three times over a week while Dmytro wrote back \"Still no answer\".",
-    "First reply took about 73 hours, far past the 120 minute standard, and the question on whether Delaware or the IRS must be told was never answered.",
+    "The same reply, including the e-meet greeting, was sent three times while Dmytro wrote back \"Still no answer\".",
+    "The question on whether Delaware or the IRS must be told was never answered.",
     "Ticket closed with the latest resend of the request unanswered in the thread."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Early updates have no notes; later notes are screenshots without Summary, Resolution or Next Step."
-   },
-   "timing": {
-    "firstHours": 73.3,
-    "slowestHours": 3.1,
-    "replies": 3,
-    "overStandard": 3,
-    "slaMinutes": 120
    }
   },
   {
@@ -2464,7 +1954,7 @@ export default {
     3,
     4,
     4,
-    3,
+    4,
     3
    ],
    "category": "Accuracy & Completeness",
@@ -2474,18 +1964,11 @@ export default {
    "fix": [
     "Olga asked to keep the registered agent and business address on Starter; the reply never confirmed both are included.",
     "Document access was answered as just \"dashboard access\" without confirming her formation documents, EIN letter and past filings stay available.",
-    "First response took just over 2 hours, narrowly missing the 120 minute standard, and the reply went only to the CC address rather than the person who wrote in."
+    "The reply with the refund and plan details went only to the CC address rather than the person who wrote in."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No note logged for the refund and plan change."
-   },
-   "timing": {
-    "firstHours": 2,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -2513,13 +1996,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No note logged for the cancellation."
-   },
-   "timing": {
-    "firstHours": 1.2,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -2544,18 +2020,11 @@ export default {
    "fix": [
     "Final reply skipped two direct questions: whether the renewed plan covers the 2027 return and whether the $1,999 price is guaranteed.",
     "The discount request got only \"check Services > My plan for promotions\" instead of a clear yes or no.",
-    "One of five waits ran over the 120 minute standard: 6.5 hours on the detailed cost breakdown request."
+    "The ticket was closed after that final reply while the 2027 coverage and renewal price questions were still open; resolve them before closing."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No notes logged for any of the five replies."
-   },
-   "timing": {
-    "firstHours": 1.8,
-    "slowestHours": 6.5,
-    "replies": 5,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -2569,7 +2038,7 @@ export default {
     3,
     4,
     3,
-    3,
+    5,
     2
    ],
    "category": "Effort Reduction",
@@ -2578,19 +2047,11 @@ export default {
    ],
    "fix": [
     "When the customer asked \"What do you suggest?\" the reply repeated the policy instead of offering options such as a cheaper plan or what happens to the company if services lapse.",
-    "Replies read as firm refusals; acknowledge the cash flow situation before restating the policy.",
-    "First response took 9.1 hours against the 120 minute standard."
+    "Replies read as firm refusals; acknowledge the cash flow situation before restating the policy."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No notes logged for any of the three replies."
-   },
-   "timing": {
-    "firstHours": 9.1,
-    "slowestHours": 1.3,
-    "replies": 3,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -2609,7 +2070,7 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Scheduled the downgrade for April 16, 2027 and confirmed the $297 Starter renewal within about 30 minutes."
+    "Scheduled the downgrade for April 16, 2027 and confirmed the $297 Starter renewal in one clear reply."
    ],
    "fix": [
     "Syb asked directly whether the FY2026 federal return and 2027 Wyoming annual report are still handled under the current plan; \"continue using all services\" does not confirm either filing.",
@@ -2618,13 +2079,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Note has an admin link and \"downgrade scheduled\" but no summary of the request or next step with an owner."
-   },
-   "timing": {
-    "firstHours": 0.5,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -2652,13 +2106,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No note logged for the reply."
-   },
-   "timing": {
-    "firstHours": 1.8,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -2687,13 +2134,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No note logged for the reply."
-   },
-   "timing": {
-    "firstHours": 1.3,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -2713,7 +2153,7 @@ export default {
    "category": "Empathy & Tone",
    "keep": [
     "Explained exactly what ends with cancellation (registered agent, mail scanning, reminders) and asked for confirmation before acting.",
-    "Cancelled both subscriptions within 30 minutes of confirmation and restated the ongoing compliance duties."
+    "Cancelled both subscriptions as soon as Shaylinn confirmed and restated the ongoing compliance duties."
    ],
    "fix": [
     "Confirm whether any refund applies or that no further charge is pending, since cancellation was effective immediately."
@@ -2721,13 +2161,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "Only the first update has a note; the completed cancellation has none."
-   },
-   "timing": {
-    "firstHours": 0.9,
-    "slowestHours": 0.5,
-    "replies": 2,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -2741,28 +2174,21 @@ export default {
     5,
     4,
     5,
-    3,
+    5,
     5
    ],
-   "category": "Policy & Process",
+   "category": "Clarity & Structure",
    "keep": [
     "Answered all six numbered asks in one reply: no 8822-B needed, no Wyoming amendment, BOI exempt, Operating Agreement path, legal referral and tax consult.",
     "Followed through with sample Article IV language and updated the members on the dashboard once documents arrived."
    ],
    "fix": [
-    "Two of four waits ran over the 120 minute standard: 3.7 hours on the first reply and 9.6 hours before sending the promised clause language.",
-    "The first reply is long; short headings per topic would make the action items easier to spot."
+    "The first reply is long; short headings per topic would make the action items easier to spot.",
+    "The clause email told Yash to file any ownership update the state requires, which blurs the earlier clear answer that Wyoming needs no amendment; keep the advice consistent across replies."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Only the first reply has a note; the clause, document review and member update have none."
-   },
-   "timing": {
-    "firstHours": 3.7,
-    "slowestHours": 9.6,
-    "replies": 4,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -2790,13 +2216,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Note says \"SP canceled upon request\" with no summary of the ask or next step with an owner."
-   },
-   "timing": {
-    "firstHours": 1.8,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -2810,7 +2229,7 @@ export default {
     4,
     5,
     5,
-    3,
+    4,
     4
    ],
    "category": "Policy & Process",
@@ -2819,20 +2238,12 @@ export default {
     "Owned the reopened case and offered to be the single contact, which directly addressed the client's frustration about the earlier closure."
    ],
    "fix": [
-    "First reply took about 11.5 hours against the 120 minute standard on a client already upset about a closed ticket.",
     "Ticket was closed two days later while still waiting on the signed Operating Agreement and the promised banking help, so the case the client asked to keep open was closed again.",
     "Banking guidance was deferred entirely; share at least the likely bank options for a Chilean owner now so the client can prepare."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No HubSpot notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 11.5,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -2846,27 +2257,19 @@ export default {
     5,
     4,
     5,
-    3,
-    4
+    5,
+    5
    ],
-   "category": "Policy & Process",
+   "category": "Clarity & Structure",
    "keep": [
     "Confirmed the payment was received for the yearly Business Plan and that services were active again, with nothing else needed from the client."
    ],
    "fix": [
-    "Reply came about 41 hours after the client's message against the 120 minute standard; a one line confirmation like this should go out the same shift.",
     "Trim the generic closing paragraph; it adds length to what should be a two line confirmation."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No HubSpot notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 41.2,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -2880,7 +2283,7 @@ export default {
     3,
     3,
     4,
-    3,
+    4,
     4
    ],
    "category": "Accuracy & Completeness",
@@ -2890,18 +2293,11 @@ export default {
    "fix": [
     "First reply was a generic dissolution macro: it mentioned a full 2025 return for a company formed in March 2026, did not answer whether the final Form 5472 and pro forma 1120 are included, and gave no total including the $60 state fee.",
     "The client's December 31 goal was not addressed directly; state whether submitting now meets it given the 15 to 20 business day timeline.",
-    "First reply took about 47 hours and the follow up about 2.9 hours, both past the 120 minute standard, and \"For more details, click here\" was sent with no working link."
+    "\"For more details, click here\" was sent with no working link; add the real link or remove the line before sending."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No HubSpot notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 46.9,
-    "slowestHours": 2.9,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -2921,23 +2317,16 @@ export default {
    "category": "Accuracy & Completeness",
    "keep": [
     "Handled an escalating client threatening chargebacks calmly, explained honestly why no guaranteed IRS date could be given, and committed to an update within 48 hours, which was kept when the EIN was issued about 24 hours later.",
-    "Talked the client out of cancelling by explaining that a new application would restart the IRS queue, in a first reply sent inside the 120 minute standard."
+    "Talked the client out of cancelling by explaining that a new application would restart the IRS queue."
    ],
    "fix": [
     "The \"approximately 2 weeks\" estimate was given without a source, which the client immediately challenged; share what the IRS specialist actually confirmed instead of a soft estimate.",
     "Several replies opened with a stray backslash before \"Hi\" and reintroduced yourself mid thread; proofread before sending.",
-    "The reply after the client's escalation took about 31 hours, far past the 120 minute standard; with a 48 hour ultimatum, aim to acknowledge the same day."
+    "When the client asked for proof behind the two week estimate, the reply offered apologies but no next step or update date, and the client escalated to chargeback and legal threats; give a committed update date in every holding reply, as the later 48 hour commitment did."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Only one note, a bare Slack link with no Summary, Resolution or Next Step, across five agent updates."
-   },
-   "timing": {
-    "firstHours": 1.5,
-    "slowestHours": 30.7,
-    "replies": 4,
-    "overStandard": 3,
-    "slaMinutes": 120
    }
   },
   {
@@ -2956,7 +2345,7 @@ export default {
    ],
    "category": "Effort Reduction",
    "keep": [
-    "Replied within about 3 hours and acknowledged the client's new registered agent."
+    "Acknowledged the client's new registered agent and thanked them for the clear instructions."
    ],
    "fix": [
     "The client gave a clear cancellation instruction and reason and asked for confirmation; the reply asked why they were cancelling and pitched registered agent service they already said they had replaced.",
@@ -2966,13 +2355,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No HubSpot notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 2.7,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -2986,28 +2368,20 @@ export default {
     5,
     5,
     5,
-    4,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Effort Reduction",
    "keep": [
     "Gave the itemised breakdown the client asked for and clearly separated doola's $297 from the Wyoming annual report fee they had already paid.",
     "Laid out keep or cancel options with the consequence of each, including the need for a new registered agent."
    ],
    "fix": [
-    "Reply came about 2.9 hours after the client's first message, past the 120 minute standard, after the AI reply had not answered the question.",
     "Add a direct link to update the card in the dashboard so the client can act in one click."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No HubSpot notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 2.9,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3031,18 +2405,11 @@ export default {
    "fix": [
     "Four direct questions went unanswered: whether filings can be in before December 1, whether an EIN was obtained for either company, whether any 2025 Form 5472 was filed, and confirmation of no renewals.",
     "The reply was a pasted macro with a VIP plan caveat and \"click here\" with no link; tailor it to the two companies and their deadline.",
-    "Ticket was closed without the client's open questions resolved; first reply also took about 5.6 hours against the 120 minute standard."
+    "Ticket was closed without the client's open questions resolved, and the request not to renew the registered agent or annual filing plan was never confirmed."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No HubSpot notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 5.6,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3056,27 +2423,18 @@ export default {
     5,
     5,
     5,
-    4,
+    5,
     5
    ],
-   "category": "Policy & Process",
+   "category": "Accuracy & Completeness",
    "keep": [
     "Answered all three requests in one reply: step by step bizfile access instructions, the filing date of the initial Statement of Information, and all requested documents attached.",
     "Followed through by approving the access request and giving a fallback if it did not appear, which the client praised as thorough."
    ],
-   "fix": [
-    "First reply took about 3.8 hours against the 120 minute standard, and the client's follow up waited about 12 hours for a human reply."
-   ],
+   "fix": [],
    "notes": {
     "status": "Missing",
     "issue": "Only one note, a bare Slack link with no Summary, Resolution or Next Step, across two agent updates."
-   },
-   "timing": {
-    "firstHours": 3.8,
-    "slowestHours": 12,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -3090,7 +2448,7 @@ export default {
     4,
     4,
     4,
-    4,
+    5,
     3
    ],
    "category": "Effort Reduction",
@@ -3099,18 +2457,11 @@ export default {
    ],
    "fix": [
     "\"We'll take care of the next steps on our end\" is vague; say what happens next, for example that the doola subscription and registered agent service will be cancelled so there is no renewal.",
-    "Reply opened with a stray backslash before \"Hi\" and came about 6 hours after the client's message, past the 120 minute standard."
+    "Reply opened with a stray backslash before \"Hi\"; proofread before sending."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No HubSpot notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 5.9,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3124,7 +2475,7 @@ export default {
     4,
     5,
     4,
-    4,
+    5,
     5
    ],
    "category": "Accuracy & Completeness",
@@ -3134,18 +2485,11 @@ export default {
    ],
    "fix": [
     "Confirm internally that the Form 8822-B update is really included at no extra cost before promising it in writing.",
-    "Address the two named members by name rather than \"Team TeKoTeK\", and aim to reply within the 120 minute standard rather than the 18.5 hours this took."
+    "Address the two named members, Sigui and Franck, by name rather than \"Team TeKoTeK\"."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No HubSpot notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 18.5,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3159,7 +2503,7 @@ export default {
     3,
     4,
     4,
-    3,
+    4,
     3
    ],
    "category": "Accuracy & Completeness",
@@ -3170,18 +2514,11 @@ export default {
    "fix": [
     "First reply said the Delaware conversion was covered, then the Tax team confirmed a second return in the conversion year costs extra; confirm coverage before saying yes.",
     "Questions on the CPA or EA signer and the Starter credit were deflected in the first reply, which created the second round of questions.",
-    "First response took about 3.7 hours against the 120 minute standard, and the holding reply promised 'first thing next week' but the answer came Tuesday evening."
+    "The holding reply promised an answer 'first thing next week' but it came Tuesday evening; keep the return date you commit to, or update the customer before it passes."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "None of the three notes has a Next Step with an owner, and the holding update note is only a Slack link."
-   },
-   "timing": {
-    "firstHours": 3.7,
-    "slowestHours": 0.1,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3195,7 +2532,7 @@ export default {
     3,
     4,
     4,
-    3,
+    4,
     4
    ],
    "category": "Accuracy & Completeness",
@@ -3205,18 +2542,11 @@ export default {
    ],
    "fix": [
     "The vendor check question (preparer credentials and doola's legal entity) was dismissed as 'your 3rd concern' instead of being answered or explained.",
-    "First response took about 2.1 hours, just over the 120 minute standard."
+    "The customer asked about Relay by name; say whether it is an option for a non resident owner instead of leaving it out."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Note has Concern and Resolution but no Next Step with an owner."
-   },
-   "timing": {
-    "firstHours": 2.1,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3230,27 +2560,20 @@ export default {
     5,
     5,
     4,
-    3,
+    5,
     5
    ],
-   "category": "Policy & Process",
+   "category": "Empathy & Tone",
    "keep": [
     "Answered all five questions in order with clear headings, recommended Slash first with Wise as backup and explained why Relay is a poor fit.",
     "Preempted the next issue: payout account must match the LLC's exact legal name in Stripe, plus application tips and the eligibility page link."
    ],
    "fix": [
-    "First response took about 5 hours against the 120 minute standard for a customer worried about payout interruption."
+    "Opened without introducing yourself; add a line acknowledging Julien's worry about Stripe payouts stopping before moving into the options."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Note has Concern and Resolution but no Next Step with an owner."
-   },
-   "timing": {
-    "firstHours": 5,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3264,7 +2587,7 @@ export default {
     3,
     4,
     3,
-    3,
+    4,
     3
    ],
    "category": "Accuracy & Completeness",
@@ -3275,18 +2598,11 @@ export default {
    "fix": [
     "Cancellation confirmation gave the end date as 10/10/2026, a date already in the past, when the renewal was November 10.",
     "Cancellation reply was addressed to Priyesh although the request came from the Lucia team inbox.",
-    "Renewal question reply took about 10 hours and the cancellation request sent on renewal day waited about 4.7 hours, both over the 120 minute standard."
+    "The cancellation deadline answer only said 'before the renewal date'; give the exact last day and how to cancel, since the team later could not find a cancel button in the dashboard."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "First two notes have no Next Step and the third says 'Next step: na' with no owner."
-   },
-   "timing": {
-    "firstHours": 1.7,
-    "slowestHours": 10.2,
-    "replies": 3,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -3314,13 +2630,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Only note is a related ticket link with no Summary, Resolution or Next Step."
-   },
-   "timing": {
-    "firstHours": 3.1,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3334,7 +2643,7 @@ export default {
     3,
     3,
     4,
-    4,
+    5,
     3
    ],
    "category": "Accuracy & Completeness",
@@ -3345,18 +2654,11 @@ export default {
    "fix": [
     "First reply misread the request as 100% ownership by the member LLC, and the second still wrote 'Sword LLC' after the customer flagged the name as SWORLD LLC.",
     "Reactivation cost and the outstanding Delaware franchise tax were not answered; a pricing page link was given instead of the price for this case.",
-    "Guide links for single and multi member Operating Agreements appear as plain labels, and the first response took about 9.9 hours."
+    "Guide links for single and multi member Operating Agreements appear as plain labels, so the customer cannot open them."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No notes on the ticket for either of the agent's two updates."
-   },
-   "timing": {
-    "firstHours": 9.9,
-    "slowestHours": 1,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3375,7 +2677,7 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied in about 20 minutes with every question answered under its own heading, including the $1,500 IRS filing option versus the $1,999 plan.",
+    "Answered every question under its own heading, including the $1,500 IRS filing option versus the $1,999 plan, and gave the $150 CPA consultation with booking steps.",
     "Told the customer to keep receipts and convert baht to dollars, preempting what the tax team will need."
    ],
    "fix": [
@@ -3385,13 +2687,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Both notes have Concern and Resolution but no Next Step with an owner."
-   },
-   "timing": {
-    "firstHours": 0.3,
-    "slowestHours": 1,
-    "replies": 2,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -3421,13 +2716,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Note has Concern and Resolution but no Next Step with an owner."
-   },
-   "timing": {
-    "firstHours": 0.4,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -3446,24 +2734,17 @@ export default {
    ],
    "category": "Effort Reduction",
    "keep": [
-    "Replied to each of the agent's three customer messages within an hour.",
+    "Kept the 'first thing tomorrow' promise and came back the next day with confirmation that the ITIN team would proceed.",
     "Confirmed the partnership tax classification from the filed SS-4 when asked."
    ],
    "fix": [
     "Told the customer the Filing team had the updated passport, then three days later asked them to resend it; the customer had already attached it twice.",
     "Closed the ticket by redirecting the customer to another person's email without confirming receipt or a date for the signature documents.",
-    "Thread overall had a 64.5 hour gap before the agent took over; acknowledge the repeated chasing."
+    "The customer had chased the signature documents several times before you joined; acknowledge that and apologize before asking for anything again."
    ],
    "notes": {
     "status": "Missing",
     "issue": "The two November 9 updates have no notes; later notes are a Slack link and a note with 'Next step: na'."
-   },
-   "timing": {
-    "firstHours": 8.5,
-    "slowestHours": 64.5,
-    "replies": 7,
-    "overStandard": 4,
-    "slaMinutes": 120
    }
   },
   {
@@ -3477,7 +2758,7 @@ export default {
     3,
     2,
     4,
-    3,
+    4,
     3
    ],
    "category": "Clarity & Structure",
@@ -3486,19 +2767,11 @@ export default {
    ],
    "fix": [
     "Sent with an unfilled template placeholder in brackets for the non customer booking steps, so the customer has no way to book.",
-    "Fee and filing scope questions were not answered; give at least the known service prices for Form 1065, 8822-B and the Massachusetts registration.",
-    "First response took about 4.8 hours against the 120 minute standard."
+    "Fee and filing scope questions were not answered; give at least the known service prices for Form 1065, 8822-B and the Massachusetts registration."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Note is a one line Concern and Resolution with no Next Step or owner."
-   },
-   "timing": {
-    "firstHours": 4.8,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3512,28 +2785,21 @@ export default {
     3,
     4,
     4,
-    3,
+    4,
     2
    ],
    "category": "Effort Reduction",
    "keep": [
-    "First reply landed in about 35 minutes and offered a clear choice between dissolution help and cancelling the subscription only."
+    "First reply offered a clear choice between dissolution help and cancelling the subscription only."
    ],
    "fix": [
     "Arwa asked to confirm no future charges and what steps she needed to take; the first reply answered neither and only asked which option she wanted.",
-    "Her follow up asking for the dissolution fee and state fees waited about 55 hours, then got a redirect to another ticket instead of the figures.",
+    "Her follow up asking for the dissolution fee and state fees got a redirect to another ticket instead of the figures.",
     "When moving a customer to another ticket, restate the answer or the key next step so she does not have to go hunting."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Only one note for two updates, and it just links the other ticket with no Summary, Resolution or Next Step."
-   },
-   "timing": {
-    "firstHours": 0.6,
-    "slowestHours": 55.3,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3547,7 +2813,7 @@ export default {
     3,
     4,
     4,
-    4,
+    5,
     3
    ],
    "category": "Accuracy & Completeness",
@@ -3563,13 +2829,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes logged for either of the agent's updates."
-   },
-   "timing": {
-    "firstHours": 3.4,
-    "slowestHours": 1.4,
-    "replies": 3,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3583,28 +2842,19 @@ export default {
     4,
     5,
     4,
-    2,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Accuracy & Completeness",
    "keep": [
     "Gave a clear yes that the report was filed and pointed to exactly where to find it (dashboard, Documents)."
    ],
    "fix": [
-    "The customer asked to be told once the report was processed, heard nothing, and had to chase; the first human reply came about 98 hours after the thread opened.",
-    "Proactively confirm completion when a customer has asked to be notified rather than waiting for a follow up.",
     "State plainly that nothing else is needed from their side, since that was their second question."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Note only says Ops query with a Slack link; no Summary, Resolution or Next Step with owner."
-   },
-   "timing": {
-    "firstHours": 98.2,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3632,13 +2882,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No note logged for the agent's reply."
-   },
-   "timing": {
-    "firstHours": 1.5,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -3666,13 +2909,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes logged for either of the agent's updates."
-   },
-   "timing": {
-    "firstHours": 1.6,
-    "slowestHours": 1.2,
-    "replies": 2,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -3686,28 +2922,20 @@ export default {
     4,
     4,
     3,
-    2,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Empathy & Tone",
    "keep": [
     "Gave a direct answer that doola files the federal return under the Tax and Compliance plan, with the dashboard path to start it."
    ],
    "fix": [
-    "Ernie said yes please to sales tax help and waited about 17 hours for the first human reply.",
     "The Kintsugi reply was a pasted macro with a bare HERE link; for a self described first timer, add one line on what to do first.",
     "Acknowledge that he is new to this before the product list so the reply does not read as a canned block."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No notes logged for either of the agent's updates."
-   },
-   "timing": {
-    "firstHours": 17.3,
-    "slowestHours": 3.4,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -3721,7 +2949,7 @@ export default {
     2,
     4,
     3,
-    2,
+    3,
     2
    ],
    "category": "Accuracy & Completeness",
@@ -3730,19 +2958,11 @@ export default {
    ],
    "fix": [
     "Christian said that if no refund applied he wanted to downgrade at the next billing cycle; the reply told him to keep the plan and change his mind later, ignoring that instruction.",
-    "Confirm the downgrade is scheduled for renewal and give the renewal date, then close.",
-    "Replies took about 29 and 54 hours, both well over the 120 minute standard."
+    "Confirm the downgrade is scheduled for renewal and give the renewal date, then close."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No notes logged for either of the agent's updates."
-   },
-   "timing": {
-    "firstHours": 29.2,
-    "slowestHours": 54.2,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -3761,7 +2981,7 @@ export default {
    ],
    "category": "Effort Reduction",
    "keep": [
-    "Replied in about 14 minutes and confirmed nothing more was needed because the ITIN was already on file.",
+    "Confirmed nothing more was needed because the ITIN was already on file.",
     "Laid out the two next steps (state filing, then online EIN with the ITIN) in plain language."
    ],
    "fix": [
@@ -3770,13 +2990,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No note logged for the agent's reply."
-   },
-   "timing": {
-    "firstHours": 0.2,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -3790,12 +3003,12 @@ export default {
     3,
     4,
     4,
-    4,
+    5,
     3
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Fast replies (under an hour for the first three) with fee, documents and 16 to 24 week processing time.",
+    "First reply covered the fee, documents and the 16 to 24 week processing time in one message.",
     "Honestly flagged that filing Form 5472 alone does not mean a 1040-NR is needed and suggested a consult before paying $499."
    ],
    "fix": [
@@ -3806,13 +3019,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes logged for any of the agent's four updates."
-   },
-   "timing": {
-    "firstHours": 0.9,
-    "slowestHours": 3.1,
-    "replies": 4,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3839,13 +3045,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes logged for any of the agent's updates."
-   },
-   "timing": {
-    "firstHours": 0.9,
-    "slowestHours": 0.4,
-    "replies": 3,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -3859,29 +3058,21 @@ export default {
     4,
     4,
     3,
-    2,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Empathy & Tone",
    "keep": [
     "Recommended Quo with the doola discount and explained how VoIP works for a non-US founder.",
     "Follow-up gave a concrete EIN timeline: submitted October 28, 6 to 8 weeks, letter uploaded to the dashboard."
    ],
    "fix": [
-    "First reply came about 47 hours after the customer wrote, against the 120 minute standard.",
     "Customer asked to stop the reminders every second day; the reply never acknowledged or addressed that frustration.",
     "Use one name consistently; the first reply said Rale and the second Radoljub."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Both notes have Concern and Resolution but no Next Step with an owner."
-   },
-   "timing": {
-    "firstHours": 47.1,
-    "slowestHours": 0.1,
-    "replies": 2,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -3900,7 +3091,7 @@ export default {
    ],
    "category": "Accuracy & Completeness",
    "keep": [
-    "Replied within about 1.4 hours with a working payment link."
+    "Sent a working payment link for the renewal so the customer could pay as soon as funds allowed."
    ],
    "fix": [
     "Customer asked for a one week extension, protection from dissolution meanwhile, and a payment plan; none of the three was answered.",
@@ -3910,13 +3101,6 @@ export default {
    "notes": {
     "status": "Incomplete",
     "issue": "Note has Concern and Resolution but no Next Step with an owner."
-   },
-   "timing": {
-    "firstHours": 1.4,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 0,
-    "slaMinutes": 120
    }
   },
   {
@@ -3930,29 +3114,22 @@ export default {
     3,
     4,
     3,
-    2,
+    3,
     2
    ],
-   "category": "Policy & Process",
+   "category": "Effort Reduction",
    "keep": [
     "Offered a goodwill 10% discount up front and listed EIN timelines with and without an SSN.",
-    "Once the customer accepted, sent the invoice within about 30 minutes and confirmed payment receipt with next steps."
+    "Once the customer accepted, sent the invoice and payment link and confirmed payment receipt with clear next steps from the filing team."
    ],
    "fix": [
-    "Holding reply said he would check with the team but gave no return date; the customer chased twice and waited about 5.7 days for the answer.",
+    "Holding reply said he would check with the team but gave no return date and no proactive update followed, so the customer had to chase twice.",
     "Customer asked whether the REVIEWSGUIDE10 code could be applied to the Starter purchase; that question was never answered.",
-    "When a holding reply is sent, commit to a specific update time and keep it."
+    "When a holding reply is sent, commit to a specific update date and keep it."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Only one summary note plus a Slack link for five agent updates."
-   },
-   "timing": {
-    "firstHours": 4.3,
-    "slowestHours": 6.9,
-    "replies": 6,
-    "overStandard": 3,
-    "slaMinutes": 120
    }
   },
   {
@@ -3966,29 +3143,22 @@ export default {
     4,
     4,
     4,
-    3,
+    4,
     3
    ],
    "category": "Effort Reduction",
    "keep": [
     "Gave a clear forwarding quote of $332.81 and explained the 50 day claim window.",
-    "Sent invoice and payment link within about 35 minutes of approval and confirmed payment receipt."
+    "Sent the invoice and payment link right after approval and confirmed payment receipt."
    ],
    "fix": [
     "Customer had already given the address; the template then asked again for name, company, email and full address fields.",
-    "Name format check came a day after payment; checking it when the details arrived would have avoided the extra round trip.",
+    "The name format check came only after payment; checking the name against the dashboard when the details arrived would have avoided an extra round trip.",
     "Ticket closed before the tracking ID was shared, leaving the customer to chase it."
    ],
    "notes": {
     "status": "Missing",
     "issue": "One note covers six agent updates."
-   },
-   "timing": {
-    "firstHours": 191.8,
-    "slowestHours": 19.2,
-    "replies": 6,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -4002,27 +3172,20 @@ export default {
     5,
     3,
     4,
-    2,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Clarity & Structure",
    "keep": [
     "Refunded the duplicate $297, gave a 5 to 10 business day window, and confirmed the plan renews November 7, 2027 without a double charge."
    ],
    "fix": [
-    "First reply came about 37.6 hours after the customer wrote, against the 120 minute standard.",
-    "The refund sentence is repeated twice word for word; proofread before sending."
+    "The refund sentence is repeated twice word for word; proofread before sending.",
+    "Say which of the two charges was refunded so the customer can match it on their card statement."
    ],
    "notes": {
     "status": "Incomplete",
     "issue": "Note has Concern and Resolution but no Next Step with an owner."
-   },
-   "timing": {
-    "firstHours": 37.6,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -4036,7 +3199,7 @@ export default {
     3,
     4,
     3,
-    3,
+    5,
     4
    ],
    "category": "Accuracy & Completeness",
@@ -4046,19 +3209,12 @@ export default {
    ],
    "fix": [
     "Stated the SS-4 and EIN names cannot differ instead of actually comparing them, after sales had flagged a possible mismatch.",
-    "Flagged urgent with a Mercury application pending, but the first reply took about 6.3 hours and did not acknowledge the urgency.",
+    "Customer flagged the request as urgent with a Mercury application pending; the reply did not acknowledge that urgency.",
     "Quote the Wyoming filing ID and formation date directly since the customer asked for them."
    ],
    "notes": {
     "status": "Missing",
     "issue": "No notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 6.3,
-    "slowestHours": 6.4,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -4087,13 +3243,6 @@ export default {
    "notes": {
     "status": "Missing",
     "issue": "No notes logged on the ticket."
-   },
-   "timing": {
-    "firstHours": 6.3,
-    "slowestHours": null,
-    "replies": 1,
-    "overStandard": 1,
-    "slaMinutes": 120
    }
   },
   {
@@ -4116,19 +3265,12 @@ export default {
    ],
    "fix": [
     "Customer asked to stop that day's payment; neither reply said whether it was blocked or would be refunded.",
-    "Save attempt came about 4.9 hours later on a same-day payment request; confirm the charge is paused first, then retain.",
+    "When a customer asks to stop a same-day payment, confirm the charge is paused first, then make the save attempt.",
     "Final reply should confirm the LLC itself stays active, which was the customer's explicit concern."
    ],
    "notes": {
     "status": "Missing",
     "issue": "One note for two agent updates, and it has no Next Step."
-   },
-   "timing": {
-    "firstHours": 4.9,
-    "slowestHours": 5,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -4142,29 +3284,21 @@ export default {
     4,
     4,
     4,
-    3,
+    5,
     4
    ],
-   "category": "Policy & Process",
+   "category": "Accuracy & Completeness",
    "keep": [
     "Answered registered agent continuity, mail status and full Starter inclusions in one structured reply.",
     "Handled the price match ask with a $50 goodwill discount and sent a discounted payment link."
    ],
    "fix": [
-    "First reply took about 6.7 hours and the final reply about 2.9 hours, both over the 120 minute standard.",
     "State contact email question got a vague answer; say plainly whether notices sent to the doola filings address are forwarded.",
     "Customer asked to clear the annual report reminder after filing; that was not acknowledged."
    ],
    "notes": {
     "status": "Missing",
     "issue": "One note for three agent updates, and it has no Next Step."
-   },
-   "timing": {
-    "firstHours": 6.7,
-    "slowestHours": 2.9,
-    "replies": 3,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   },
   {
@@ -4178,28 +3312,21 @@ export default {
     2,
     4,
     2,
-    2,
+    4,
     2
    ],
    "category": "Effort Reduction",
    "keep": [
-    "Once escalated, the tech team fixed the login and he told the customer to try again the same day."
+    "Escalated to the tech team and relayed each fix update until the customer confirmed she could log in."
    ],
    "fix": [
     "First human reply repeated the reset and spam checks the customer said they had already tried.",
-    "After the customer described the Invalid Credentials error and asked for a human, escalation took about 44.6 hours.",
-    "Asked for a screenshot of an error already described, and closed right after the fix without confirming login worked."
+    "Twice told the customer the issue was resolved and asked her to reset again, when the reset email was the very thing failing; confirm the fix with the tech team before asking the customer to retry.",
+    "Asked for a screenshot of an error the customer had already described in words."
    ],
    "notes": {
     "status": "Missing",
     "issue": "Three agent updates but only a Slack link and one note, with no Next Step."
-   },
-   "timing": {
-    "firstHours": 27.3,
-    "slowestHours": 44.6,
-    "replies": 2,
-    "overStandard": 2,
-    "slaMinutes": 120
    }
   }
  ]

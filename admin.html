@@ -241,10 +241,9 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
     <div class="msg" id="setMsg" hidden style="margin-bottom:12px"></div>
     <div class="set">
       <div class="card">
-        <h3>Sampling and response standard</h3>
+        <h3>Sampling</h3>
         <p class="sub">Applies to the next QA cycle you start.</p>
         <div class="field" style="margin-bottom:10px"><label for="setPer">Tickets per agent each month</label><input id="setPer" type="number" min="3" max="30"></div>
-        <div class="field" style="margin-bottom:12px"><label for="setSla">Response standard (minutes)</label><input id="setSla" type="number" min="5" max="1440"></div>
         <button class="btn small" id="setSave" type="button">Save</button>
       </div>
       <div class="card">
@@ -754,7 +753,6 @@ function reviewCard(month,t){
   else h.appendChild(el("span",{class:"tag2"},"Not reviewed"));
   c.appendChild(h);
   var meta=t.date+" · Ticket "+t.id+" · "+total(t.s).toFixed(0)+"%";
-  if(t.timing)meta+=" · first reply "+t.timing.firstHours+" h";
   if(t.notes)meta+=" · HubSpot notes "+t.notes.status;
   if(t.review)meta+=" · reviewed by "+String(t.review.by||"").split("@")[0];
   c.appendChild(el("div",{class:"meta"},meta));
@@ -811,7 +809,7 @@ $("rvAgent").addEventListener("change",loadReview);
 /* ---------------- settings ---------------- */
 async function loadSettings(){
   var r;try{r=await api("/api/admin/settings");}catch(e){showMsg("setMsg",e.message);return;}
-  var s=r.settings;$("setPer").value=s.ticketsPerAgent;$("setSla").value=s.slaMinutes;
+  var s=r.settings;$("setPer").value=s.ticketsPerAgent;
   renderWeights(s.weights);
   var tb=document.querySelector("#rosterTbl tbody");tb.textContent="";
   s.roster.forEach(function(a){
@@ -847,7 +845,7 @@ $("wSave").addEventListener("click",function(){
   if(!confirm("Save these weights? Combined % will be recalculated for every month on the dashboard, approvals and reports."))return;
   saveSettings({weights:readWeights()},"Weights saved. Combined % now uses them everywhere.");
 });
-$("setSave").addEventListener("click",function(){saveSettings({ticketsPerAgent:Number($("setPer").value),slaMinutes:Number($("setSla").value)},"Saved. These apply to the next QA cycle.");});
+$("setSave").addEventListener("click",function(){saveSettings({ticketsPerAgent:Number($("setPer").value)},"Saved. These apply to the next QA cycle.");});
 $("addBtn").addEventListener("click",async function(){
   var name=$("addName").value.trim();
   if(!confirm("Add "+name+" to the QA roster? They'll be scored from the next QA cycle."))return;
