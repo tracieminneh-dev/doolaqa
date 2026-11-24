@@ -1,5 +1,5 @@
 // Team lead sign-off for a month: approve agents' QA results, then send each
-// approved agent their QA analysis PDF in Slack.
+// approved agent a Slack DM with the link to their web QA report.
 import { requireAdmin } from "../../lib/auth.js";
 import { getApprovals, approveAgent, unapproveAgent, sendReport, approveAll, sendAll } from "../../lib/approvals.js";
 import { isMonth } from "../../lib/cycles.js";
@@ -17,13 +17,14 @@ export const GET = route(async (request) => {
 export const POST = route(async (request) => {
   const admin = requireAdmin(request);
   const { month, agent, action = "approve", resend } = await readJsonBody(request);
+  const origin = new URL(request.url).origin;
   if (!isMonth(month)) throw new HttpError(400, "Pick a month.");
   let result;
   if (action === "approve") result = await approveAgent({ month, agentName: agent, admin });
   else if (action === "unapprove") result = await unapproveAgent({ month, agentName: agent });
-  else if (action === "send") result = await sendReport({ month, agentName: agent, admin, resend: Boolean(resend) });
+  else if (action === "send") result = await sendReport({ month, agentName: agent, admin, resend: Boolean(resend), origin });
   else if (action === "approve_all") result = await approveAll({ month, admin });
-  else if (action === "send_all") result = await sendAll({ month, admin });
+  else if (action === "send_all") result = await sendAll({ month, admin, origin });
   else throw new HttpError(400, "Unknown action.");
   return json({ month, agent: agent || null, result, approvals: await getApprovals(month) });
 });

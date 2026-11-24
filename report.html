@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>QA analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --yellow:#F9C800;--blue:#4F8FF6;--green:#40E86F;--pink:#FFA5BB;
+  --s-yellow:#FEF4CC;--s-blue:#EEF3FE;--s-green:#E3F9EA;--s-pink:#FFE7EC;
+  --text:#141414;--text2:#5B5B5B;--text3:#6B6B6B;--line:#EAEAEA;--track:#F2F2F2;--bg:#FAFAF7;--card:#fff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.5}
+.stripe{display:grid;grid-template-columns:repeat(4,1fr);height:6px}
+.stripe i:nth-child(1){background:var(--yellow)}.stripe i:nth-child(2){background:var(--blue)}.stripe i:nth-child(3){background:var(--green)}.stripe i:nth-child(4){background:var(--pink)}
+.wrap{max-width:920px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:28px;font-weight:800;margin:0 0 4px;letter-spacing:-.02em}
+h2{font-size:19px;font-weight:800;margin:34px 0 12px}
+.sub{color:var(--text2);margin:0}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
+.tile{border-radius:14px;padding:14px}
+.tile .l{font-size:12px;font-weight:700;color:var(--text2)}
+.tile .v{font-size:24px;font-weight:800;margin-top:4px}
+.small{font-size:12.5px;color:var(--text3);margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.dim{display:grid;grid-template-columns:190px 1fr 60px;gap:12px;align-items:center;margin:8px 0}
+.bar{height:9px;background:var(--track);border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;border-radius:99px}
+.num{font-variant-numeric:tabular-nums;font-weight:700;text-align:right}
+ul{margin:6px 0 0;padding-left:18px}li{margin:4px 0}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.t{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+.t h3{font-size:16px;margin:0 0 4px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.badge{flex:none;font-size:12px;font-weight:800;padding:3px 10px;border-radius:99px}
+.meta{font-size:12.5px;color:var(--text3)}
+.scores{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:12px 0}
+.sc{border-radius:10px;padding:8px;text-align:center}.sc .sl{font-size:11px;font-weight:700;color:var(--text2)}.sc .sv{font-size:18px;font-weight:800}
+.lbl{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);margin-top:10px}
+.lead{background:var(--s-blue);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:14px}
+.btn{font:inherit;font-weight:700;font-size:13.5px;border:0;border-radius:99px;padding:8px 16px;cursor:pointer;background:var(--text);color:#fff}
+.btn.ghost{background:#fff;color:var(--text);border:1px solid var(--text)}
+.btn:disabled{opacity:.5;cursor:default}
+textarea{width:100%;min-height:90px;font:inherit;font-size:14px;padding:10px;border:1px solid #d6d6d6;border-radius:10px;margin:8px 0;resize:vertical}
+.dz{border-top:1px dashed var(--line);margin-top:14px;padding-top:12px}
+.disp{border-radius:10px;padding:10px 12px;margin-top:8px;font-size:14px}
+.disp.open{background:var(--s-yellow)}.disp.resolved{background:var(--s-green)}
+.msg{border-radius:10px;padding:10px 12px;font-size:14px;margin-top:8px}
+.msg.err{background:var(--s-pink)}.msg.ok{background:var(--s-green)}
+.hub{font-size:12.5px;color:var(--blue)}
+.center{text-align:center;padding:80px 16px}
+@media (max-width:680px){.tiles{grid-template-columns:repeat(2,1fr)}.cols{grid-template-columns:1fr}.dim{grid-template-columns:110px 1fr 50px}.scores{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="stripe"><i></i><i></i><i></i><i></i></div>
+<div class="wrap" id="app"><p class="center sub">Loading your QA report…</p></div>
+<script>
+(function(){
+var DIMS=["Accuracy & Completeness","Clarity & Structure","Empathy & Tone","Policy & Process","Effort Reduction"];
+var SHORT=["Accuracy","Clarity","Empathy","Policy","Effort"];
+var KEYS=["accuracy","clarity","empathy","policy","effort"];
+var token=new URLSearchParams(location.search).get("t")||"";
+var app=document.getElementById("app"),data=null;
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function band(p){return p>=90?"A":p>=70?"B":p>=60?"C":"D";}
+var BAND={A:"A Exceptional",B:"B Adequate",C:"C Fair",D:"D Weak"};
+var FILL={A:"var(--green)",B:"var(--blue)",C:"var(--yellow)",D:"var(--pink)"},TINT={A:"var(--s-green)",B:"var(--s-blue)",C:"var(--s-yellow)",D:"var(--s-pink)"};
+function total(s){var w=data.weights||{},sw=0,sum=0;KEYS.forEach(function(k,i){var x=Number(w[k]);if(!(x>=0))x=20;sw+=x;sum+=s[i]*x;});return sw?sum/sw*20:0;}
+function fmt(d){var x=new Date(d+(d.length===10?"T12:00:00Z":""));return isNaN(x)?d:x.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});}
+
+async function load(){
+  if(!token){app.innerHTML='<p class="center sub">This link is missing its report code. Open the link from your Slack message.</p>';return;}
+  try{
+    var r=await fetch("/api/report?t="+encodeURIComponent(token),{cache:"no-store"});
+    var j=await r.json().catch(function(){return {};});
+    if(!r.ok)throw new Error(j.error||"The report couldn't be loaded.");
+    data=j;render();
+  }catch(e){app.innerHTML='<p class="center sub">'+esc(e.message)+'</p>';}
+}
+
+function render(){
+  var ts=data.tickets,first=data.agent.split(" ")[0];
+  document.title="QA analysis - "+data.label;
+  if(!ts.length){app.innerHTML='<h1>QA analysis - '+esc(data.label)+'</h1><p class="sub">No scored tickets for you this month.</p>';return;}
+  var pct=ts.reduce(function(n,t){return n+total(t.s);},0)/ts.length,b=band(pct);
+  var dims=DIMS.map(function(_,i){return ts.reduce(function(n,t){return n+t.s[i];},0)/ts.length;});
+  var checked=ts.filter(function(t){return t.notes;});
+  var cov=checked.length?Math.round(100*checked.filter(function(t){return t.notes.status==="Complete";}).length/checked.length)+"%":"Not checked";
+  var byTotal=ts.slice().sort(function(a,c){return total(c.s)-total(a.s);});
+  var keep=[],focus=[];
+  byTotal.forEach(function(t){t.keep.forEach(function(k){if(keep.indexOf(k)<0)keep.push(k);});});
+  byTotal.slice().reverse().forEach(function(t){t.fix.forEach(function(f){if(focus.indexOf(f)<0)focus.push(f);});});
+  var h='<h1>QA analysis - '+esc(data.label)+'</h1>'+
+    '<p class="sub">'+esc(data.agent)+' · '+esc(data.team)+(data.window?' · tickets closed '+fmt(data.window.from)+' to '+fmt(data.window.to):'')+'</p>'+
+    '<div class="tiles">'+
+      '<div class="tile" style="background:var(--s-blue)"><div class="l">Combined QA score</div><div class="v">'+pct.toFixed(1)+'%</div></div>'+
+      '<div class="tile" style="background:'+TINT[b]+'"><div class="l">Band</div><div class="v" style="font-size:19px">'+BAND[b]+'</div></div>'+
+      '<div class="tile" style="background:var(--s-green)"><div class="l">Overall</div><div class="v">'+(pct/20).toFixed(2)+' <span style="font-size:14px">/ 5</span></div></div>'+
+      '<div class="tile" style="background:var(--s-yellow)"><div class="l">HubSpot notes complete</div><div class="v">'+cov+'</div></div>'+
+    '</div>'+
+    '<p class="small">Target 95%. Bands: A Exceptional 90 to 100, B Adequate 70 to 89, C Fair 60 to 69, D Weak below 60. '+ts.length+' tickets scored.</p>'+
+    '<h2>Score by dimension</h2><div class="card">'+dims.map(function(v,i){var bb=band(v*20);return '<div class="dim"><div>'+DIMS[i]+'</div><div class="bar"><i style="width:'+(v/5*100).toFixed(1)+'%;background:'+FILL[bb]+'"></i></div><div class="num">'+v.toFixed(2)+'</div></div>';}).join("")+'</div>'+
+    '<div class="cols" style="margin-top:14px"><div class="card"><b>What to keep doing</b><ul>'+keep.slice(0,4).map(function(k){return '<li>'+esc(k)+'</li>';}).join("")+'</ul></div>'+
+    '<div class="card"><b>What to work on next</b><ul>'+focus.slice(0,6).map(function(f){return '<li>'+esc(f)+'</li>';}).join("")+'</ul></div></div>'+
+    '<h2>Ticket by ticket</h2><p class="sub" style="margin:-6px 0 14px">Disagree with a score? Press <b>Dispute</b> on that ticket, '+esc(first)+'. Your team lead sees it and replies here.</p>'+
+    '<div id="tickets"></div>';
+  app.innerHTML=h;
+  var box=document.getElementById("tickets");
+  ts.forEach(function(t){box.appendChild(ticketCard(t));});
+}
+
+function ticketCard(t){
+  var tt=total(t.s),tb=band(tt);
+  var c=document.createElement("div");c.className="t";
+  var h='<h3><span>'+esc(t.subject)+'</span><span class="badge" style="background:'+FILL[tb]+'">'+tt.toFixed(0)+'% '+tb+'</span></h3>'+
+    '<div class="meta">'+fmt(t.date)+' · Ticket '+esc(t.id)+' · Focus: '+esc(t.category)+(t.notes?' · HubSpot notes: '+esc(t.notes.status):'')+'</div>'+
+    '<a class="hub" href="https://app.hubspot.com/contacts/23182676/record/0-5/'+encodeURIComponent(t.id)+'" target="_blank" rel="noopener">Open in HubSpot</a>'+
+    '<div class="scores">'+SHORT.map(function(n,i){var bb=band(t.s[i]*20);return '<div class="sc" style="background:'+TINT[bb]+'"><div class="sl">'+n+'</div><div class="sv">'+t.s[i]+'</div></div>';}).join("")+'</div>'+
+    (t.keep.length?'<div class="lbl">Keep doing</div><ul>'+t.keep.map(function(k){return '<li>'+esc(k)+'</li>';}).join("")+'</ul>':'')+
+    (t.fix.length?'<div class="lbl">Do differently</div><ul>'+t.fix.map(function(f){return '<li>'+esc(f)+'</li>';}).join("")+'</ul>':'')+
+    (t.notes&&t.notes.status!=="Complete"&&t.notes.issue?'<div class="lbl">HubSpot notes</div><p style="margin:4px 0 0">'+esc(t.notes.issue)+'</p>':'')+
+    (t.review&&t.review.comment?'<div class="lead"><b>Team lead'+(t.overridden?' (scores adjusted)':'')+':</b> '+esc(t.review.comment)+'</div>':'');
+  c.innerHTML=h;
+  var dz=document.createElement("div");dz.className="dz";c.appendChild(dz);
+  drawDisputes(dz,t);
+  return c;
+}
+
+function drawDisputes(dz,t){
+  dz.textContent="";
+  var mine=(data.disputes||[]).filter(function(d){return d.ticketId===t.id;});
+  mine.forEach(function(d){
+    var x=document.createElement("div");x.className="disp "+d.status;
+    x.innerHTML='<b>Your dispute</b> · '+fmt(d.at.slice(0,10))+' · '+(d.status==="resolved"?'Resolved':'Waiting for your team lead')+
+      '<div style="margin-top:4px">'+esc(d.text)+'</div>'+(d.response?'<div style="margin-top:6px"><b>Team lead reply:</b> '+esc(d.response)+'</div>':'');
+    dz.appendChild(x);
+  });
+  var open=mine.some(function(d){return d.status==="open";});
+  if(open)return;
+  var btn=document.createElement("button");btn.className="btn ghost";btn.type="button";btn.textContent=mine.length?"Dispute again":"Dispute";btn.style.marginTop=mine.length?"10px":"0";
+  dz.appendChild(btn);
+  btn.addEventListener("click",function(){
+    btn.remove();
+    var f=document.createElement("div");
+    f.innerHTML='<div class="lbl">What do you disagree with, and why?</div><textarea maxlength="1500" placeholder="For example: Policy should be higher because I gave a return date of Friday and replied on Friday."></textarea>'+
+      '<div style="display:flex;gap:8px"><button class="btn" type="button">Submit dispute</button><button class="btn ghost" type="button">Cancel</button></div><div class="msg err" hidden></div>';
+    dz.appendChild(f);
+    var ta=f.querySelector("textarea"),bs=f.querySelectorAll("button"),m=f.querySelector(".msg");ta.focus();
+    bs[1].addEventListener("click",function(){drawDisputes(dz,t);});
+    bs[0].addEventListener("click",async function(){
+      bs[0].disabled=true;bs[0].textContent="Sending…";m.hidden=true;
+      try{
+        var r=await fetch("/api/report",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({t:token,ticketId:t.id,text:ta.value})});
+        var j=await r.json().catch(function(){return {};});
+        if(!r.ok)throw new Error(j.error||"The dispute wasn't sent.");
+        data.disputes=(data.disputes||[]).concat([j.dispute]);
+        drawDisputes(dz,t);
+        var ok=document.createElement("div");ok.className="msg ok";ok.textContent="Sent. Your team lead will review it and reply here.";dz.appendChild(ok);
+      }catch(e){m.textContent=e.message;m.hidden=false;bs[0].disabled=false;bs[0].textContent="Submit dispute";}
+    });
+  });
+}
+load();
+})();
+</script>
+</body>
+</html>

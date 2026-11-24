@@ -17,7 +17,7 @@ if (fs.existsSync(envFile)) {
 }
 
 const PORT = Number(process.env.PORT || 3123);
-const PAGES = { "/": "index.html", "/index.html": "index.html", "/admin": "admin.html", "/admin.html": "admin.html", "/signed-out": "signed-out.html" };
+const PAGES = { "/": "index.html", "/index.html": "index.html", "/admin": "admin.html", "/admin.html": "admin.html", "/signed-out": "signed-out.html", "/report": "report.html", "/report.html": "report.html" };
 const { default: middleware } = await import(pathToFileURL(path.join(root, "middleware.js")).href);
 
 // Runs middleware.js like Vercel does (everything except /api/auth/ and /signed-out).

@@ -44,7 +44,7 @@ async function validSession(request) {
 
 // The dashboard and the one API it reads are public. Everything else (the
 // admin page and its APIs, raw data files, source files) needs sign-in.
-const PUBLIC = new Set(["/", "/index", "/index.html", "/api/data"]);
+const PUBLIC = new Set(["/", "/index", "/index.html", "/api/data", "/report", "/report.html", "/api/report"]);
 
 export default async function middleware(request) {
   if (!enabled()) return;

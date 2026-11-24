@@ -46,7 +46,7 @@ body{margin:0;color:var(--text);
 h1{font-size:30px;font-weight:800;letter-spacing:-.03em;margin:0 0 6px}
 h2{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text);margin:42px 0 14px}
 h2::before{content:"";flex:0 0 12px;height:12px;border-radius:4px;background:var(--blue)}
-h2.g::before{background:var(--green)} h2.y::before{background:var(--yellow)} h2.p::before{background:var(--pink)}
+h2.g::before{background:var(--green)} h2.y::before{background:var(--yellow)} h2.p::before{background:var(--pink)} h2.b::before{background:var(--blue)}
 h3{font-size:15px;font-weight:700;margin:0 0 2px}
 p{margin:0 0 12px;color:var(--text2)}
 a{color:var(--blue);font-weight:500}
@@ -224,6 +224,15 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
     <div class="msg" id="rvMsg" hidden style="margin-bottom:12px"></div>
     <div id="rvList"></div>
 
+    <h2 class="b">Disputes <span class="tag2" id="dzCount" hidden></span></h2>
+    <div class="controls" style="background:var(--s-blue)">
+      <div class="field" style="max-width:260px"><label for="dzMonth">Month</label><select id="dzMonth"></select></div>
+      <div class="field" style="max-width:220px"><label for="dzShow">Show</label><select id="dzShow"><option value="open">Open</option><option value="all">All</option><option value="resolved">Resolved</option></select></div>
+    </div>
+    <p class="sub" style="margin:0 0 12px">Agents raise these from the Dispute button on each ticket in their report. Reply and resolve here; the agent sees your reply on their report. To change a score, use Ticket review, then resend their report.</p>
+    <div class="msg" id="dzMsg" hidden style="margin-bottom:12px"></div>
+    <div id="dzList"></div>
+
     <h2 class="p">Monthly approvals</h2>
     <div class="controls" style="background:var(--s-pink)">
       <div class="field" style="max-width:280px"><label for="apMonth">Month</label><select id="apMonth"></select></div>
@@ -235,7 +244,7 @@ footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;bord
       <thead><tr><th>Agent</th><th>Team</th><th>Tickets</th><th>Combined</th><th>Band</th><th>Notes coverage</th><th>Lead review</th><th>Approval</th><th>Report</th><th></th></tr></thead>
       <tbody></tbody>
     </table></div></div>
-    <p class="note">Step 1: a team lead reviews each agent's month and presses Approve. Step 2: Send report delivers the "QA analysis - month" PDF to that agent's Slack DM. Only agents with a full 10 tickets can be approved; an approval can be undone until the report is sent. Scores can still be edited after a report is sent: the report is then marked as changed, and Resend updated report sends the new version.</p>
+    <p class="note">Step 1: a team lead reviews each agent's month and presses Approve. Step 2: Send report sends that agent a Slack DM with a private link to their "QA analysis - month" report, where they can dispute any ticket. Only agents with a full 10 tickets can be approved; an approval can be undone until the report is sent. Scores can still be edited after a report is sent: the report is then marked as changed, and Resend updated report sends the new version.</p>
 
     <h2>Settings</h2>
     <div class="msg" id="setMsg" hidden style="margin-bottom:12px"></div>
@@ -386,7 +395,7 @@ async function loadData(){
   fillMonthSelects();
   renderCharts();
   await loadApprovals();
-  fillReviewSelects();await loadReview();await loadSettings();
+  fillReviewSelects();await loadReview();fillDisputeMonths();await loadDisputes();await loadSettings();
 }
 
 function monthsFor(filter){
@@ -679,7 +688,7 @@ function renderApprovals(){
       else rc.appendChild(el("span",{class:"state"},ap?"Ready to send":"Waiting for approval"));
       tr.appendChild(rc);
       var act=el("td");var wrap=el("div",{class:"actions"});
-      if(ts.length)wrap.appendChild(el("a",{class:"btn ghost small",href:"/api/admin/report?month="+encodeURIComponent(month)+"&agent="+encodeURIComponent(name),target:"_blank",rel:"noopener"},"Preview PDF"));
+      if(ts.length)wrap.appendChild(el("a",{class:"btn ghost small",href:"/api/admin/report?month="+encodeURIComponent(month)+"&agent="+encodeURIComponent(name),target:"_blank",rel:"noopener"},"Preview report"));
       var full=ts.length>=per;
       if(!ap){
         var ab=el("button",{class:"btn small green",type:"button"},"Approve");
@@ -804,6 +813,65 @@ async function refreshAfterReview(){
   var d=await api("/api/data");state.data=d;state.cycles=d.cycles;renderCharts();renderApprovals();
 }
 $("rvMonth").addEventListener("change",loadReview);
+
+/* ---------------- disputes ---------------- */
+function fillDisputeMonths(){
+  var m=$("dzMonth"),pm=m.value;m.textContent="";
+  state.cycles.slice().reverse().forEach(function(c){m.appendChild(el("option",{value:c.month},c.label));});
+  if(pm&&state.cycles.some(function(c){return c.month===pm;}))m.value=pm;
+}
+async function loadDisputes(){
+  var month=$("dzMonth").value,box=$("dzList");box.textContent="";
+  if(!month)return;
+  var r;try{r=await api("/api/admin/review?view=disputes&month="+encodeURIComponent(month));}
+  catch(e){showMsg("dzMsg",e.message);return;}
+  showMsg("dzMsg","");
+  var all=r.disputes||[],open=all.filter(function(d){return d.status==="open";}).length;
+  $("dzCount").textContent=open+" open";show("dzCount",open>0);
+  var want=$("dzShow").value,list=all.filter(function(d){return want==="all"||d.status===want;});
+  if(!list.length){box.appendChild(el("p",{class:"sub"},want==="open"?"No open disputes for this month.":"No disputes to show."));return;}
+  var byAgent={};list.forEach(function(d){(byAgent[d.agent]=byAgent[d.agent]||[]).push(d);});
+  Object.keys(byAgent).sort().forEach(function(name){
+    var g=el("div",{class:"card"});g.style.marginBottom="12px";
+    var ds=byAgent[name].sort(function(a,b){return a.at<b.at?-1:1;});
+    g.appendChild(el("h3",null,name+" · "+ds.length+" dispute"+(ds.length===1?"":"s")));
+    ds.forEach(function(d){g.appendChild(disputeCard(month,d));});
+    box.appendChild(g);
+  });
+}
+function disputeCard(month,d){
+  var c=el("div",{class:"rv"});
+  var h=el("h4",null,d.subject||("Ticket "+d.ticketId));
+  h.appendChild(el("span",{class:"tag2"+(d.status==="resolved"?" ok":" ov")},d.status==="resolved"?"Resolved":"Open"));
+  c.appendChild(h);
+  c.appendChild(el("div",{class:"meta"},"Ticket "+d.ticketId+" · raised "+new Date(d.at).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})+(d.resolvedBy?" · resolved by "+String(d.resolvedBy).split("@")[0]:"")));
+  var q=el("div");q.style.cssText="background:var(--surface);border-radius:10px;padding:10px 12px;font-size:13.5px;white-space:pre-wrap";q.textContent=d.text;c.appendChild(q);
+  var links=el("div",{class:"actions"});links.style.margin="8px 0";
+  var hub=el("a",{href:"https://app.hubspot.com/contacts/23182676/record/0-5/"+d.ticketId,target:"_blank",rel:"noopener"},"Open in HubSpot");hub.style.fontSize="12.5px";links.appendChild(hub);
+  var go=el("button",{class:"btn small ghost",type:"button"},"Review this ticket");
+  go.addEventListener("click",async function(){$("rvMonth").value=month;$("rvAgent").value=d.agent;await loadReview();
+    var card=[].slice.call(document.querySelectorAll("#rvList .rv")).find(function(x){return x.textContent.indexOf("Ticket "+d.ticketId)>=0;});
+    (card||$("rvList")).scrollIntoView({behavior:"smooth",block:"center"});});
+  links.appendChild(go);c.appendChild(links);
+  var note=el("div",{class:"msg"});note.hidden=true;
+  if(d.status==="resolved"){
+    var rp=el("div");rp.style.cssText="font-size:13.5px;margin-top:4px";rp.textContent="Your reply: "+(d.response||"");c.appendChild(rp);
+    var ro=el("button",{class:"btn small ghost",type:"button"},"Reopen");ro.style.marginTop="8px";
+    ro.addEventListener("click",async function(){try{await api("/api/admin/review",{method:"POST",body:{month:month,action:"reopen_dispute",disputeId:d.id}});await loadDisputes();}catch(e){note.textContent=e.message;note.hidden=false;}});
+    c.appendChild(ro);
+  }else{
+    var ta=el("textarea",{placeholder:"Reply to "+d.agent.split(" ")[0]+" (shown on their report)",maxlength:"1500"});c.appendChild(ta);
+    var sb=el("button",{class:"btn small",type:"button"},"Reply and resolve");sb.style.marginTop="8px";
+    sb.addEventListener("click",async function(){sb.disabled=true;
+      try{await api("/api/admin/review",{method:"POST",body:{month:month,action:"resolve_dispute",disputeId:d.id,response:ta.value}});await loadDisputes();showMsg("dzMsg","Resolved. "+d.agent.split(" ")[0]+" can see your reply on their report.",true);}
+      catch(e){note.textContent="Not saved: "+e.message;note.className="msg";note.hidden=false;sb.disabled=false;}});
+    c.appendChild(sb);
+  }
+  c.appendChild(note);
+  return c;
+}
+$("dzMonth").addEventListener("change",loadDisputes);
+$("dzShow").addEventListener("change",loadDisputes);
 $("rvAgent").addEventListener("change",loadReview);
 
 /* ---------------- settings ---------------- */
